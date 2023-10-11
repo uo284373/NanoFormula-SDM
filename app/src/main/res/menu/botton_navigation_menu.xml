@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/carrerasFragment"
+        android:icon="@drawable/banderaacuadros"
+        android:title="Carreras" />
+
+    <item
+        android:id="@+id/pilotosFragment"
+        android:icon="@drawable/casco"
+        android:title="Pilotos" />
+
+    <item
+        android:id="@+id/constructoresFragment"
+        android:icon="@drawable/herramientas"
+        android:title="Constructores" />
+</menu>
