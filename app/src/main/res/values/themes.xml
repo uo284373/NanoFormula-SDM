@@ -1,12 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.NanoFormula" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.NanoFormula" parent="Theme.Material3.Dark.NoActionBar">
         <!-- Customize your light theme here. -->
     </style>
 
-    <style name="Theme.NanoFormula" parent="Base.Theme.NanoFormula" />
-
-    <style name="fragment">
+    <style name="Theme.NanoFormula" parent="Base.Theme.NanoFormula">
+        <item name="colorPrimary">@color/backgroundColorMenu</item>
     </style>
 
     <style name="bottomMenu">
