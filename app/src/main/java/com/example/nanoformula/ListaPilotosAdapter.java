@@ -67,7 +67,7 @@ public class ListaPilotosAdapter extends RecyclerView.Adapter<ListaPilotosAdapte
         public PilotosViewHolder(View itemView) {
             super(itemView);
 
-            posicion= (TextView)itemView.findViewById(R.id.posicionPiloto);
+            posicion= itemView.findViewById(R.id.posicionPiloto);
             nombre= (TextView)itemView.findViewById(R.id.nombrePiloto);
             equipo= (TextView) itemView.findViewById(R.id.nombreEquipo);
             puntos= (TextView) itemView.findViewById(R.id.puntosPiloto);
@@ -75,10 +75,10 @@ public class ListaPilotosAdapter extends RecyclerView.Adapter<ListaPilotosAdapte
 
         // asignar valores a los componentes
         public void bindUser(final Piloto piloto, final OnItemClickListener listener) {
-            posicion.setText(piloto.getPosition());
+            posicion.setText(String.valueOf(piloto.getPosition()));
             nombre.setText(piloto.getName());
             equipo.setText(piloto.getTeam());
-            puntos.setText(piloto.getPoints());
+            puntos.setText(String.valueOf(piloto.getPoints()));
             //Picasso.get().load(pelicula.getUrlCaratula()).into(imagen);
 
 
