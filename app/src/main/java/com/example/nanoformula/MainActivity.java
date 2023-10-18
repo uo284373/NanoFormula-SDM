@@ -2,6 +2,7 @@ package com.example.nanoformula;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -18,6 +19,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     List<Piloto> pilotos = new ArrayList<Piloto>();
+    Toolbar toolbar;
 
 
     @Override
@@ -32,12 +34,25 @@ public class MainActivity extends AppCompatActivity {
 
         CarrerasFragment carrerasFragment=CarrerasFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, carrerasFragment).commit();
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Calendario GP");
+        setSupportActionBar(toolbar);
 
 
     }
 
 
     private void rellenarListaPilotos(){
+        pilotos.add(new Piloto(1,"Fernando Alonso","Aston Martin",333,14,R.drawable.fernandoalonso));
+        pilotos.add(new Piloto(2,"Max Verstapen","Red Bull",300,2,R.drawable.maxverstappen));
+        pilotos.add(new Piloto(1,"Fernando Alonso","Aston Martin",333,14,R.drawable.fernandoalonso));
+        pilotos.add(new Piloto(2,"Max Verstapen","Red Bull",300,2,R.drawable.maxverstappen));
+        pilotos.add(new Piloto(1,"Fernando Alonso","Aston Martin",333,14,R.drawable.fernandoalonso));
+        pilotos.add(new Piloto(2,"Max Verstapen","Red Bull",300,2,R.drawable.maxverstappen));
+        pilotos.add(new Piloto(1,"Fernando Alonso","Aston Martin",333,14,R.drawable.fernandoalonso));
+        pilotos.add(new Piloto(2,"Max Verstapen","Red Bull",300,2,R.drawable.maxverstappen));
+        pilotos.add(new Piloto(1,"Fernando Alonso","Aston Martin",333,14,R.drawable.fernandoalonso));
+        pilotos.add(new Piloto(2,"Max Verstapen","Red Bull",300,2,R.drawable.maxverstappen));
         pilotos.add(new Piloto(1,"Fernando Alonso","Aston Martin",333,14,R.drawable.fernandoalonso));
         pilotos.add(new Piloto(2,"Max Verstapen","Red Bull",300,2,R.drawable.maxverstappen));
     }
@@ -57,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 CarrerasFragment carrerasFragment=CarrerasFragment.newInstance();
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, carrerasFragment).commit();
+                toolbar = findViewById(R.id.toolbar);
+                toolbar.setTitle("Calendario GP");
                 return true;
             }
 
@@ -65,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
                 PilotosFragment pilotosFragment=PilotosFragment.newInstance(pilotos);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, pilotosFragment).commit();
+                toolbar = findViewById(R.id.toolbar);
+                toolbar.setTitle("Clasificacion de Pilotos");
                 return true;
             }
 
@@ -73,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
                 ConstructoresFragment constructoresFragment=ConstructoresFragment.newInstance();
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, constructoresFragment).commit();
+                toolbar = findViewById(R.id.toolbar);
+                toolbar.setTitle("Clasificacion de Constructores");
                 return true;
             }
             throw new IllegalStateException("Unexpected value: " + item.getItemId());
