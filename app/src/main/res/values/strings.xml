@@ -2,4 +2,8 @@
     <string name="app_name">NanoFormula</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="posicion">Posicion</string>
+    <string name="nombrePiloto">Nombre Piloto</string>
+    <string name="nombreEquipo">Nombre Equipo</string>
+    <string name="puntosPiloto">Puntos Piloto</string>
 </resources>
