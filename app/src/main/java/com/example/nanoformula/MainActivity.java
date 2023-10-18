@@ -13,10 +13,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private CarrerasFragment carrerasFragment = new CarrerasFragment();
-    private PilotosFragment pilotosFragment = new PilotosFragment();
-    private ConstructoresFragment constructoresFragment = new ConstructoresFragment();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,29 +20,46 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if(item.getItemId()==R.id.carrerasFragment){
-                    loadFragment(carrerasFragment);
-                    return true;
-                }else if(item.getItemId()==R.id.pilotosFragment){
-                    loadFragment(pilotosFragment);
-                    return true;
-                }else if(item.getItemId()==R.id.constructoresFragment){
-                    loadFragment(constructoresFragment);
-                    return true;
-                }
-                return false;
+        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        CarrerasFragment carrerasFragment=CarrerasFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, carrerasFragment).commit();
+    }
+
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        /* Cuando se selecciona uno de los botones / ítems*/
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            int itemId = item.getItemId();
+
+            /* Según el caso, crearemos un Fragmento u otro */
+            if (itemId == R.id.carrerasFragment)
+            {
+                CarrerasFragment carrerasFragment=CarrerasFragment.newInstance();
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, carrerasFragment).commit();
+                return true;
             }
-        });
-        loadFragment(carrerasFragment);
-    }
 
+            if (itemId == R.id.pilotosFragment)
+            {
+                PilotosFragment pilotosFragment=PilotosFragment.newInstance();
 
-    private void loadFragment(Fragment fragment){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.containerView,fragment);
-        transaction.commit();
-    }
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, pilotosFragment).commit();
+                return true;
+            }
+
+            if (itemId == R.id.constructoresFragment)
+            {
+                ConstructoresFragment constructoresFragment=ConstructoresFragment.newInstance();
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, constructoresFragment).commit();
+                return true;
+            }
+            throw new IllegalStateException("Unexpected value: " + item.getItemId());
+        };
+    };
 }
