@@ -6,4 +6,5 @@
     <string name="nombrePiloto">Nombre Piloto</string>
     <string name="nombreEquipo">Nombre Equipo</string>
     <string name="puntosPiloto">Puntos Piloto</string>
+    <string name="fotoPiloto">Foto Piloto</string>
 </resources>

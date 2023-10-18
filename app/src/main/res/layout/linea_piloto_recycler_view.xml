@@ -13,8 +13,18 @@
         android:id="@+id/posicionPiloto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0.3"
         android:text="@string/posicion" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/fotoPiloto"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/fotoPiloto"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/roundedImageView" />
+
 
     <LinearLayout
         android:layout_width="0dp"
@@ -27,7 +37,7 @@
         <TextView
             android:id="@+id/nombrePiloto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:text="@string/nombrePiloto" />
 
@@ -45,7 +55,7 @@
         android:id="@+id/puntosPiloto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0.3"
         android:text="@string/puntosPiloto" />
 
 </LinearLayout>

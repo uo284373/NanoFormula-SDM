@@ -12,13 +12,15 @@ public class Piloto implements Parcelable {
     private String team;
     private int points;
     private int wins;
+    private int foto;
 
-    public Piloto(int position, String name, String team, int points, int wins) {
+    public Piloto(int position, String name, String team, int points, int wins, int foto) {
         this.position = position;
         this.name = name;
         this.team = team;
         this.points = points;
         this.wins = wins;
+        this.foto = foto;
     }
 
     protected Piloto(Parcel in) {
@@ -27,6 +29,7 @@ public class Piloto implements Parcelable {
         team = in.readString();
         points = in.readInt();
         wins = in.readInt();
+        foto = in.readInt();
     }
 
     public static final Creator<Piloto> CREATOR = new Creator<Piloto>() {
@@ -81,6 +84,14 @@ public class Piloto implements Parcelable {
         this.wins = wins;
     }
 
+    public int getFoto() {
+        return foto;
+    }
+
+    public void setFoto(int foto) {
+        this.foto = foto;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -93,5 +104,6 @@ public class Piloto implements Parcelable {
         parcel.writeString(team);
         parcel.writeInt(points);
         parcel.writeInt(wins);
+        parcel.writeInt(foto);
     }
 }

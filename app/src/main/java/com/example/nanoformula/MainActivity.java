@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void rellenarListaPilotos(){
-        pilotos.add(new Piloto(1,"Fernando Alonso","Aston Martin",333,14));
-        pilotos.add(new Piloto(2,"Max Verstapen","Red Bull",300,2));
+        pilotos.add(new Piloto(1,"Fernando Alonso","Aston Martin",333,14,R.drawable.fernandoalonso));
+        pilotos.add(new Piloto(2,"Max Verstapen","Red Bull",300,2,R.drawable.maxverstappen));
     }
 
 

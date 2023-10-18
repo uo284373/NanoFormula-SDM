@@ -3,6 +3,7 @@ package com.example.nanoformula;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,9 +50,10 @@ public class PilotosFragment extends Fragment {
         // Inflate the layout for this fragment
         View root= inflater.inflate(R.layout.fragment_pilotos, container, false);
         listaPilotosView = (RecyclerView)root.findViewById(R.id.pilotosRecyclerView);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         listaPilotosView.setLayoutManager(layoutManager);
-
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listaPilotosView.getContext(), layoutManager.getOrientation());
+        listaPilotosView.addItemDecoration(dividerItemDecoration);
         ListaPilotosAdapter lpAdapter= new ListaPilotosAdapter(pilotos,
                 new ListaPilotosAdapter.OnItemClickListener() {
                     @Override
@@ -60,6 +62,7 @@ public class PilotosFragment extends Fragment {
                     }
                 });
         listaPilotosView.setAdapter(lpAdapter);
+
         return root;
     }
 

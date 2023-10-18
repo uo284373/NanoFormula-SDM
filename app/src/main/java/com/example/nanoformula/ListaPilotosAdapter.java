@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -63,6 +64,7 @@ public class ListaPilotosAdapter extends RecyclerView.Adapter<ListaPilotosAdapte
         private TextView nombre;
         private TextView equipo;
         private TextView puntos;
+        private ImageView foto;
 
         public PilotosViewHolder(View itemView) {
             super(itemView);
@@ -71,6 +73,7 @@ public class ListaPilotosAdapter extends RecyclerView.Adapter<ListaPilotosAdapte
             nombre= (TextView)itemView.findViewById(R.id.nombrePiloto);
             equipo= (TextView) itemView.findViewById(R.id.nombreEquipo);
             puntos= (TextView) itemView.findViewById(R.id.puntosPiloto);
+            foto = (ImageView) itemView.findViewById(R.id.fotoPiloto);
         }
 
         // asignar valores a los componentes
@@ -79,6 +82,7 @@ public class ListaPilotosAdapter extends RecyclerView.Adapter<ListaPilotosAdapte
             nombre.setText(piloto.getName());
             equipo.setText(piloto.getTeam());
             puntos.setText(String.valueOf(piloto.getPoints()));
+            foto.setImageResource(piloto.getFoto());
             //Picasso.get().load(pelicula.getUrlCaratula()).into(imagen);
 
 
