@@ -3,22 +3,23 @@ package com.example.nanoformula;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
+import com.example.nanoformula.modelo.Escuderia;
 import com.example.nanoformula.modelo.Piloto;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     List<Piloto> pilotos = new ArrayList<Piloto>();
+    List<Escuderia> escuderias = new ArrayList<>();
     Toolbar toolbar;
 
 
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         rellenarListaPilotos();
+        rellenarListaEscuderias();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -54,6 +56,14 @@ public class MainActivity extends AppCompatActivity {
         pilotos.add(new Piloto(9,"Lance Stroll","Aston Martin",56,0,R.drawable.lancestroll));
         pilotos.add(new Piloto(10,"Oscar Piastri","McLaren",44,0,R.drawable.piastri));
 
+    }
+
+    private void rellenarListaEscuderias(){
+        escuderias.add(new Escuderia(1,"Aston Martin",new HashSet<>(Arrays.asList("Alonso", "Stroll")),389,14, 0, 5, R.drawable.astonmartin));
+        escuderias.add(new Escuderia(2,"Ferrari",new HashSet<>(Arrays.asList("Sainz", "Leclerc")),240,1, 16, 66, R.drawable.ferrari));
+        escuderias.add(new Escuderia(3,"Red Bull",new HashSet<>(Arrays.asList("Verstappen", "Pérez")),237,2, 6, 19, R.drawable.redbull));
+        escuderias.add(new Escuderia(4,"Mercedes",new HashSet<>(Arrays.asList("Hamilton", "Russel")),210,0, 8, 14, R.drawable.mercedes));
+        escuderias.add(new Escuderia(5,"McLaren",new HashSet<>(Arrays.asList("Norris", "Piatri")),115,0, 8, 54, R.drawable.mclaren));
     }
 
 
@@ -86,11 +96,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
 
-            if (itemId == R.id.constructoresFragment)
+            if (itemId == R.id.escuderiasFragment)
             {
-                ConstructoresFragment constructoresFragment=ConstructoresFragment.newInstance();
+                EscuderiasFragment escuderiasFragment = EscuderiasFragment.newInstance(escuderias);
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, constructoresFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, escuderiasFragment).commit();
                 toolbar = findViewById(R.id.toolbar);
                 toolbar.setTitle("Clasificacion de Constructores");
                 return true;

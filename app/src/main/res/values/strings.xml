@@ -8,4 +8,8 @@
     <string name="puntosPiloto">Puntos Piloto</string>
     <string name="fotoPiloto">Foto Piloto</string>
     <string name="toolbar">ToolBar</string>
+    <string name="fotoConstructor">Foto Constructor</string>
+    <string name="nombreConstructor">Nombre Constructor</string>
+    <string name="nombrePilotos">Piloto 1 - Piloto 2</string>
+    <string name="puntosConstructor">Puntos Piloto</string>
 </resources>
