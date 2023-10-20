@@ -11,7 +11,7 @@
         android:title="Pilotos" />
 
     <item
-        android:id="@+id/constructoresFragment"
+        android:id="@+id/escuderiasFragment"
         android:icon="@drawable/herramientas"
         android:title="Constructores" />
 </menu>
