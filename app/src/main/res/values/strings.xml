@@ -12,4 +12,8 @@
     <string name="nombreConstructor">Nombre Constructor</string>
     <string name="nombrePilotos">Piloto 1 - Piloto 2</string>
     <string name="puntosConstructor">Puntos Piloto</string>
+    <string name="nombreCarrera">Nombre Carrera\n</string>
+    <string name="nombreCiudad">Ciudad - Pais</string>
+    <string name="fechaCarrera">dd-mm-yy</string>
+    <string name="nombreLocalizacion">Nombre Localizacion</string>
 </resources>
