@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.nanoformula.modelo.Carrera;
 import com.example.nanoformula.modelo.Escuderia;
 import com.example.nanoformula.modelo.Piloto;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     List<Piloto> pilotos = new ArrayList<Piloto>();
     List<Escuderia> escuderias = new ArrayList<>();
+    List<Carrera> carreras = new ArrayList<>();
     Toolbar toolbar;
 
 
@@ -30,11 +32,12 @@ public class MainActivity extends AppCompatActivity {
 
         rellenarListaPilotos();
         rellenarListaEscuderias();
+        rellenarListaCarreras();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        CarrerasFragment carrerasFragment=CarrerasFragment.newInstance();
+        CarrerasFragment carrerasFragment=CarrerasFragment.newInstance(carreras);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, carrerasFragment).commit();
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Calendario GP");
@@ -66,6 +69,27 @@ public class MainActivity extends AppCompatActivity {
         escuderias.add(new Escuderia(5,"McLaren",new HashSet<>(Arrays.asList("Norris", "Piatri")),115,0, 8, 54, R.drawable.mclaren));
     }
 
+    private void rellenarListaCarreras(){
+        carreras.add(new Carrera(1,"Bahrain Grand Prix","Bahrain Interntional Circuit",
+                "Sakhir - Bahrain", "05-03-23", R.drawable.bahrain));
+        carreras.add(new Carrera(2,"Saudi Arabia Grand Prix","Jeddah Corniche Circuit",
+                "Jeddah - Saudi Arabia","19-03-23",R.drawable.saudi_arabia));
+        carreras.add(new Carrera(3,"Australian Grand Prix","Albert Park Grand Circuit",
+                "Melbourne - Australia","02-04-23",R.drawable.australia));
+        carreras.add(new Carrera(4,"Azerbaijan Grand Prix","Baku City Circuit",
+                "Baku - Azerbaijan","30-04-23",R.drawable.azerbaijan));
+        carreras.add(new Carrera(5,"Miami Grand Prix","Miami International Autodrome",
+                "Miami - USA","07-05-23",R.drawable.united_states));
+        carreras.add(new Carrera(6,"Monaco Grand Prix","Circuit de Monaco",
+                "Monte-Carlo - Monaco","28-05-23",R.drawable.monaco));
+        carreras.add(new Carrera(7,"Spanish Grand Prix","Circuit de Barcelona-Catalunya",
+                "Montmeló - Spain","04-06-23",R.drawable.spain));
+        carreras.add(new Carrera(8,"Canadian Grand Prix","Circuit Gilles Villenueve",
+                "Montreal - Canada","18-06-23",R.drawable.canada));
+        carreras.add(new Carrera(9,"Austrian Grand Prix","Red Bull Ring",
+                "Spielberg - Austria","02-07-23",R.drawable.austria));
+    }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -78,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             /* Según el caso, crearemos un Fragmento u otro */
             if (itemId == R.id.carrerasFragment)
             {
-                CarrerasFragment carrerasFragment=CarrerasFragment.newInstance();
+                CarrerasFragment carrerasFragment=CarrerasFragment.newInstance(carreras);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, carrerasFragment).commit();
                 toolbar = findViewById(R.id.toolbar);
