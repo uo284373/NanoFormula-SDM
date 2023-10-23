@@ -1,5 +1,7 @@
 package com.example.nanoformula;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -22,6 +24,7 @@ public class PilotosFragment extends Fragment {
 
 
     private static final String ARG_PILOTOS = "pilotos";
+    public static final String PILOTO_SELECCIONADO = "piloto_seleccionado";
 
     private List<Piloto> pilotos;
     private RecyclerView listaPilotosView;
@@ -67,5 +70,9 @@ public class PilotosFragment extends Fragment {
     }
 
     private void clickonItem(Piloto piloto) {
+        Intent intent=new Intent (PilotosFragment.this.getContext(), PilotoDetails.class);
+        intent.putExtra(PILOTO_SELECCIONADO, piloto);
+
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
     }
 }
