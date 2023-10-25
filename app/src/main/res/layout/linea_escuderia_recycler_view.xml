@@ -20,7 +20,7 @@
         android:id="@+id/fotoEscuderia"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:contentDescription="@string/fotoConstructor"
+        android:contentDescription="@string/fotoEscuderia"
         app:srcCompat="@mipmap/ic_launcher"
         android:scaleType="centerCrop"
         app:shapeAppearanceOverlay="@style/roundedImageView" />
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:text="@string/nombreConstructor" />
+            android:text="@string/nombreEscuderia" />
 
 
         <TextView
@@ -56,6 +56,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.3"
-        android:text="@string/puntosConstructor" />
+        android:text="@string/puntosEscuderia" />
 
 </LinearLayout>

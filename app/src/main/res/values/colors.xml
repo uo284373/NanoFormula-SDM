@@ -4,4 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="backgroundColor">#474646</color>
     <color name="backgroundColorMenu">#8C0C0C</color>
+
+    <color name="colorUno">#C30A0A</color>
+    <color name="colorDos">#6E1212</color>
+    <color name="colorTres">#000000</color>
 </resources>

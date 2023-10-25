@@ -1,5 +1,7 @@
 package com.example.nanoformula;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -24,13 +26,14 @@ import java.util.List;
 public class EscuderiasFragment extends Fragment {
 
     private static final String ARG_ESCUDERIAS = "ESCUDERIAS";
+
+    public static final String ESCUDERIA_SELECCIONADA = "piloto_seleccionado";
+
+
     private List<Escuderia> escuderias;
 
     private RecyclerView listaEscuderiasView;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public static EscuderiasFragment newInstance(List<Escuderia> escuderias) {
         EscuderiasFragment fragment = new EscuderiasFragment();
@@ -71,5 +74,9 @@ public class EscuderiasFragment extends Fragment {
     }
 
     private void clickonItem(Escuderia escuderia) {
+        Intent intent=new Intent (EscuderiasFragment.this.getContext(), EscuderiaDetails.class);
+        intent.putExtra(ESCUDERIA_SELECCIONADA, escuderia);
+
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
     }
 }
