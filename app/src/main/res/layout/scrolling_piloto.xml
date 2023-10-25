@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".PilotoDetails"
-    tools:showIn="@layout/activity_piloto_details">
+    tools:showIn="@layout/activity_piloto_details"
+    android:background="@drawable/fondo_degradado">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,12 +21,13 @@
             android:id="@+id/txNombrePiloto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/nombre_piloto" />
+            android:text="@string/nombre_piloto"
+            android:layout_marginBottom="20dp"/>
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/fotoPiloto"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:id="@+id/ftPiloto"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:contentDescription="@string/fotoPiloto"
             app:srcCompat="@mipmap/ic_launcher"
             android:scaleType="centerCrop"
@@ -35,7 +37,9 @@
             android:id="@+id/txNacionalidadPiloto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/nacionalidad_piloto" />
+            android:layout_margin="15dp"
+            android:text="@string/nacionalidad_piloto"
+            android:gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,7 +50,10 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="20dp"
+                >
 
                 <TextView
                     android:id="@+id/txTituloNumero"
@@ -58,13 +65,15 @@
                     android:id="@+id/txNumero"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:gravity="center"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginRight="60dp">
 
                 <TextView
                     android:id="@+id/txTituloCodigo"
@@ -76,13 +85,15 @@
                     android:id="@+id/txCodigo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:gravity="center"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginRight="20dp">
 
                 <TextView
                     android:id="@+id/txTituloEdad"
@@ -94,7 +105,8 @@
                     android:id="@+id/txEdad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:gravity="center"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

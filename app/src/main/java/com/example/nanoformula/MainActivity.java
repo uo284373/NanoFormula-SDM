@@ -48,16 +48,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void rellenarListaPilotos(){
-        pilotos.add(new Piloto(1,"Fernando Alonso","Aston Martin",333,14,R.drawable.alonso));
-        pilotos.add(new Piloto(2,"Max Verstapen","Red Bull",150,2,R.drawable.verstappen));
-        pilotos.add(new Piloto(3,"Carlos Sainz","Ferrari",140,1,R.drawable.carlossainz));
-        pilotos.add(new Piloto(4,"Lewis Hamilton","Mercedes",120,0,R.drawable.hamilton));
-        pilotos.add(new Piloto(5,"Charles Leclerc","Ferrari",100,0,R.drawable.leclerc));
-        pilotos.add(new Piloto(6,"George Rusell","Mercedes",90,0,R.drawable.rusell));
-        pilotos.add(new Piloto(7,"Checo Pérez","Red Bull",87,0,R.drawable.checoperez));
-        pilotos.add(new Piloto(8,"Lando Norris","McLaren",71,0,R.drawable.landonorris));
-        pilotos.add(new Piloto(9,"Lance Stroll","Aston Martin",56,0,R.drawable.lancestroll));
-        pilotos.add(new Piloto(10,"Oscar Piastri","McLaren",44,0,R.drawable.piastri));
+        pilotos.add(new Piloto(1,"Fernando Alonso","Aston Martin",333,14,R.drawable.alonso,"Spanish",14,"ALO",42));
+        pilotos.add(new Piloto(2,"Max Verstapen","Red Bull",150,2,R.drawable.verstappen,"",1,"",12));
+        pilotos.add(new Piloto(3,"Carlos Sainz","Ferrari",140,1,R.drawable.carlossainz,"",1,"",12));
+        pilotos.add(new Piloto(4,"Lewis Hamilton","Mercedes",120,0,R.drawable.hamilton,"",1,"",12));
+        pilotos.add(new Piloto(5,"Charles Leclerc","Ferrari",100,0,R.drawable.leclerc,"",1,"",12));
+        pilotos.add(new Piloto(6,"George Rusell","Mercedes",90,0,R.drawable.rusell,"",1,"",12));
+        pilotos.add(new Piloto(7,"Checo Pérez","Red Bull",87,0,R.drawable.checoperez,"",1,"",12));
+        pilotos.add(new Piloto(8,"Lando Norris","McLaren",71,0,R.drawable.landonorris,"",1,"",12));
+        pilotos.add(new Piloto(9,"Lance Stroll","Aston Martin",56,0,R.drawable.lancestroll,"",1,"",12));
+        pilotos.add(new Piloto(10,"Oscar Piastri","McLaren",44,0,R.drawable.piastri,"",1,"",12));
 
     }
 

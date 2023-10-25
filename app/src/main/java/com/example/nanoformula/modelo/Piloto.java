@@ -13,14 +13,22 @@ public class Piloto implements Parcelable {
     private int points;
     private int wins;
     private int foto;
+    private String nacionalidad;
+    private int número;
+    private String codigo;
+    private int edad;
 
-    public Piloto(int position, String name, String team, int points, int wins, int foto) {
+    public Piloto(int position, String name, String team, int points, int wins, int foto, String nacionalidad, int número, String codigo, int edad) {
         this.position = position;
         this.name = name;
         this.team = team;
         this.points = points;
         this.wins = wins;
         this.foto = foto;
+        this.nacionalidad = nacionalidad;
+        this.número = número;
+        this.codigo = codigo;
+        this.edad = edad;
     }
 
     protected Piloto(Parcel in) {
@@ -30,6 +38,10 @@ public class Piloto implements Parcelable {
         points = in.readInt();
         wins = in.readInt();
         foto = in.readInt();
+        nacionalidad = in.readString();
+        número = in.readInt();
+        codigo = in.readString();
+        edad = in.readInt();
     }
 
     public static final Creator<Piloto> CREATOR = new Creator<Piloto>() {
@@ -92,6 +104,38 @@ public class Piloto implements Parcelable {
         this.foto = foto;
     }
 
+    public String getNacionalidad() {
+        return nacionalidad;
+    }
+
+    public void setNacionalidad(String nacionalidad) {
+        this.nacionalidad = nacionalidad;
+    }
+
+    public int getNúmero() {
+        return número;
+    }
+
+    public void setNúmero(int número) {
+        this.número = número;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -105,5 +149,9 @@ public class Piloto implements Parcelable {
         parcel.writeInt(points);
         parcel.writeInt(wins);
         parcel.writeInt(foto);
+        parcel.writeString(nacionalidad);
+        parcel.writeInt(número);
+        parcel.writeString(codigo);
+        parcel.writeInt(edad);
     }
 }
