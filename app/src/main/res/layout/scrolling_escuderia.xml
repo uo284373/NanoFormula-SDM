@@ -20,27 +20,37 @@
 
 
         <TextView
-            android:id="@+id/txNombrePiloto"
+            android:id="@+id/txNombreEscuderia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/nombreEscuderia"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            android:textAlignment="center"/>
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ftPiloto"
+            android:id="@+id/ftEscuderia"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:contentDescription="@string/fotoPiloto"
+            android:contentDescription="@string/fotoEscuderia"
             app:srcCompat="@mipmap/ic_launcher"
             android:scaleType="centerCrop"
             app:shapeAppearanceOverlay="@style/roundedImageView" />
 
         <TextView
-            android:id="@+id/txNacionalidadPiloto"
+            android:id="@+id/txNacionalidadEscuderia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:text="@string/nacionalidadEscuderia"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/txEstadisticas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/estadisticasGenerales"
             android:gravity="center"
             android:drawableLeft="@drawable/linea"
             android:drawableRight="@drawable/linea"
@@ -142,7 +152,134 @@
                     android:text="-"
                     android:gravity="center"/>
             </LinearLayout>
+
+
+
+
+
+
+
+
         </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/txTemporada"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/temporada"
+            android:gravity="center"
+            android:drawableLeft="@drawable/linea"
+            android:drawableRight="@drawable/linea"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="20dp"
+
+                >
+
+                <TextView
+                    android:id="@+id/txPosEscuderia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/posEscudería"
+                    />
+
+                <TextView
+                    android:id="@+id/txPos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                >
+
+                <TextView
+                    android:id="@+id/txRondaEscuderias"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rondaEscudería" />
+
+                <TextView
+                    android:id="@+id/txRonda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                >
+
+                <TextView
+                    android:id="@+id/txVictoriasEscuderiaTemp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/victoriasEscudería" />
+
+                <TextView
+                    android:id="@+id/txVictoriasTemp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="20dp"
+                >
+
+                <TextView
+                    android:id="@+id/txPuntosEscuderiaTemp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/puntosEscudería" />
+
+                <TextView
+                    android:id="@+id/txPuntosTemp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+
+
+
+
+
+
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

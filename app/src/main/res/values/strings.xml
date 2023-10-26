@@ -17,4 +17,8 @@
     <string name="victoriasEscudería">VICTORIAS</string>
     <string name="puntosEscudería">PUNTOS</string>
     <string name="temporadasEscudería">TEMP.</string>
+    <string name="estadisticasGenerales">ESTADÍSTICAS GENERALES</string>
+    <string name="temporada">TEMPORADA 2023</string>
+    <string name="posEscudería">POS</string>
+    <string name="rondaEscudería">RONDA</string>
 </resources>
