@@ -11,6 +11,7 @@ public class Escuderia implements Parcelable {
 
     private int position;
     private String name;
+    private String nacionalidad;
     private Set<String> pilots;
     private int points;
     private int wins;
@@ -18,9 +19,10 @@ public class Escuderia implements Parcelable {
     private int seasons;
     private int foto;
 
-    public Escuderia(int position, String name, Set<String> pilots, int points, int wins, int titles, int seasons, int foto) {
+    public Escuderia(int position, String name, String nacionalidad, Set<String> pilots, int points, int wins, int titles, int seasons, int foto) {
         this.position = position;
         this.name = name;
+        this.nacionalidad = nacionalidad;
         this.pilots = pilots;
         this.points = points;
         this.wins = wins;
@@ -32,6 +34,7 @@ public class Escuderia implements Parcelable {
     protected Escuderia(Parcel in) {
         position = in.readInt();
         name = in.readString();
+        nacionalidad = in.readString();
         points = in.readInt();
         wins = in.readInt();
         titles = in.readInt();
@@ -65,6 +68,14 @@ public class Escuderia implements Parcelable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getNacionalidad() {
+        return nacionalidad;
+    }
+
+    public void setNacionalidad(String nacionalidad) {
+        this.nacionalidad = nacionalidad;
     }
 
     public Set<String> getPilots() {
@@ -124,6 +135,7 @@ public class Escuderia implements Parcelable {
     public void writeToParcel(@NonNull Parcel parcel, int i) {
         parcel.writeInt(position);
         parcel.writeString(name);
+        parcel.writeString(nacionalidad);
         parcel.writeInt(points);
         parcel.writeInt(wins);
         parcel.writeInt(titles);

@@ -8,7 +8,7 @@
                 android:startColor="@color/colorUno"
                 android:centerColor="@color/colorDos"
                 android:endColor="@color/colorTres"
-                 />
+                />
         </shape>
     </item>
 

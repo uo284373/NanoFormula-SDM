@@ -62,11 +62,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void rellenarListaEscuderias(){
-        escuderias.add(new Escuderia(1,"Aston Martin",new HashSet<>(Arrays.asList("Alonso", "Stroll")),389,14, 0, 5, R.drawable.astonmartin));
-        escuderias.add(new Escuderia(2,"Ferrari",new HashSet<>(Arrays.asList("Sainz", "Leclerc")),240,1, 16, 66, R.drawable.ferrari));
-        escuderias.add(new Escuderia(3,"Red Bull",new HashSet<>(Arrays.asList("Verstappen", "Pérez")),237,2, 6, 19, R.drawable.redbull));
-        escuderias.add(new Escuderia(4,"Mercedes",new HashSet<>(Arrays.asList("Hamilton", "Russel")),210,0, 8, 14, R.drawable.mercedes));
-        escuderias.add(new Escuderia(5,"McLaren",new HashSet<>(Arrays.asList("Norris", "Piatri")),115,0, 8, 54, R.drawable.mclaren));
+        escuderias.add(new Escuderia(1,"Aston Martin", "Británica",new HashSet<>(Arrays.asList("Alonso", "Stroll")),389,14, 0, 5, R.drawable.astonmartin));
+        escuderias.add(new Escuderia(2,"Ferrari", "Italiana", new HashSet<>(Arrays.asList("Sainz", "Leclerc")),240,1, 16, 66, R.drawable.ferrari));
+        escuderias.add(new Escuderia(3,"Red Bull", "Austríaca", new HashSet<>(Arrays.asList("Verstappen", "Pérez")),237,2, 6, 19, R.drawable.redbull));
+        escuderias.add(new Escuderia(4,"Mercedes", "Alemana", new HashSet<>(Arrays.asList("Hamilton", "Russel")),210,0, 8, 14, R.drawable.mercedes));
+        escuderias.add(new Escuderia(5,"McLaren", "Británica", new HashSet<>(Arrays.asList("Norris", "Piastri")),115,0, 8, 54, R.drawable.mclaren));
     }
 
     private void rellenarListaCarreras(){

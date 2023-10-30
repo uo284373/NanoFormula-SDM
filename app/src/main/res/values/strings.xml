@@ -8,8 +8,8 @@
     <string name="puntosPiloto">Puntos Piloto</string>
     <string name="fotoPiloto">Foto Piloto</string>
     <string name="toolbar">ToolBar</string>
-    <string name="fotoConstructor">Foto Constructor</string>
-    <string name="nombreConstructor">Nombre Constructor</string>
+    <string name="fotoEscuderia">Foto Escuderia</string>
+    <string name="nombreEscuderia">Nombre Escuderia</string>
     <string name="nombrePilotos">Piloto 1 - Piloto 2</string>
     <string name="puntosConstructor">Puntos Piloto</string>
     <string name="nombreCarrera">Nombre Carrera\n</string>
@@ -21,4 +21,14 @@
     <string name="numero_piloto">NÚMERO</string>
     <string name="codigo_piloto">CÓDIGO</string>
     <string name="edad_piloto">EDAD</string>
+    <string name="puntosEscuderia">Puntos Escuderia</string>
+    <string name="nacionalidadEscuderia">Nacionalidad Escudería</string>
+    <string name="titulosEscudería">Títulos</string>
+    <string name="victoriasEscudería">VICTORIAS</string>
+    <string name="puntosEscudería">PUNTOS</string>
+    <string name="temporadasEscudería">TEMP.</string>
+    <string name="estadisticasGenerales">ESTADÍSTICAS GENERALES</string>
+    <string name="temporada">TEMPORADA 2023</string>
+    <string name="posEscudería">POS</string>
+    <string name="rondaEscudería">RONDA</string>
 </resources>
