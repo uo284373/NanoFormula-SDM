@@ -4,17 +4,25 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.nanoformula.API.Api;
 import com.example.nanoformula.modelo.Escuderia;
 import com.example.nanoformula.modelo.Piloto;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,11 +67,72 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void rellenarListaEscuderias(){
-        escuderias.add(new Escuderia(1,"Aston Martin", "Británica",new HashSet<>(Arrays.asList("Alonso", "Stroll")),389,14, 0, 5, R.drawable.astonmartin));
-        escuderias.add(new Escuderia(2,"Ferrari", "Italiana", new HashSet<>(Arrays.asList("Sainz", "Leclerc")),240,1, 16, 66, R.drawable.ferrari));
-        escuderias.add(new Escuderia(3,"Red Bull", "Austríaca", new HashSet<>(Arrays.asList("Verstappen", "Pérez")),237,2, 6, 19, R.drawable.redbull));
-        escuderias.add(new Escuderia(4,"Mercedes", "Alemana", new HashSet<>(Arrays.asList("Hamilton", "Russel")),210,0, 8, 14, R.drawable.mercedes));
-        escuderias.add(new Escuderia(5,"McLaren", "Británica", new HashSet<>(Arrays.asList("Norris", "Piastri")),115,0, 8, 54, R.drawable.mclaren));
+        new NetworkTask().execute();
+
+
+//        escuderias.add(new Escuderia(1,"Aston Martin", "Británica",new HashSet<>(Arrays.asList("Alonso", "Stroll")),389,14, 0, 5, R.drawable.astonmartin));
+//        escuderias.add(new Escuderia(2,"Ferrari", "Italiana", new HashSet<>(Arrays.asList("Sainz", "Leclerc")),240,1, 16, 66, R.drawable.ferrari));
+//        escuderias.add(new Escuderia(3,"Red Bull", "Austríaca", new HashSet<>(Arrays.asList("Verstappen", "Pérez")),237,2, 6, 19, R.drawable.redbull));
+//        escuderias.add(new Escuderia(4,"Mercedes", "Alemana", new HashSet<>(Arrays.asList("Hamilton", "Russel")),210,0, 8, 14, R.drawable.mercedes));
+//        escuderias.add(new Escuderia(5,"McLaren", "Británica", new HashSet<>(Arrays.asList("Norris", "Piastri")),115,0, 8, 54, R.drawable.mclaren));
+    }
+
+    private class NetworkTask extends AsyncTask<Void, Void, String[]> {
+        @Override
+        protected String[] doInBackground(Void... params) {
+            // Realiza la operación de red aquí (por ejemplo, una solicitud HTTP)
+            // Devuelve el resultado como una cadena (o el tipo de datos que necesites)
+
+            String escuderias = Api.makeQuery("https://ergast.com/api/f1/current/constructorstandings.json");
+            String pilotos = Api.makeQuery("https://ergast.com/api/f1/current/driverstandings.json");
+
+            return new String[] {escuderias, pilotos};
+        }
+
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            // Actualiza la interfaz de usuario con el resultado de la operación de red
+            // Esto se ejecutará en el hilo UI
+
+            try {
+                JSONArray jsonEscuderias = new JSONObject(result[0])
+                        .getJSONObject("MRData")
+                        .getJSONObject("StandingsTable")
+                        .getJSONArray("StandingsLists")
+                        .getJSONObject(0)
+                        .getJSONArray("ConstructorStandings");
+
+                JSONArray jsonPilotos = new JSONObject(result[1])
+                        .getJSONObject("MRData")
+                        .getJSONObject("StandingsTable")
+                        .getJSONArray("StandingsLists")
+                        .getJSONObject(0)
+                        .getJSONArray("DriverStandings");
+
+
+                for(int i = 0; i < jsonEscuderias.length(); i++){
+                    JSONObject escuderia = jsonEscuderias.getJSONObject(i);
+                    Set<String> pilots = new HashSet<>();
+
+                    for (int j = 0; j < jsonPilotos.length(); j++) {
+                        JSONObject json = jsonPilotos.getJSONObject(j);
+
+                        if(json.getJSONArray("Constructors").getJSONObject(0).getString("name").equals(escuderia.getJSONObject("Constructor").getString("name"))){
+                            pilots.add(json.getJSONObject("Driver").getString("givenName").substring(0, 1) + ". " + json.getJSONObject("Driver").getString("familyName"));
+                        }
+
+                    }
+                    escuderias.add(new Escuderia(escuderia.getInt("position"), escuderia.getJSONObject("Constructor").getString("name"),
+                            escuderia.getJSONObject("Constructor").getString("nationality"), pilots, escuderia.getInt("points")));
+                }
+
+
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
     }
 
 

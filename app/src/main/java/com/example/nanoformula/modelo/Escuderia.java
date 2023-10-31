@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import com.example.nanoformula.R;
+
 import java.util.Set;
 
 public class Escuderia implements Parcelable {
@@ -18,6 +20,15 @@ public class Escuderia implements Parcelable {
     private int titles;
     private int seasons;
     private int foto;
+
+    public Escuderia(int position, String name, String nacionalidad, Set<String> pilots, int points) {
+        this.position = position;
+        this.name = name;
+        this.nacionalidad = nacionalidad;
+        this.pilots = pilots;
+        this.points = points;
+        this.foto = R.drawable.mclaren;
+    }
 
     public Escuderia(int position, String name, String nacionalidad, Set<String> pilots, int points, int wins, int titles, int seasons, int foto) {
         this.position = position;
