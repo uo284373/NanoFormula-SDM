@@ -39,13 +39,16 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:text="@string/nacionalidad_piloto"
-            android:gravity="center"/>
+            android:gravity="center"
+         />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -109,6 +112,214 @@
                     android:gravity="center"/>
             </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/txEstadisticas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/estadisticasGenerales"
+            android:gravity="center"
+            android:drawableLeft="@drawable/linea"
+            android:drawableRight="@drawable/linea"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                >
+
+                <TextView
+                    android:id="@+id/txTituloTitulosPiloto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/titulosEscudería"
+                    />
+
+                <TextView
+                    android:id="@+id/txTitulosPiloto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="30dp"
+                >
+
+                <TextView
+                    android:id="@+id/txTituloVictoriasPiloto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/victoriasEscudería" />
+
+                <TextView
+                    android:id="@+id/txVictoriasPiloto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="30dp"
+                >
+
+                <TextView
+                    android:id="@+id/txTituloPodiosPiloto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/podiosPiloto" />
+
+                <TextView
+                    android:id="@+id/txPodiosPiloto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/txTituloPoles"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/polesPiloto" />
+
+                <TextView
+                    android:id="@+id/txPolesPiloto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:gravity="center"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="55dp"
+                android:layout_marginLeft="37dp"
+                >
+
+                <TextView
+                    android:id="@+id/txTituloTemporadasPiloto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/temaporadasPiloto"
+                    />
+
+                <TextView
+                    android:id="@+id/txTemporadasPiloto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="35dp"
+                >
+
+                <TextView
+                    android:id="@+id/txTituloVueltaRapidaPiloto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vueltaRapida"
+                    android:textAlignment="center"/>
+
+                <TextView
+                    android:id="@+id/txVueltaRapidaPiloto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="30dp"
+                >
+
+                <TextView
+                    android:id="@+id/txTituloPuntosPiloto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/puntosPilotototal" />
+
+                <TextView
+                    android:id="@+id/txPuntosPilotoTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/txTituloMejorPosicion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mejorPosicion"
+                    android:textAlignment="center"/>
+
+                <TextView
+                    android:id="@+id/txMejorPosicionPiloto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:gravity="center"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txTemporadaActual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/TemporadaActual"
+            android:gravity="center"
+            android:drawableLeft="@drawable/linea"
+            android:drawableRight="@drawable/linea"
+            />
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

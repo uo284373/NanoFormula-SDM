@@ -23,7 +23,7 @@
     <string name="edad_piloto">EDAD</string>
     <string name="puntosEscuderia">Puntos Escuderia</string>
     <string name="nacionalidadEscuderia">Nacionalidad Escudería</string>
-    <string name="titulosEscudería">Títulos</string>
+    <string name="titulosEscudería">TÍTULOS</string>
     <string name="victoriasEscudería">VICTORIAS</string>
     <string name="puntosEscudería">PUNTOS</string>
     <string name="temporadasEscudería">TEMP.</string>
@@ -31,4 +31,12 @@
     <string name="temporada">TEMPORADA 2023</string>
     <string name="posEscudería">POS</string>
     <string name="rondaEscudería">RONDA</string>
+    <string name="fotoConstructor">Foto equipo</string>
+    <string name="podiosPiloto">PODIOS</string>
+    <string name="polesPiloto">POLES</string>
+    <string name="temaporadasPiloto">TEMP.</string>
+    <string name="vueltaRapida">VUELTA\n RAP.</string>
+    <string name="puntosPilotototal">PUNTOS</string>
+    <string name="mejorPosicion">MEJOR\nPOS</string>
+    <string name="TemporadaActual">TEMPORADA ACTUAL</string>
 </resources>
