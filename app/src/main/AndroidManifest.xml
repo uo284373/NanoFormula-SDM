@@ -19,7 +19,8 @@
             android:exported="false" />
         <activity
             android:name=".PilotoDetails"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.NanoFormulaDetails"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

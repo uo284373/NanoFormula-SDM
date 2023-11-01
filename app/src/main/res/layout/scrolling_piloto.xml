@@ -7,7 +7,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".PilotoDetails"
     tools:showIn="@layout/activity_piloto_details"
-    android:background="@drawable/fondo_degradado">
+    android:background="@drawable/fondo_degradado"
+    android:layout_marginTop="50dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,12 +18,7 @@
         tools:layout_editor_absoluteY="1dp"
         android:gravity="center|top">
 
-        <TextView
-            android:id="@+id/txNombrePiloto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/nombre_piloto"
-            android:layout_marginBottom="20dp"/>
+
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ftPiloto"
@@ -31,7 +27,8 @@
             android:contentDescription="@string/fotoPiloto"
             app:srcCompat="@mipmap/ic_launcher"
             android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/roundedImageView" />
+            app:shapeAppearanceOverlay="@style/roundedImageView"
+            android:layout_marginTop="10dp"/>
 
         <TextView
             android:id="@+id/txNacionalidadPiloto"
@@ -62,7 +59,8 @@
                     android:id="@+id/txTituloNumero"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/numero_piloto" />
+                    android:text="@string/numero_piloto"
+                    android:textColor="@color/white"/>
 
                 <TextView
                     android:id="@+id/txNumero"
@@ -82,7 +80,8 @@
                     android:id="@+id/txTituloCodigo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/codigo_piloto" />
+                    android:text="@string/codigo_piloto"
+                    android:textColor="@color/white"/>
 
                 <TextView
                     android:id="@+id/txCodigo"
@@ -102,7 +101,8 @@
                     android:id="@+id/txTituloEdad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/edad_piloto" />
+                    android:text="@string/edad_piloto"
+                    android:textColor="@color/white"/>
 
                 <TextView
                     android:id="@+id/txEdad"
@@ -122,6 +122,7 @@
             android:gravity="center"
             android:drawableLeft="@drawable/linea"
             android:drawableRight="@drawable/linea"
+            android:textColor="@color/white"
             />
 
         <LinearLayout
@@ -135,7 +136,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_marginRight="30dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="20dp"
                 >
 
                 <TextView
@@ -143,6 +144,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/titulosEscudería"
+                    android:textColor="@color/white"
                     />
 
                 <TextView
@@ -151,90 +153,14 @@
                     android:layout_height="wrap_content"
                     android:text="-"
                     android:gravity="center"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginRight="30dp"
-                >
-
-                <TextView
-                    android:id="@+id/txTituloVictoriasPiloto"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/victoriasEscudería" />
-
-                <TextView
-                    android:id="@+id/txVictoriasPiloto"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:gravity="center"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginRight="30dp"
-                >
-
-                <TextView
-                    android:id="@+id/txTituloPodiosPiloto"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/podiosPiloto" />
-
-                <TextView
-                    android:id="@+id/txPodiosPiloto"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:gravity="center"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
-
-                <TextView
-                    android:id="@+id/txTituloPoles"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/polesPiloto" />
-
-                <TextView
-                    android:id="@+id/txPolesPiloto"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:gravity="center"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginRight="55dp"
-                android:layout_marginLeft="37dp"
-                >
 
                 <TextView
                     android:id="@+id/txTituloTemporadasPiloto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/temaporadasPiloto"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
                     />
 
                 <TextView
@@ -248,16 +174,30 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginRight="35dp"
-                >
+                android:layout_marginRight="30dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txTituloVictoriasPiloto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/victoriasEscudería"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/txVictoriasPiloto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="-" />
 
                 <TextView
                     android:id="@+id/txTituloVueltaRapidaPiloto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/vueltaRapida"
-                    android:textAlignment="center"/>
+                    android:textAlignment="center"
+                    android:textColor="@color/white"/>
 
                 <TextView
                     android:id="@+id/txVueltaRapidaPiloto"
@@ -275,10 +215,25 @@
                 >
 
                 <TextView
+                    android:id="@+id/txTituloPodiosPiloto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/podiosPiloto"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/txPodiosPiloto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:gravity="center"/>
+
+                <TextView
                     android:id="@+id/txTituloPuntosPiloto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/puntosPilotototal" />
+                    android:text="@string/puntosPilotototal"
+                    android:textColor="@color/white"/>
 
                 <TextView
                     android:id="@+id/txPuntosPilotoTotal"
@@ -295,11 +250,26 @@
                 >
 
                 <TextView
+                    android:id="@+id/txTituloPoles"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/polesPiloto"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/txPolesPiloto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:gravity="center"/>
+
+                <TextView
                     android:id="@+id/txTituloMejorPosicion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/mejorPosicion"
-                    android:textAlignment="center"/>
+                    android:textAlignment="center"
+                    android:textColor="@color/white"/>
 
                 <TextView
                     android:id="@+id/txMejorPosicionPiloto"
@@ -310,6 +280,8 @@
             </LinearLayout>
         </LinearLayout>
 
+
+
         <TextView
             android:id="@+id/txTemporadaActual"
             android:layout_width="match_parent"
@@ -319,6 +291,7 @@
             android:gravity="center"
             android:drawableLeft="@drawable/linea"
             android:drawableRight="@drawable/linea"
+            android:textColor="@color/white"
             />
     </LinearLayout>
 

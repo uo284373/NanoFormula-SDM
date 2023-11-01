@@ -6,5 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".PilotoDetails">
 
+
+    <include
+        android:id="@+id/toolbarPiloto"
+        layout="@layout/toolbar_piloto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
     <include layout="@layout/scrolling_piloto" />
 </androidx.constraintlayout.widget.ConstraintLayout>
