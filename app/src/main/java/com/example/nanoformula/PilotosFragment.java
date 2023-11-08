@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.nanoformula.modelo.Piloto;
+import com.example.nanoformula.modelo.driversStandings.DriverStanding;
+import com.example.nanoformula.modelo.driversStandings.Standings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,15 +28,15 @@ public class PilotosFragment extends Fragment {
     private static final String ARG_PILOTOS = "pilotos";
     public static final String PILOTO_SELECCIONADO = "piloto_seleccionado";
 
-    private List<Piloto> pilotos;
+    private Standings standings;
     private RecyclerView listaPilotosView;
 
 
 
-    public static PilotosFragment newInstance(List<Piloto> pilotos) {
+    public static PilotosFragment newInstance(Standings standings) {
         PilotosFragment fragment = new PilotosFragment();
         Bundle args = new Bundle();
-        args.putParcelableArrayList(ARG_PILOTOS,new ArrayList<>(pilotos));
+        args.putParcelable(ARG_PILOTOS,standings);
         fragment.setArguments(args);
         return fragment;
     }
@@ -43,7 +45,7 @@ public class PilotosFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            pilotos = (List<Piloto>) getArguments().get(ARG_PILOTOS);
+            standings = (Standings) getArguments().get(ARG_PILOTOS);
         }
     }
 
@@ -57,10 +59,10 @@ public class PilotosFragment extends Fragment {
         listaPilotosView.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listaPilotosView.getContext(), layoutManager.getOrientation());
         listaPilotosView.addItemDecoration(dividerItemDecoration);
-        ListaPilotosAdapter lpAdapter= new ListaPilotosAdapter(pilotos,
+        ListaPilotosAdapter lpAdapter= new ListaPilotosAdapter(standings.getMRData().getStandingsTable().getStandingsLists().get(0).getDriverStandings(),
                 new ListaPilotosAdapter.OnItemClickListener() {
                     @Override
-                    public void onItemClick(Piloto piloto) {
+                    public void onItemClick(DriverStanding piloto) {
                         clickonItem(piloto);
                     }
                 });
@@ -69,7 +71,7 @@ public class PilotosFragment extends Fragment {
         return root;
     }
 
-    private void clickonItem(Piloto piloto) {
+    private void clickonItem(DriverStanding piloto) {
         Intent intent=new Intent (PilotosFragment.this.getContext(), PilotoDetails.class);
         intent.putExtra(PILOTO_SELECCIONADO, piloto);
 
