@@ -22,8 +22,8 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ftPiloto"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:contentDescription="@string/fotoPiloto"
             app:srcCompat="@mipmap/ic_launcher"
             android:scaleType="centerCrop"
