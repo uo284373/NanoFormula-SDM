@@ -31,6 +31,16 @@ public class Driver {
     @Expose
     private String nationality;
 
+    private String urlImage;
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
+
     public String getDriverId() {
         return driverId;
     }

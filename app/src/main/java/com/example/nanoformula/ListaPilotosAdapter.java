@@ -92,17 +92,7 @@ public class ListaPilotosAdapter extends RecyclerView.Adapter<ListaPilotosAdapte
             nombre.setText(piloto.getDriver().getGivenName()+" "+piloto.getDriver().getFamilyName());
             equipo.setText(piloto.getConstructors().get(0).getName());
             puntos.setText(piloto.getPoints());
-            int startIndex = piloto.getDriver().getUrl().indexOf("wiki/") + 5; // Sumamos 5 para incluir "wiki/"
-            String driverName = piloto.getDriver().getUrl().substring(startIndex);
-            try {
-                String decodedString = URLDecoder.decode(driverName, "UTF-8");
-                getDriverImage(decodedString);
-            }catch (UnsupportedEncodingException e){
-                e.printStackTrace();
-            }
-
-            //foto.setImageResource();
-            //Picasso.get().load(pelicula.getUrlCaratula()).into(imagen);
+            Picasso.get().load(piloto.getDriver().getUrlImage()).into(foto);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -113,33 +103,7 @@ public class ListaPilotosAdapter extends RecyclerView.Adapter<ListaPilotosAdapte
             });
         }
 
-        private void getDriverImage(String driverName){
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://en.wikipedia.org/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
 
-            WikipediaApi wikipediaApi = retrofit.create(WikipediaApi.class);
-            Call<DriverImage> result = wikipediaApi.getImageDriver(driverName);
-
-            result.enqueue(new Callback<DriverImage>() {
-                @Override
-                public void onResponse(Call<DriverImage> call, Response<DriverImage> response) {
-                    if(response.isSuccessful()){
-                        if(response.body().getQuery().getPages().get(0).getThumbnail()!=null){
-                            Picasso.get().load(response.body().getQuery().getPages().get(0).getThumbnail().getSource()).into(foto);
-                        }
-                    }else{
-                        Log.i("fallo","ha fallado "+driverName);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<DriverImage> call, Throwable t) {
-                    Log.i("fallo",t.toString());
-                }
-            });
-        }
     }
 
 

@@ -6,22 +6,29 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.nanoformula.API.ErgastApi;
+import com.example.nanoformula.API.WikipediaApi;
 import com.example.nanoformula.modelo.Carrera;
 import com.example.nanoformula.API.Api;
 import com.example.nanoformula.modelo.Escuderia;
 import com.example.nanoformula.modelo.Piloto;
+import com.example.nanoformula.modelo.driversImage.DriverImage;
+import com.example.nanoformula.modelo.driversStandings.Driver;
+import com.example.nanoformula.modelo.driversStandings.DriverStanding;
 import com.example.nanoformula.modelo.driversStandings.Standings;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Driver;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -182,6 +189,16 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Standings> call, Response<Standings> response) {
                 if(response.isSuccessful()){
                     standings = response.body();
+                    for(DriverStanding piloto : standings.getMRData().getStandingsTable().getStandingsLists().get(0).getDriverStandings()){
+                        int startIndex = piloto.getDriver().getUrl().indexOf("wiki/") + 5; // Sumamos 5 para incluir "wiki/"
+                        String driverName = piloto.getDriver().getUrl().substring(startIndex);
+                        try {
+                            String decodedString = URLDecoder.decode(driverName, "UTF-8");
+                            setDriverImage(decodedString,piloto.getDriver());
+                        }catch (UnsupportedEncodingException e){
+                            e.printStackTrace();
+                        }
+                    }
                 }else{
                     Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los pilotos", Snackbar.LENGTH_LONG).show();
                 }
@@ -190,6 +207,34 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Standings> call, Throwable t) {
                 Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los pilotos", Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void setDriverImage(String driverName, Driver driver){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://en.wikipedia.org/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        WikipediaApi wikipediaApi = retrofit.create(WikipediaApi.class);
+        Call<DriverImage> result = wikipediaApi.getImageDriver(driverName);
+
+        result.enqueue(new Callback<DriverImage>() {
+            @Override
+            public void onResponse(Call<DriverImage> call, Response<DriverImage> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getQuery().getPages().get(0).getThumbnail()!=null){
+                        driver.setUrlImage(response.body().getQuery().getPages().get(0).getThumbnail().getSource());
+                    }
+                }else{
+                    Log.i("fallo","ha fallado "+driverName);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DriverImage> call, Throwable t) {
+                Log.i("fallo",t.toString());
             }
         });
     }
