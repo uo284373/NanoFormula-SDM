@@ -10,10 +10,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.nanoformula.modelo.Piloto;
+import com.example.nanoformula.API.WikipediaApi;
+import com.example.nanoformula.modelo.driversImage.DriverImage;
 import com.example.nanoformula.modelo.driversStandings.DriverStanding;
+import com.squareup.picasso.Picasso;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class ListaPilotosAdapter extends RecyclerView.Adapter<ListaPilotosAdapter.PilotosViewHolder>{
@@ -46,7 +56,6 @@ public class ListaPilotosAdapter extends RecyclerView.Adapter<ListaPilotosAdapte
     public void onBindViewHolder(@NonNull PilotosViewHolder holder, int position) {
         // Extrae de la lista el elemento indicado por posición
         DriverStanding piloto= listaPilotos.get(position);
-        Log.i("Lista","Visualiza elemento: "+piloto);
         // llama al método de nuestro holder para asignar valores a los componentes
         // además, pasamos el listener del evento onClick
         holder.bindUser(piloto, listener);
@@ -83,6 +92,15 @@ public class ListaPilotosAdapter extends RecyclerView.Adapter<ListaPilotosAdapte
             nombre.setText(piloto.getDriver().getGivenName()+" "+piloto.getDriver().getFamilyName());
             equipo.setText(piloto.getConstructors().get(0).getName());
             puntos.setText(piloto.getPoints());
+            int startIndex = piloto.getDriver().getUrl().indexOf("wiki/") + 5; // Sumamos 5 para incluir "wiki/"
+            String driverName = piloto.getDriver().getUrl().substring(startIndex);
+            try {
+                String decodedString = URLDecoder.decode(driverName, "UTF-8");
+                getDriverImage(decodedString);
+            }catch (UnsupportedEncodingException e){
+                e.printStackTrace();
+            }
+
             //foto.setImageResource();
             //Picasso.get().load(pelicula.getUrlCaratula()).into(imagen);
 
@@ -94,5 +112,35 @@ public class ListaPilotosAdapter extends RecyclerView.Adapter<ListaPilotosAdapte
                 }
             });
         }
+
+        private void getDriverImage(String driverName){
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://en.wikipedia.org/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            WikipediaApi wikipediaApi = retrofit.create(WikipediaApi.class);
+            Call<DriverImage> result = wikipediaApi.getImageDriver(driverName);
+
+            result.enqueue(new Callback<DriverImage>() {
+                @Override
+                public void onResponse(Call<DriverImage> call, Response<DriverImage> response) {
+                    if(response.isSuccessful()){
+                        if(response.body().getQuery().getPages().get(0).getThumbnail()!=null){
+                            Picasso.get().load(response.body().getQuery().getPages().get(0).getThumbnail().getSource()).into(foto);
+                        }
+                    }else{
+                        Log.i("fallo","ha fallado "+driverName);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<DriverImage> call, Throwable t) {
+                    Log.i("fallo",t.toString());
+                }
+            });
+        }
     }
+
+
 }
