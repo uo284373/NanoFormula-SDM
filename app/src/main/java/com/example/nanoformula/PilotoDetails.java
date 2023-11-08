@@ -10,10 +10,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.nanoformula.modelo.Piloto;
+import com.example.nanoformula.modelo.driversStandings.Driver;
+import com.example.nanoformula.modelo.driversStandings.DriverStanding;
+import com.squareup.picasso.Picasso;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 public class PilotoDetails extends AppCompatActivity {
 
-    private Piloto piloto;
+    private Driver piloto;
+    private DriverStanding standings;
     TextView nacionalidadPiloto;
     TextView numeroPiloto;
     TextView codigoPiloto;
@@ -28,7 +36,7 @@ public class PilotoDetails extends AppCompatActivity {
 
         Intent intentPiloto= getIntent();
         piloto= intentPiloto.getParcelableExtra(PilotosFragment.PILOTO_SELECCIONADO);
-        Log.i("piloto",piloto.toString());
+        standings = intentPiloto.getParcelableExtra(PilotosFragment.EQUIPO_PILOTO_SELECCIONADO);
         nacionalidadPiloto = findViewById(R.id.txNacionalidadPiloto);
         numeroPiloto = findViewById(R.id.txNumero);
         codigoPiloto = findViewById(R.id.txCodigo);
@@ -48,13 +56,19 @@ public class PilotoDetails extends AppCompatActivity {
     }
 
     private void mostrarDatosPiloto() {
-        toolbar.setTitle(piloto.getName());
+        toolbar.setTitle(piloto.getGivenName()+" "+piloto.getFamilyName());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        nacionalidadPiloto.setText(piloto.getNacionalidad());
-        numeroPiloto.setText(String.valueOf(piloto.getNúmero()));
-        codigoPiloto.setText(piloto.getCodigo());
-        edadPiloto.setText(String.valueOf(piloto.getEdad()));
-        fotoPiloto.setImageResource(piloto.getFoto());
+        nacionalidadPiloto.setText(piloto.getNationality());
+        numeroPiloto.setText(piloto.getPermanentNumber());
+        codigoPiloto.setText(piloto.getCode());
+
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fechaNac = LocalDate.parse(piloto.getDateOfBirth(), fmt);
+        LocalDate ahora = LocalDate.now();
+
+        Period periodo = Period.between(fechaNac, ahora);
+        edadPiloto.setText(String.valueOf(periodo.getYears()));
+        Picasso.get().load(piloto.getUrlImage()).into(fotoPiloto);
     }
 }

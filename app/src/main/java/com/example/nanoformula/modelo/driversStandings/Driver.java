@@ -1,10 +1,15 @@
 
 package com.example.nanoformula.modelo.driversStandings;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Driver {
+public class Driver implements Parcelable {
 
     @SerializedName("driverId")
     @Expose
@@ -32,6 +37,30 @@ public class Driver {
     private String nationality;
 
     private String urlImage;
+
+    protected Driver(Parcel in) {
+        driverId = in.readString();
+        permanentNumber = in.readString();
+        code = in.readString();
+        url = in.readString();
+        givenName = in.readString();
+        familyName = in.readString();
+        dateOfBirth = in.readString();
+        nationality = in.readString();
+        urlImage = in.readString();
+    }
+
+    public static final Creator<Driver> CREATOR = new Creator<Driver>() {
+        @Override
+        public Driver createFromParcel(Parcel in) {
+            return new Driver(in);
+        }
+
+        @Override
+        public Driver[] newArray(int size) {
+            return new Driver[size];
+        }
+    };
 
     public String getUrlImage() {
         return urlImage;
@@ -105,4 +134,21 @@ public class Driver {
         this.nationality = nationality;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(driverId);
+        parcel.writeString(permanentNumber);
+        parcel.writeString(code);
+        parcel.writeString(url);
+        parcel.writeString(givenName);
+        parcel.writeString(familyName);
+        parcel.writeString(dateOfBirth);
+        parcel.writeString(nationality);
+        parcel.writeString(urlImage);
+    }
 }

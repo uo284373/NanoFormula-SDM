@@ -228,13 +228,13 @@ public class MainActivity extends AppCompatActivity {
                         driver.setUrlImage(response.body().getQuery().getPages().get(0).getThumbnail().getSource());
                     }
                 }else{
-                    Log.i("fallo","ha fallado "+driverName);
+                    Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar las fotos de los pilotos", Snackbar.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<DriverImage> call, Throwable t) {
-                Log.i("fallo",t.toString());
+                Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar las fotos de los pilotos", Snackbar.LENGTH_LONG).show();
             }
         });
     }

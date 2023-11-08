@@ -27,6 +27,7 @@ public class PilotosFragment extends Fragment {
 
     private static final String ARG_PILOTOS = "pilotos";
     public static final String PILOTO_SELECCIONADO = "piloto_seleccionado";
+    public static final String EQUIPO_PILOTO_SELECCIONADO = "equipo_piloto_seleccionado";
 
     private Standings standings;
     private RecyclerView listaPilotosView;
@@ -73,7 +74,8 @@ public class PilotosFragment extends Fragment {
 
     private void clickonItem(DriverStanding piloto) {
         Intent intent=new Intent (PilotosFragment.this.getContext(), PilotoDetails.class);
-        intent.putExtra(PILOTO_SELECCIONADO, piloto);
+        intent.putExtra(PILOTO_SELECCIONADO, piloto.getDriver());
+        intent.putExtra(EQUIPO_PILOTO_SELECCIONADO, piloto);
 
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
     }
