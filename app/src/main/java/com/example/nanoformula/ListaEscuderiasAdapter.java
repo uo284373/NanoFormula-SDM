@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.nanoformula.modelo.Escuderia;
+import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
 
 import java.util.List;
 
@@ -18,13 +18,13 @@ import java.util.List;
 public class ListaEscuderiasAdapter extends RecyclerView.Adapter<ListaEscuderiasAdapter.EscuderiasViewHolder>{
 
     public interface OnItemClickListener {
-        void onItemClick(Escuderia item);
+        void onItemClick(ConstructorStanding item);
     }
 
-    private List<Escuderia> listaEscuderias;
+    private List<ConstructorStanding> listaEscuderias;
     private final OnItemClickListener listener;
 
-    public ListaEscuderiasAdapter(List<Escuderia> listaEscuderias, OnItemClickListener listener) {
+    public ListaEscuderiasAdapter(List<ConstructorStanding> listaEscuderias, OnItemClickListener listener) {
         this.listaEscuderias = listaEscuderias;
         this.listener = listener;
     }
@@ -44,7 +44,7 @@ public class ListaEscuderiasAdapter extends RecyclerView.Adapter<ListaEscuderias
     @Override
     public void onBindViewHolder(@NonNull EscuderiasViewHolder holder, int position) {
         // Extrae de la lista el elemento indicado por posición
-        Escuderia escuderia= listaEscuderias.get(position);
+        ConstructorStanding escuderia= listaEscuderias.get(position);
         Log.i("Lista","Visualiza elemento: "+escuderia);
         // llama al método de nuestro holder para asignar valores a los componentes
         // además, pasamos el listener del evento onClick
@@ -77,18 +77,19 @@ public class ListaEscuderiasAdapter extends RecyclerView.Adapter<ListaEscuderias
         }
 
         // asignar valores a los componentes
-        public void bindUser(final Escuderia escuderia, final OnItemClickListener listener) {
+        public void bindUser(final ConstructorStanding escuderia, final OnItemClickListener listener) {
             posicion.setText(String.valueOf(escuderia.getPosition()));
-            nombre.setText(escuderia.getName());
+            nombre.setText(escuderia.getConstructor().getName());
 
             String pilots = "";
-            for(String pilot : escuderia.getPilots()){
-                pilots += pilot + " - ";
-            }
+//            for(String pilot : escuderia.getConstructor().get){
+                pilots += "Dato" + " - " + "hardcodeado";
+//            }
             pilots = pilots.substring(0, pilots.length() - 2);
             pilotos.setText(pilots);
             puntos.setText(String.valueOf(escuderia.getPoints()));
-            foto.setImageResource(escuderia.getFoto());
+//            foto.setImageResource(escuderia.getFoto());
+            foto.setImageResource(R.drawable.astonmartin);
             //Picasso.get().load(pelicula.getUrlCaratula()).into(imagen);
 
 
