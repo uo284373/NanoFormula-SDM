@@ -13,5 +13,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
-    <include layout="@layout/scrolling_piloto" />
+
+
+    <include layout="@layout/scrolling_piloto"
+        android:id="@+id/layoutPiloto"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

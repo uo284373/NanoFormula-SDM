@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import pl.droidsonroids.gif.GifImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,11 +54,17 @@ public class PilotoDetails extends AppCompatActivity {
     TextView temporadasPiloto;
     TextView vueltasRapidasPiloto;
     TextView puntosPiloto;
+    Loader loaderGif;
+    AtomicInteger llamadasCompletadasGeneral = new AtomicInteger(0);
+    int totalLlamadasGeneral = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piloto_details);
+
+        loaderGif = new Loader(this);
+        loaderGif.show();
 
         Intent intentPiloto= getIntent();
         piloto= intentPiloto.getParcelableExtra(PilotosFragment.PILOTO_SELECCIONADO);
@@ -83,6 +91,7 @@ public class PilotoDetails extends AppCompatActivity {
             mostrarPolesPiloto();
             mostrarTemporadasPiloto();
             mostrarVueltasRapidasPiloto();
+            //loaderGif.dismiss();
         }
     }
 
@@ -122,6 +131,7 @@ public class PilotoDetails extends AppCompatActivity {
             public void onResponse(Call<DriverRaceResults> call, Response<DriverRaceResults> response) {
                 if(response.isSuccessful()){
                     victoriasPiloto.setText(response.body().getMRData().getTotal());
+                    llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
                 }else{
                     Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
                 }
@@ -147,7 +157,7 @@ public class PilotoDetails extends AppCompatActivity {
             public void onResponse(Call<Standings> call, Response<Standings> response) {
                 if(response.isSuccessful()){
                     titulosPiloto.setText(response.body().getMRData().getTotal());
-
+                    llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
                 }else{
                     Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
                 }
@@ -164,6 +174,11 @@ public class PilotoDetails extends AppCompatActivity {
         if (llamadasCompletadas.incrementAndGet() == totalLlamadas) {
             // Todas las llamadas se han completado, ahora puedes actualizar el TextView
             podiosPiloto.setText(String.valueOf(podios));
+        }
+    }
+    private void llamadaCompletaGif(AtomicInteger llamadasCompletadas, int totalLlamadas) {
+        if (llamadasCompletadas.incrementAndGet() == totalLlamadas) {
+            loaderGif.dismiss();
         }
     }
 
@@ -184,6 +199,7 @@ public class PilotoDetails extends AppCompatActivity {
                 if(response.isSuccessful()){
                     podios += Integer.parseInt(response.body().getMRData().getTotal());
                     llamadaCompleta(llamadasCompletadas, totalLlamadas);
+                    llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
                 }else{
                     Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
                 }
@@ -201,6 +217,7 @@ public class PilotoDetails extends AppCompatActivity {
                 if(response.isSuccessful()){
                     podios += Integer.parseInt(response.body().getMRData().getTotal());
                     llamadaCompleta(llamadasCompletadas, totalLlamadas);
+                    llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
                 }else{
                     Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
                 }
@@ -219,6 +236,7 @@ public class PilotoDetails extends AppCompatActivity {
                 if(response.isSuccessful()){
                     podios += Integer.parseInt(response.body().getMRData().getTotal());
                     llamadaCompleta(llamadasCompletadas, totalLlamadas);
+                    llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
                 }else{
                     Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
                 }
@@ -244,6 +262,7 @@ public class PilotoDetails extends AppCompatActivity {
             public void onResponse(Call<DriverQualifyingResults> call, Response<DriverQualifyingResults> response) {
                 if(response.isSuccessful()){
                     polesPiloto.setText(response.body().getMRData().getTotal());
+                    llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
                 }else{
                     Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
                 }
@@ -271,11 +290,12 @@ public class PilotoDetails extends AppCompatActivity {
                     temporadasPiloto.setText(response.body().getMRData().getTotal());
                     for(StandingsList standings : response.body().getMRData().getStandingsTable().getStandingsLists()){
                         for(DriverStanding driverStanding : standings.getDriverStandings()){
-                            puntos += Integer.parseInt(driverStanding.getPoints());
+                            puntos += Double.parseDouble(driverStanding.getPoints());
                         }
                     }
                     puntos += Integer.parseInt(standings.getPoints());
                     puntosPiloto.setText(String.valueOf(puntos));
+                    llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
                 }else{
                     Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
                 }
@@ -301,6 +321,7 @@ public class PilotoDetails extends AppCompatActivity {
             public void onResponse(Call<DriverRaceResults> call, Response<DriverRaceResults> response) {
                 if(response.isSuccessful()){
                     vueltasRapidasPiloto.setText(response.body().getMRData().getTotal());
+                    llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
                 }else{
                     Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
                 }
