@@ -10,21 +10,32 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.nanoformula.modelo.Piloto;
+import com.example.nanoformula.API.WikipediaApi;
+import com.example.nanoformula.modelo.driversImage.DriverImage;
+import com.example.nanoformula.modelo.driversStandings.DriverStanding;
+import com.squareup.picasso.Picasso;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class ListaPilotosAdapter extends RecyclerView.Adapter<ListaPilotosAdapter.PilotosViewHolder>{
 
     public interface OnItemClickListener {
-        void onItemClick(Piloto item);
+        void onItemClick(DriverStanding item);
     }
 
-    private List<Piloto> listaPilotos;
+    private List<DriverStanding> listaPilotos;
     private final OnItemClickListener listener;
 
-    public ListaPilotosAdapter(List<Piloto> listaPilotos, OnItemClickListener listener) {
+    public ListaPilotosAdapter(List<DriverStanding> listaPilotos, OnItemClickListener listener) {
         this.listaPilotos = listaPilotos;
         this.listener = listener;
     }
@@ -44,8 +55,7 @@ public class ListaPilotosAdapter extends RecyclerView.Adapter<ListaPilotosAdapte
     @Override
     public void onBindViewHolder(@NonNull PilotosViewHolder holder, int position) {
         // Extrae de la lista el elemento indicado por posición
-        Piloto piloto= listaPilotos.get(position);
-        Log.i("Lista","Visualiza elemento: "+piloto);
+        DriverStanding piloto= listaPilotos.get(position);
         // llama al método de nuestro holder para asignar valores a los componentes
         // además, pasamos el listener del evento onClick
         holder.bindUser(piloto, listener);
@@ -77,13 +87,12 @@ public class ListaPilotosAdapter extends RecyclerView.Adapter<ListaPilotosAdapte
         }
 
         // asignar valores a los componentes
-        public void bindUser(final Piloto piloto, final OnItemClickListener listener) {
-            posicion.setText(String.valueOf(piloto.getPosition()));
-            nombre.setText(piloto.getName());
-            equipo.setText(piloto.getTeam());
-            puntos.setText(String.valueOf(piloto.getPoints()));
-            foto.setImageResource(piloto.getFoto());
-            //Picasso.get().load(pelicula.getUrlCaratula()).into(imagen);
+        public void bindUser(final DriverStanding piloto, final OnItemClickListener listener) {
+            posicion.setText(piloto.getPosition());
+            nombre.setText(piloto.getDriver().getGivenName()+" "+piloto.getDriver().getFamilyName());
+            equipo.setText(piloto.getConstructors().get(0).getName());
+            puntos.setText(piloto.getPoints());
+            Picasso.get().load(piloto.getDriver().getUrlImage()).into(foto);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -93,5 +102,9 @@ public class ListaPilotosAdapter extends RecyclerView.Adapter<ListaPilotosAdapte
                 }
             });
         }
+
+
     }
+
+
 }

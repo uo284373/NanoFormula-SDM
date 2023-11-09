@@ -11,4 +11,8 @@
     <style name="bottomMenu">
         <item name="android:background">@color/backgroundColorMenu</item>
     </style>
+
+    <style name="Theme.NanoFormulaDetails" parent="Base.Theme.NanoFormula">
+        <item name="colorPrimary">@color/colorUno</item>
+    </style>
 </resources>
