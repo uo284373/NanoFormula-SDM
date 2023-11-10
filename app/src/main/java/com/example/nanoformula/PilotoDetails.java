@@ -133,13 +133,15 @@ public class PilotoDetails extends AppCompatActivity {
                     victoriasPiloto.setText(response.body().getMRData().getTotal());
                     llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
                 }else{
-                    Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                    loaderGif.dismiss();
+                    Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<DriverRaceResults> call, Throwable t) {
-                Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                loaderGif.dismiss();
+                Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto "+t.getMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
     }
@@ -159,13 +161,15 @@ public class PilotoDetails extends AppCompatActivity {
                     titulosPiloto.setText(response.body().getMRData().getTotal());
                     llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
                 }else{
-                    Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                    loaderGif.dismiss();
+                    Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Standings> call, Throwable t) {
-                Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                loaderGif.dismiss();
+                Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto "+t.getMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
     }
@@ -201,13 +205,15 @@ public class PilotoDetails extends AppCompatActivity {
                     llamadaCompleta(llamadasCompletadas, totalLlamadas);
                     llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
                 }else{
-                    Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                    loaderGif.dismiss();
+                    Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<DriverRaceResults> call, Throwable t) {
-                Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                loaderGif.dismiss();
+                Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto "+t.getMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
         result = ergastApi.getDriverRaceResults(piloto.getDriverId(),1);
@@ -219,13 +225,15 @@ public class PilotoDetails extends AppCompatActivity {
                     llamadaCompleta(llamadasCompletadas, totalLlamadas);
                     llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
                 }else{
-                    Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                    loaderGif.dismiss();
+                    Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<DriverRaceResults> call, Throwable t) {
-                Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                loaderGif.dismiss();
+                Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto "+t.getMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
 
@@ -238,13 +246,15 @@ public class PilotoDetails extends AppCompatActivity {
                     llamadaCompleta(llamadasCompletadas, totalLlamadas);
                     llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
                 }else{
-                    Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                    loaderGif.dismiss();
+                    Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<DriverRaceResults> call, Throwable t) {
-                Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                loaderGif.dismiss();
+                Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto "+t.getMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
     }
@@ -264,13 +274,15 @@ public class PilotoDetails extends AppCompatActivity {
                     polesPiloto.setText(response.body().getMRData().getTotal());
                     llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
                 }else{
-                    Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                    loaderGif.dismiss();
+                    Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<DriverQualifyingResults> call, Throwable t) {
-                Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                loaderGif.dismiss();
+                Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto "+t.getMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
     }
@@ -297,13 +309,15 @@ public class PilotoDetails extends AppCompatActivity {
                     puntosPiloto.setText(String.valueOf(puntos));
                     llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
                 }else{
-                    Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                    loaderGif.dismiss();
+                    Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Standings> call, Throwable t) {
-                Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                loaderGif.dismiss();
+                Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto "+t.getMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
     }
@@ -323,13 +337,15 @@ public class PilotoDetails extends AppCompatActivity {
                     vueltasRapidasPiloto.setText(response.body().getMRData().getTotal());
                     llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
                 }else{
-                    Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                    loaderGif.dismiss();
+                    Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<DriverRaceResults> call, Throwable t) {
-                Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                loaderGif.dismiss();
+                Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto "+t.getMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
     }
