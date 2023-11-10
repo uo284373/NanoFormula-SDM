@@ -158,13 +158,16 @@ public class EscuderiaDetails extends AppCompatActivity {
             @Override
             public void onResponse(Call<StandingsEscuderias> call, Response<StandingsEscuderias> response) {
                 if(response.isSuccessful()){
-                    int puntos = 0;
+                    double puntos = 0;
+                    int seasons = 0;
                     temporadasEscuderia.setText(response.body().getMRData().getTotal());
                     for(StandingsList standings : response.body().getMRData().getStandingsTable().getStandingsLists()){
                         for(ConstructorStanding constructorStanding : standings.getConstructorStandings()){
                             puntos += Double.parseDouble(constructorStanding.getPoints());
+                            seasons++;
                         }
                     }
+                    Log.i("Seasons", String.valueOf(seasons));
                     puntos += Integer.parseInt(standings.getPoints());
                     puntosEscuderia.setText(String.valueOf(puntos));
                     llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
