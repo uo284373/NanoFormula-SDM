@@ -1,5 +1,7 @@
 package com.example.nanoformula;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -25,6 +27,8 @@ import java.util.List;
 public class CarrerasFragment extends Fragment {
 
     private static final String ARG_CARRERAS = "CARRERAS";
+    public static final String CARRERA_SELECCIONADA = "carrera_seleccionada";
+
 
     private List<Carrera> carreras;
 
@@ -72,5 +76,9 @@ public class CarrerasFragment extends Fragment {
         return root;
     }
     private void clickonItem(Carrera carrera) {
+        Intent intent=new Intent (CarrerasFragment.this.getContext(), CarreraDetails.class);
+        intent.putExtra(CARRERA_SELECCIONADA, carrera);
+
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
     }
 }

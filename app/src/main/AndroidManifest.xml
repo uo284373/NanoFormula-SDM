@@ -15,12 +15,17 @@
         android:theme="@style/Theme.NanoFormula"
         tools:targetApi="31">
         <activity
+            android:name=".CarreraDetails"
+            android:exported="false"
+            android:label="@string/title_activity_carrera_details"
+            android:theme="@style/Theme.NanoFormula.NoActionBar" />
+        <activity
             android:name=".EscuderiaDetails"
             android:exported="false" />
         <activity
             android:name=".PilotoDetails"
             android:exported="false"
-            android:theme="@style/Theme.NanoFormulaDetails"/>
+            android:theme="@style/Theme.NanoFormulaDetails" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
