@@ -1,6 +1,7 @@
 package com.example.nanoformula;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,6 +42,8 @@ public class EscuderiaDetails extends AppCompatActivity {
     TextView victoriasEscuderiaTemporada;
     TextView puntosEscuderiaTemporada;
 
+    Toolbar toolbar;
+
     ImageView fotoEscuderia;
     Loader loaderGif;
     AtomicInteger llamadasCompletadasGeneral = new AtomicInteger(0);
@@ -68,6 +71,7 @@ public class EscuderiaDetails extends AppCompatActivity {
         rondaEscuderia = findViewById(R.id.txRonda);
         victoriasEscuderiaTemporada = findViewById(R.id.txVictoriasTemp);
         puntosEscuderiaTemporada = findViewById(R.id.txPuntosTemp);
+        toolbar = findViewById(R.id.toolbarEscuderia);
 
         if(standings != null){
             mostrarDatosEscuderia();
@@ -84,7 +88,9 @@ public class EscuderiaDetails extends AppCompatActivity {
     }
 
     private void mostrarDatosEscuderia() {
-        nombreEscuderia.setText(standings.getConstructor().getName());
+        toolbar.setTitle(standings.getConstructor().getName());
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         nacionalidadEscuderia.setText(standings.getConstructor().getNationality());
 
         posEscuderia.setText(standings.getPosition());

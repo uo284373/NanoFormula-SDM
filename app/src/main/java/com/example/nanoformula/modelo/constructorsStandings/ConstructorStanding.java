@@ -4,8 +4,12 @@ package com.example.nanoformula.modelo.constructorsStandings;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.nanoformula.modelo.driversForConstructor.Driver;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConstructorStanding implements Parcelable {
 
@@ -27,6 +31,9 @@ public class ConstructorStanding implements Parcelable {
 
     private String round;
 
+    private List<String> driversNames = new ArrayList<>();
+
+
     protected ConstructorStanding(Parcel in) {
         position = in.readString();
         positionText = in.readString();
@@ -34,6 +41,7 @@ public class ConstructorStanding implements Parcelable {
         wins = in.readString();
         constructor = in.readParcelable(Constructor.class.getClassLoader());
         round = in.readString();
+        driversNames = in.createStringArrayList();
     }
 
     @Override
@@ -44,6 +52,7 @@ public class ConstructorStanding implements Parcelable {
         dest.writeString(wins);
         dest.writeParcelable(constructor, flags);
         dest.writeString(round);
+        dest.writeStringList(driversNames);
     }
 
     @Override
@@ -62,6 +71,14 @@ public class ConstructorStanding implements Parcelable {
             return new ConstructorStanding[size];
         }
     };
+
+    public List<String> getDriversNames() {
+        return driversNames;
+    }
+
+    public void setDriversNames(List<String> driversNames) {
+        this.driversNames = driversNames;
+    }
 
     public String getPosition() {
         return position;
@@ -109,5 +126,9 @@ public class ConstructorStanding implements Parcelable {
 
     public void setRound(String round) {
         this.round = round;
+    }
+
+    public void addDriversName(String driverName) {
+        driversNames.add(driverName);
     }
 }

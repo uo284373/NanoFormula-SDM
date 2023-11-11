@@ -14,6 +14,7 @@ import com.example.nanoformula.modelo.Escuderia;
 import com.example.nanoformula.modelo.constructorsStandings.Constructor;
 import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
 import com.example.nanoformula.modelo.constructorsStandings.StandingsEscuderias;
+import com.example.nanoformula.modelo.driversForConstructor.DriverTable;
 import com.example.nanoformula.modelo.driversImage.DriverImage;
 import com.example.nanoformula.modelo.driversStandings.Driver;
 import com.example.nanoformula.modelo.driversStandings.DriverStanding;
@@ -25,6 +26,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,13 +44,19 @@ public class MainActivity extends AppCompatActivity {
 
     String round;
 
+    private boolean hasEndedDrivers;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         getDriversStandings();
-        getConstructorsStandings();
+        try {
+            getConstructorsStandings();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         rellenarListaCarreras();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -104,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             String decodedString = URLDecoder.decode(driverName, "UTF-8");
                             setDriverImage(decodedString,piloto.getDriver());
+                            hasEndedDrivers = true;
                         }catch (UnsupportedEncodingException e){
                             e.printStackTrace();
                         }
@@ -149,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void getConstructorsStandings(){
+    private void getConstructorsStandings() throws InterruptedException {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://ergast.com/api/f1/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -164,6 +173,13 @@ public class MainActivity extends AppCompatActivity {
                     constructorStandingsEscuderias = response.body();
                     round = constructorStandingsEscuderias.getMRData().getStandingsTable().getStandingsLists().get(0).getRound();
                     for(ConstructorStanding escuderia : constructorStandingsEscuderias.getMRData().getStandingsTable().getStandingsLists().get(0).getConstructorStandings()){
+//                        for(DriverStanding standing : standings.getMRData().getStandingsTable().getStandingsLists().get(0).getDriverStandings()){
+//                            for(com.example.nanoformula.modelo.driversStandings.Constructor constructor : standing.getConstructors()){
+//                                if(constructor.getConstructorId().equals(escuderia.getConstructor().getConstructorId())){
+//                                    escuderia.addDriversName(standing.getDriver().getGivenName() + ". " + standing.getDriver().getFamilyName());
+//                                }
+//                            }
+//                        }
                         escuderia.setRound(round);
                         int startIndex = escuderia.getConstructor().getUrl().indexOf("wiki/") + 5; // Sumamos 5 para incluir "wiki/"
                         String constructorName = escuderia.getConstructor().getUrl().substring(startIndex);

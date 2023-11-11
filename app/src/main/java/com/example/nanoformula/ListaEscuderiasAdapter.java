@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
+import com.example.nanoformula.modelo.driversForConstructor.Driver;
 
 import java.util.List;
 
@@ -81,12 +82,14 @@ public class ListaEscuderiasAdapter extends RecyclerView.Adapter<ListaEscuderias
             posicion.setText(String.valueOf(escuderia.getPosition()));
             nombre.setText(escuderia.getConstructor().getName());
 
-            String pilots = "";
-//            for(String pilot : escuderia.getConstructor().get){
-                pilots += "Dato" + " - " + "hardcodeado";
+
+
+//            String drivers = "";
+//            for(String driver : escuderia.getDriversNames()){
+//                drivers += driver + " - ";
 //            }
-            pilots = pilots.substring(0, pilots.length() - 2);
-            pilotos.setText(pilots);
+//            drivers = drivers.substring(0, drivers.length() - 2);
+//            pilotos.setText(drivers);
             puntos.setText(String.valueOf(escuderia.getPoints()));
 //            foto.setImageResource(escuderia.getFoto());
             foto.setImageResource(R.drawable.astonmartin);

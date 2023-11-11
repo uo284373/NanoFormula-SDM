@@ -6,5 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".EscuderiaDetails">
 
-    <include layout="@layout/scrolling_escuderia" />
+
+    <include
+        android:id="@+id/toolbarEscuderia"
+        layout="@layout/toolbar_piloto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+    <include
+    layout="@layout/scrolling_escuderia"
+    android:id="@+id/layoutEscuderia"
+    />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
