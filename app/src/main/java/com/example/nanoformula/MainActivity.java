@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.nanoformula.API.ErgastApi;
+import com.example.nanoformula.API.RESTCountriesApi;
 import com.example.nanoformula.API.WikipediaApi;
 import com.example.nanoformula.modelo.Carrera;
 import com.example.nanoformula.modelo.constructorsStandings.Constructor;
@@ -17,14 +18,24 @@ import com.example.nanoformula.modelo.driversImage.DriverImage;
 import com.example.nanoformula.modelo.driversStandings.Driver;
 import com.example.nanoformula.modelo.driversStandings.DriverStanding;
 import com.example.nanoformula.modelo.driversStandings.Standings;
+import com.example.nanoformula.modelo.raceImage.RaceImage;
+import com.example.nanoformula.modelo.raceSchedule.Race;
+import com.example.nanoformula.modelo.raceSchedule.RaceSchedule;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import retrofit2.Call;
@@ -38,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     Standings standings;
 
     StandingsEscuderias constructorStandingsEscuderias;
-    List<Carrera> carreras = new ArrayList<>();
+    RaceSchedule raceSchedule;
     Toolbar toolbar;
     Loader loaderGif;
     AtomicInteger llamadasCompletadasGeneral = new AtomicInteger(0);
@@ -62,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        rellenarListaCarreras();
-
+        getRaceSchedule();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -87,25 +97,46 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private void rellenarListaCarreras(){
-        carreras.add(new Carrera(1,"Bahrain Grand Prix","Bahrain Interntional Circuit",
-                "Sakhir - Bahrain", "05-03-23", R.drawable.bahrain));
-        carreras.add(new Carrera(2,"Saudi Arabia Grand Prix","Jeddah Corniche Circuit",
-                "Jeddah - Saudi Arabia","19-03-23",R.drawable.saudi_arabia));
-        carreras.add(new Carrera(3,"Australian Grand Prix","Albert Park Grand Circuit",
-                "Melbourne - Australia","02-04-23",R.drawable.australia));
-        carreras.add(new Carrera(4,"Azerbaijan Grand Prix","Baku City Circuit",
-                "Baku - Azerbaijan","30-04-23",R.drawable.azerbaijan));
-        carreras.add(new Carrera(5,"Miami Grand Prix","Miami International Autodrome",
-                "Miami - USA","07-05-23",R.drawable.united_states));
-        carreras.add(new Carrera(6,"Monaco Grand Prix","Circuit de Monaco",
-                "Monte-Carlo - Monaco","28-05-23",R.drawable.monaco));
-        carreras.add(new Carrera(7,"Spanish Grand Prix","Circuit de Barcelona-Catalunya",
-                "Montmeló - Spain","04-06-23",R.drawable.spain));
-        carreras.add(new Carrera(8,"Canadian Grand Prix","Circuit Gilles Villenueve",
-                "Montreal - Canada","18-06-23",R.drawable.canada));
-        carreras.add(new Carrera(9,"Austrian Grand Prix","Red Bull Ring",
-                "Spielberg - Austria","02-07-23",R.drawable.austria));
+    private void  getRaceSchedule(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ergast.com/api/f1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ErgastApi ergastApi = retrofit.create(ErgastApi.class);
+        Call<RaceSchedule> result = ergastApi.getRaceSchedule();
+
+        result.enqueue(new Callback<RaceSchedule>() {
+            @Override
+            public void onResponse(Call<RaceSchedule> call, Response<RaceSchedule> response) {
+                if(response.isSuccessful()){
+                    raceSchedule = response.body();
+                    totalLlamadasGeneral = raceSchedule.getMRData().getRaceTable().getRaces().size();
+                    for(Race carrera : raceSchedule.getMRData().getRaceTable().getRaces()){
+                        String countryName = carrera.getCircuit().getLocation().getCountry();
+                        int startIndex = carrera.getUrl().indexOf("wiki/") + 5; // Sumamos 5 para incluir "wiki/"
+                        String raceName = carrera.getUrl().substring(startIndex);
+                        try {
+                            String decodedString = URLDecoder.decode(countryName, "UTF-8");
+                            String decodedString1 = URLDecoder.decode(raceName, "UTF-8");
+                            setRaceFlag(decodedString,carrera);
+                            setRaceImage(decodedString1,carrera);
+                            CarrerasFragment carrerasFragment=CarrerasFragment.newInstance(raceSchedule);
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, carrerasFragment).commit();
+                        }catch (UnsupportedEncodingException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }else{
+                    Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar las carreras", Snackbar.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RaceSchedule> call, Throwable t) {
+                Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar las carreras", Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
 
@@ -249,6 +280,67 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void setRaceImage(String raceName, Race race){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://en.wikipedia.org/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        WikipediaApi wikipediaApi = retrofit.create(WikipediaApi.class);
+        Call<RaceImage> result = wikipediaApi.getImageRace(raceName);
+
+        result.enqueue(new Callback<RaceImage>() {
+            @Override
+            public void onResponse(Call<RaceImage> call, Response<RaceImage> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getQuery().getPages().get(0).getThumbnail()!=null){
+                        race.setUrl(response.body().getQuery().getPages().get(0).getThumbnail().getSource());
+                    }
+                    llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
+                }else{
+                    loaderGif.dismiss();
+                    Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar las fotos de la carrera", Snackbar.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RaceImage> call, Throwable t) {
+                loaderGif.dismiss();
+                Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar las fotos de la carrera", Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void setRaceFlag(String countryName, Race race){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://restcountries.com/v3.1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RESTCountriesApi restCountriesApi = retrofit.create(RESTCountriesApi.class);
+        Call<List<CountryDetail>> result = restCountriesApi.getCountryCode(countryName);
+
+        result.enqueue(new Callback<List<CountryDetail>>() {
+            @Override
+            public void onResponse(Call<List<CountryDetail>> call, Response<List<CountryDetail>> response) {
+                if(response.isSuccessful()){
+                    if(response.body().get(0).getFlags().getPng()!=null){
+                        race.getCircuit().setUrl(response.body().get(0).getFlags().getPng());
+                    }
+                }else{
+                    loaderGif.dismiss();
+                    Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar las fotos de la bandera", Snackbar.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<CountryDetail>> call, Throwable t) {
+                loaderGif.dismiss();
+                Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar las fotos de la bandera: "+t.getMessage(), Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -261,7 +353,7 @@ public class MainActivity extends AppCompatActivity {
             /* Según el caso, crearemos un Fragmento u otro */
             if (itemId == R.id.carrerasFragment)
             {
-                CarrerasFragment carrerasFragment=CarrerasFragment.newInstance(carreras);
+                CarrerasFragment carrerasFragment=CarrerasFragment.newInstance(raceSchedule);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, carrerasFragment).commit();
                 toolbar = findViewById(R.id.toolbar);
