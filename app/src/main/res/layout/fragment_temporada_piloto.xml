@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TemporadaPilotoFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="25dp"
+            >
+
+            <TextView
+                android:id="@+id/txTituloPosicionPiloto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/posicionPiloto"
+                android:textColor="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/txPosicionPiloto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="30dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txTituloEscuderiaPilotoTemporada"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pilotoEscudería"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/txEscuderiaPilotoTemporada"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="-" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginRight="30dp"
+            >
+
+            <TextView
+                android:id="@+id/txTituloVictoriasPilotoTemporada"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/victoriasEscudería"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/txVictoriasPilotoTemporada"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/txTituloPuntosPilotoTemporada"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/puntosPilotototal"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/txPuntosPilotoTemporada"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

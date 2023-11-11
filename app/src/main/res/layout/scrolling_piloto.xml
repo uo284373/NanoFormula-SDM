@@ -293,6 +293,14 @@
             android:drawableRight="@drawable/linea"
             android:textColor="@color/white"
             />
+
+
+
+        <FrameLayout
+            android:id="@+id/layoutTemporadaPiloto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

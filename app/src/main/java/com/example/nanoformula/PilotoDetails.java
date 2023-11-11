@@ -45,6 +45,7 @@ public class PilotoDetails extends AppCompatActivity {
     private int podios;
     private int puntos;
     private List<String> equipos = new ArrayList<>();
+    private List<StandingsList> standingsList = new ArrayList<>();
     TextView nacionalidadPiloto;
     TextView numeroPiloto;
     TextView codigoPiloto;
@@ -61,7 +62,7 @@ public class PilotoDetails extends AppCompatActivity {
     TextView numEquipos;
     Loader loaderGif;
     AtomicInteger llamadasCompletadasGeneral = new AtomicInteger(0);
-    int totalLlamadasGeneral = 8;
+    int totalLlamadasGeneral = 9;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,7 @@ public class PilotoDetails extends AppCompatActivity {
             mostrarPolesPiloto();
             mostrarTemporadasPiloto();
             mostrarVueltasRapidasPiloto();
+            mostrarTemporadaActualStandings();
         }
     }
 
@@ -305,6 +307,7 @@ public class PilotoDetails extends AppCompatActivity {
             public void onResponse(Call<Standings> call, Response<Standings> response) {
                 if(response.isSuccessful()){
                     temporadasPiloto.setText(response.body().getMRData().getTotal());
+                    standingsList = response.body().getMRData().getStandingsTable().getStandingsLists();
                     for(StandingsList standings : response.body().getMRData().getStandingsTable().getStandingsLists()){
                         for(DriverStanding driverStanding : standings.getDriverStandings()){
                             puntos += Double.parseDouble(driverStanding.getPoints());
@@ -318,6 +321,7 @@ public class PilotoDetails extends AppCompatActivity {
                     puntos += Integer.parseInt(standings.getPoints());
                     puntosPiloto.setText(String.valueOf(puntos));
                     numEquipos.setText(String.valueOf(equipos.size()));
+
                     llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
                 }else{
                     loaderGif.dismiss();
@@ -355,6 +359,45 @@ public class PilotoDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<DriverRaceResults> call, Throwable t) {
+                loaderGif.dismiss();
+                Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto "+t.getMessage(), Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void mostrarTemporadaStandings(int year){
+        for(StandingsList standings : standingsList){
+            if(standings.getSeason().equals(String.valueOf(year))){
+                TemporadaPilotoFragment temporadaPilotoFragment=TemporadaPilotoFragment.newInstance(standings.getDriverStandings().get(0));
+                getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaPiloto, temporadaPilotoFragment).commit();
+                return;
+            }
+        }
+    }
+
+    private void mostrarTemporadaActualStandings(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ergast.com/api/f1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ErgastApi ergastApi = retrofit.create(ErgastApi.class);
+        Call<Standings> result = ergastApi.getDriverStandingsCurrent(piloto.getDriverId());
+        result.enqueue(new Callback<Standings>() {
+            @Override
+            public void onResponse(Call<Standings> call, Response<Standings> response) {
+                if(response.isSuccessful()){
+                    TemporadaPilotoFragment temporadaPilotoFragment=TemporadaPilotoFragment.newInstance(response.body().getMRData().getStandingsTable().getStandingsLists().get(0).getDriverStandings().get(0));
+                    getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaPiloto, temporadaPilotoFragment).commit();
+                    llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
+                }else{
+                    loaderGif.dismiss();
+                    Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Standings> call, Throwable t) {
                 loaderGif.dismiss();
                 Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto "+t.getMessage(), Snackbar.LENGTH_LONG).show();
             }
