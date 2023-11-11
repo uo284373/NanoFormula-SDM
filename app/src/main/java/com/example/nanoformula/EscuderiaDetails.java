@@ -60,7 +60,6 @@ public class EscuderiaDetails extends AppCompatActivity {
         Intent intentEscuderia= getIntent();
         standings= intentEscuderia.getParcelableExtra(EscuderiasFragment.ESCUDERIA_SELECCIONADA);
         Log.i("escuderia",standings.getConstructor().getName());
-        nombreEscuderia = findViewById(R.id.txNombreEscuderia);
         nacionalidadEscuderia = findViewById(R.id.txNacionalidadEscuderia);
         titulosEscuderia = findViewById(R.id.txTitulos);
         victoriasEscuderia = findViewById(R.id.txVictorias);
