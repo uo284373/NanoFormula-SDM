@@ -73,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        //CarrerasFragment carrerasFragment=CarrerasFragment.newInstance(raceSchedule);
-        //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, carrerasFragment).commit();
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Calendario GP");
         setSupportActionBar(toolbar);
@@ -160,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getRaceSchedule(){
+    private void  getRaceSchedule(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://ergast.com/api/f1/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -184,6 +182,8 @@ public class MainActivity extends AppCompatActivity {
                             String decodedString1 = URLDecoder.decode(raceName, "UTF-8");
                             setRaceFlag(decodedString,carrera);
                             setRaceImage(decodedString1,carrera);
+                            CarrerasFragment carrerasFragment=CarrerasFragment.newInstance(raceSchedule);
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, carrerasFragment).commit();
                         }catch (UnsupportedEncodingException e){
                             e.printStackTrace();
                         }
