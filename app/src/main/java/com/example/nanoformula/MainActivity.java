@@ -10,10 +10,10 @@ import android.view.MenuItem;
 import com.example.nanoformula.API.ErgastApi;
 import com.example.nanoformula.API.RESTCountriesApi;
 import com.example.nanoformula.API.WikipediaApi;
-import com.example.nanoformula.modelo.Carrera;
 import com.example.nanoformula.modelo.constructorsStandings.Constructor;
 import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
 import com.example.nanoformula.modelo.constructorsStandings.StandingsEscuderias;
+import com.example.nanoformula.modelo.countryDetails.CountryDetail;
 import com.example.nanoformula.modelo.driversImage.DriverImage;
 import com.example.nanoformula.modelo.driversStandings.Driver;
 import com.example.nanoformula.modelo.driversStandings.DriverStanding;
@@ -23,19 +23,12 @@ import com.example.nanoformula.modelo.raceSchedule.Race;
 import com.example.nanoformula.modelo.raceSchedule.RaceSchedule;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
+
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import retrofit2.Call;
@@ -53,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     Loader loaderGif;
     AtomicInteger llamadasCompletadasGeneral = new AtomicInteger(0);
-    int totalLlamadasGeneral = 8;
+    int totalLlamadasGeneral = 0;
 
     String round;
 
@@ -67,18 +60,19 @@ public class MainActivity extends AppCompatActivity {
         loaderGif = new Loader(this);
         loaderGif.show();
 
+        getRaceSchedule();
         getDriversStandings();
+
         try {
             getConstructorsStandings();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        getRaceSchedule();
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        CarrerasFragment carrerasFragment=CarrerasFragment.newInstance(carreras);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, carrerasFragment).commit();
+
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Calendario GP");
         setSupportActionBar(toolbar);
@@ -90,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
         if (!isFinishing() && !isDestroyed()) {
             if (llamadasCompletadas.incrementAndGet() == totalLlamadas) {
                 loaderGif.dismiss();
+                CarrerasFragment carrerasFragment=CarrerasFragment.newInstance(raceSchedule);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, carrerasFragment).commit();
             }
         }
     }
@@ -111,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<RaceSchedule> call, Response<RaceSchedule> response) {
                 if(response.isSuccessful()){
                     raceSchedule = response.body();
-                    totalLlamadasGeneral = raceSchedule.getMRData().getRaceTable().getRaces().size();
+                    totalLlamadasGeneral += raceSchedule.getMRData().getRaceTable().getRaces().size();
                     for(Race carrera : raceSchedule.getMRData().getRaceTable().getRaces()){
                         String countryName = carrera.getCircuit().getLocation().getCountry();
                         int startIndex = carrera.getUrl().indexOf("wiki/") + 5; // Sumamos 5 para incluir "wiki/"
@@ -121,8 +117,7 @@ public class MainActivity extends AppCompatActivity {
                             String decodedString1 = URLDecoder.decode(raceName, "UTF-8");
                             setRaceFlag(decodedString,carrera);
                             setRaceImage(decodedString1,carrera);
-                            CarrerasFragment carrerasFragment=CarrerasFragment.newInstance(raceSchedule);
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, carrerasFragment).commit();
+
                         }catch (UnsupportedEncodingException e){
                             e.printStackTrace();
                         }
@@ -153,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Standings> call, Response<Standings> response) {
                 if(response.isSuccessful()){
                     standings = response.body();
-                    totalLlamadasGeneral = standings.getMRData().getStandingsTable().getStandingsLists().get(0).getDriverStandings().size();
+                    totalLlamadasGeneral += standings.getMRData().getStandingsTable().getStandingsLists().get(0).getDriverStandings().size();
                     for(DriverStanding piloto : standings.getMRData().getStandingsTable().getStandingsLists().get(0).getDriverStandings()){
                         int startIndex = piloto.getDriver().getUrl().indexOf("wiki/") + 5; // Sumamos 5 para incluir "wiki/"
                         String driverName = piloto.getDriver().getUrl().substring(startIndex);

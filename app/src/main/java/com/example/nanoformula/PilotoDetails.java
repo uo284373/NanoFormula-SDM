@@ -14,6 +14,7 @@ import com.example.nanoformula.API.ErgastApi;
 import com.example.nanoformula.modelo.Piloto;
 import com.example.nanoformula.modelo.driverQualifyingResults.DriverQualifyingResults;
 import com.example.nanoformula.modelo.driverRaceResults.DriverRaceResults;
+import com.example.nanoformula.modelo.driversStandings.Constructor;
 import com.example.nanoformula.modelo.driversStandings.Driver;
 import com.example.nanoformula.modelo.driversStandings.DriverStanding;
 import com.example.nanoformula.modelo.driversStandings.Standings;
@@ -26,6 +27,8 @@ import java.net.URLDecoder;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import pl.droidsonroids.gif.GifImageView;
@@ -39,8 +42,9 @@ public class PilotoDetails extends AppCompatActivity {
 
     private Driver piloto;
     private DriverStanding standings;
-    private int podios = 0;
-    private int puntos = 0;
+    private int podios;
+    private int puntos;
+    private List<String> equipos = new ArrayList<>();
     TextView nacionalidadPiloto;
     TextView numeroPiloto;
     TextView codigoPiloto;
@@ -54,6 +58,7 @@ public class PilotoDetails extends AppCompatActivity {
     TextView temporadasPiloto;
     TextView vueltasRapidasPiloto;
     TextView puntosPiloto;
+    TextView numEquipos;
     Loader loaderGif;
     AtomicInteger llamadasCompletadasGeneral = new AtomicInteger(0);
     int totalLlamadasGeneral = 8;
@@ -82,6 +87,7 @@ public class PilotoDetails extends AppCompatActivity {
         temporadasPiloto = findViewById(R.id.txTemporadasPiloto);
         vueltasRapidasPiloto = findViewById(R.id.txVueltaRapidaPiloto);
         puntosPiloto = findViewById(R.id.txPuntosPilotoTotal);
+        numEquipos = findViewById(R.id.txMejorNumEquipos);
 
         if(piloto != null){
             mostrarDatosPiloto();
@@ -91,7 +97,6 @@ public class PilotoDetails extends AppCompatActivity {
             mostrarPolesPiloto();
             mostrarTemporadasPiloto();
             mostrarVueltasRapidasPiloto();
-            //loaderGif.dismiss();
         }
     }
 
@@ -303,10 +308,16 @@ public class PilotoDetails extends AppCompatActivity {
                     for(StandingsList standings : response.body().getMRData().getStandingsTable().getStandingsLists()){
                         for(DriverStanding driverStanding : standings.getDriverStandings()){
                             puntos += Double.parseDouble(driverStanding.getPoints());
+                            for(Constructor constructor : driverStanding.getConstructors()){
+                                if(!equipos.contains(constructor.getConstructorId())){
+                                    equipos.add(constructor.getConstructorId());
+                                }
+                            }
                         }
                     }
                     puntos += Integer.parseInt(standings.getPoints());
                     puntosPiloto.setText(String.valueOf(puntos));
+                    numEquipos.setText(String.valueOf(equipos.size()));
                     llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
                 }else{
                     loaderGif.dismiss();
