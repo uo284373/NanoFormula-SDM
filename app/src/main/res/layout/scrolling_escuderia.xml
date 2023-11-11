@@ -21,10 +21,10 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ftEscuderia"
-            android:layout_width="205dp"
-            android:layout_height="134dp"
+            android:layout_width="274dp"
+            android:layout_height="176dp"
             android:contentDescription="@string/fotoEscuderia"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             app:srcCompat="@mipmap/ic_launcher" />
 
         <TextView

@@ -97,6 +97,7 @@ public class EscuderiaDetails extends AppCompatActivity {
         victoriasEscuderiaTemporada.setText(standings.getWins());
         puntosEscuderiaTemporada.setText(standings.getPoints());
         fotoEscuderia.setImageResource(standings.getDrawable());
+//        fotoEscuderia.setScaleType();
 
     }
 
