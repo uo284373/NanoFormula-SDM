@@ -3,6 +3,8 @@ package com.example.nanoformula.API;
 import com.example.nanoformula.modelo.driverQualifyingResults.DriverQualifyingResults;
 import com.example.nanoformula.modelo.driverRaceResults.DriverRaceResults;
 import com.example.nanoformula.modelo.driversStandings.Standings;
+import com.example.nanoformula.modelo.raceResults.RaceResults;
+import com.example.nanoformula.modelo.raceSchedule.RaceSchedule;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -27,4 +29,10 @@ public interface ErgastApi {
 
     @GET("drivers/{driverName}/fastest/1/results.json")
     Call<DriverRaceResults> getDriverFastestLap(@Path("driverName") String driverName);
+
+    @GET("current.json")
+    Call<RaceSchedule> getRaceSchedule();
+
+    @GET("current/{number}/results.json")
+    Call<RaceResults> getRaceResults(@Path("number") String posRace);
 }
