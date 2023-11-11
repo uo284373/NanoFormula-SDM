@@ -4,7 +4,7 @@ package com.example.nanoformula.modelo.driversForConstructor;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DriversForConstructor {
+public class DriversByConstructor {
 
     @SerializedName("MRData")
     @Expose

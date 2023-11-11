@@ -4,7 +4,7 @@ import com.example.nanoformula.modelo.constructorRaceResults.ConstructorRaceResu
 import com.example.nanoformula.modelo.constructorsStandings.StandingsEscuderias;
 import com.example.nanoformula.modelo.driverQualifyingResults.DriverQualifyingResults;
 import com.example.nanoformula.modelo.driverRaceResults.DriverRaceResults;
-import com.example.nanoformula.modelo.driversForConstructor.DriverTable;
+import com.example.nanoformula.modelo.driversForConstructor.DriversByConstructor;
 import com.example.nanoformula.modelo.driversStandings.Standings;
 
 import retrofit2.Call;
@@ -44,8 +44,7 @@ public interface ErgastApi {
     Call<StandingsEscuderias> getConstructorStandings(@Path("constructorName") String constructorName);
 
     @GET("{season}/constructors/{constructorName}/drivers.json")
-    Call<DriverTable> getDriversBySeasonAndConstructor(@Path("season") String season, @Path("constructorName") String constructorName);
+    Call<DriversByConstructor>  getDriversBySeasonAndConstructor(@Path("season") String season, @Path("constructorName") String constructorName);
 }
 
 
-// https://ergast.com/api/f1/current/constructors/ferrari/drivers.json

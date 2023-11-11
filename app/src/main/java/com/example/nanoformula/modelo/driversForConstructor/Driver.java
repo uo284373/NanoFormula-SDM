@@ -1,19 +1,20 @@
 
 package com.example.nanoformula.modelo.driversForConstructor;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Driver implements Parcelable {
+public class Driver {
 
     @SerializedName("driverId")
     @Expose
     private String driverId;
+    @SerializedName("permanentNumber")
+    @Expose
+    private String permanentNumber;
+    @SerializedName("code")
+    @Expose
+    private String code;
     @SerializedName("url")
     @Expose
     private String url;
@@ -30,33 +31,28 @@ public class Driver implements Parcelable {
     @Expose
     private String nationality;
 
-    protected Driver(Parcel in) {
-        driverId = in.readString();
-        url = in.readString();
-        givenName = in.readString();
-        familyName = in.readString();
-        dateOfBirth = in.readString();
-        nationality = in.readString();
-    }
-
-    public static final Creator<Driver> CREATOR = new Creator<Driver>() {
-        @Override
-        public Driver createFromParcel(Parcel in) {
-            return new Driver(in);
-        }
-
-        @Override
-        public Driver[] newArray(int size) {
-            return new Driver[size];
-        }
-    };
-
     public String getDriverId() {
         return driverId;
     }
 
     public void setDriverId(String driverId) {
         this.driverId = driverId;
+    }
+
+    public String getPermanentNumber() {
+        return permanentNumber;
+    }
+
+    public void setPermanentNumber(String permanentNumber) {
+        this.permanentNumber = permanentNumber;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getUrl() {
@@ -99,18 +95,4 @@ public class Driver implements Parcelable {
         this.nationality = nationality;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(@NonNull Parcel parcel, int i) {
-        parcel.writeString(driverId);
-        parcel.writeString(url);
-        parcel.writeString(givenName);
-        parcel.writeString(familyName);
-        parcel.writeString(dateOfBirth);
-        parcel.writeString(nationality);
-    }
 }

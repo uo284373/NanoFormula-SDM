@@ -4,7 +4,6 @@ package com.example.nanoformula.modelo.constructorsStandings;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.nanoformula.modelo.driversForConstructor.Driver;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -32,7 +31,11 @@ public class ConstructorStanding implements Parcelable {
     private String round;
 
     private List<String> driversNames = new ArrayList<>();
+    private int drawable;
 
+    public int getDrawable() {
+        return drawable;
+    }
 
     protected ConstructorStanding(Parcel in) {
         position = in.readString();
@@ -42,6 +45,7 @@ public class ConstructorStanding implements Parcelable {
         constructor = in.readParcelable(Constructor.class.getClassLoader());
         round = in.readString();
         driversNames = in.createStringArrayList();
+        drawable = in.readInt();
     }
 
     @Override
@@ -53,6 +57,7 @@ public class ConstructorStanding implements Parcelable {
         dest.writeParcelable(constructor, flags);
         dest.writeString(round);
         dest.writeStringList(driversNames);
+        dest.writeInt(drawable);
     }
 
     @Override
@@ -129,6 +134,12 @@ public class ConstructorStanding implements Parcelable {
     }
 
     public void addDriversName(String driverName) {
+        if(driversNames == null)
+            driversNames = new ArrayList<>();
         driversNames.add(driverName);
+    }
+
+    public void setDrawable(int drawable) {
+        this.drawable = drawable;
     }
 }

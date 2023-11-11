@@ -1,5 +1,8 @@
 package com.example.nanoformula;
 
+import android.app.Application;
+import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
-import com.example.nanoformula.modelo.driversForConstructor.Driver;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -83,18 +86,60 @@ public class ListaEscuderiasAdapter extends RecyclerView.Adapter<ListaEscuderias
             nombre.setText(escuderia.getConstructor().getName());
 
 
-
-//            String drivers = "";
-//            for(String driver : escuderia.getDriversNames()){
-//                drivers += driver + " - ";
-//            }
-//            drivers = drivers.substring(0, drivers.length() - 2);
-//            pilotos.setText(drivers);
+            String drivers = "";
+            for(String driver : escuderia.getDriversNames()){
+                drivers += driver + " - ";
+            }
+            drivers = drivers.substring(0, drivers.length() - 2);
+            pilotos.setText(drivers);
             puntos.setText(String.valueOf(escuderia.getPoints()));
-//            foto.setImageResource(escuderia.getFoto());
-            foto.setImageResource(R.drawable.astonmartin);
-            //Picasso.get().load(pelicula.getUrlCaratula()).into(imagen);
 
+            switch (escuderia.getConstructor().getConstructorId()){
+                case "alfa":
+                    escuderia.setDrawable(R.drawable.alfaromeo);
+                    foto.setImageResource(R.drawable.alfaromeo);
+                    break;
+                case "alphatauri":
+                    escuderia.setDrawable(R.drawable.alphatauri);
+                    foto.setImageResource(R.drawable.alphatauri);
+                    break;
+                case "alpine":
+                    escuderia.setDrawable(R.drawable.alpine);
+                    foto.setImageResource(R.drawable.alpine);
+                    break;
+                case "aston_martin":
+                    escuderia.setDrawable(R.drawable.astonmartin);
+                    foto.setImageResource(R.drawable.astonmartin);
+                    break;
+                case "ferrari":
+                    escuderia.setDrawable(R.drawable.ferrari);
+                    foto.setImageResource(R.drawable.ferrari);
+                    break;
+                case "haas":
+                    escuderia.setDrawable(R.drawable.haas);
+                    foto.setImageResource(R.drawable.haas);
+                    break;
+                case "mclaren":
+                    escuderia.setDrawable(R.drawable.mclaren);
+                    foto.setImageResource(R.drawable.mclaren);
+                    break;
+                case "mercedes":
+                    escuderia.setDrawable(R.drawable.mercedes);
+                    foto.setImageResource(R.drawable.mercedes);
+                    break;
+                case "red_bull":
+                    escuderia.setDrawable(R.drawable.redbull);
+                    foto.setImageResource(R.drawable.redbull);
+                    break;
+                case "williams":
+                    escuderia.setDrawable(R.drawable.williams);
+                    foto.setImageResource(R.drawable.williams);
+                    break;
+                default:
+                    escuderia.setDrawable(R.drawable.f1logo);
+                    foto.setImageResource(R.drawable.f1logo);
+                    break;
+            }
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
