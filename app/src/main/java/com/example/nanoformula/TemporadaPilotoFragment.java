@@ -10,15 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.nanoformula.modelo.driversStandings.Constructor;
 import com.example.nanoformula.modelo.driversStandings.DriverStanding;
+
+import java.util.ArrayList;
 
 
 public class TemporadaPilotoFragment extends Fragment {
 
 
     private static final String DRIVER_STANDING = "driver_standing";
+    private static final String DRIVER_TEAM = "driver_team";
 
     private DriverStanding driverStanding;
+    private ArrayList<Constructor> constructors;
 
     TextView posPiloto;
     TextView escuderiaPiloto;
@@ -30,10 +35,11 @@ public class TemporadaPilotoFragment extends Fragment {
     }
 
 
-    public static TemporadaPilotoFragment newInstance(DriverStanding param1) {
+    public static TemporadaPilotoFragment newInstance(DriverStanding param1, ArrayList<Constructor> param2) {
         TemporadaPilotoFragment fragment = new TemporadaPilotoFragment();
         Bundle args = new Bundle();
         args.putParcelable(DRIVER_STANDING, param1);
+        args.putParcelableArrayList(DRIVER_TEAM, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -43,6 +49,7 @@ public class TemporadaPilotoFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             driverStanding = getArguments().getParcelable(DRIVER_STANDING);
+            constructors = getArguments().getParcelableArrayList(DRIVER_TEAM);
         }
     }
 
@@ -57,7 +64,7 @@ public class TemporadaPilotoFragment extends Fragment {
         puntosPiloto = root.findViewById(R.id.txPuntosPilotoTemporada);
 
         posPiloto.setText(driverStanding.getPosition());
-        escuderiaPiloto.setText(driverStanding.getConstructors().get(0).getName());
+        escuderiaPiloto.setText(constructors.get(0).getName());
         victoriasPiloto.setText(driverStanding.getWins());
         puntosPiloto.setText(driverStanding.getPoints());
         return root;

@@ -29,8 +29,10 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import okhttp3.OkHttpClient;
 import pl.droidsonroids.gif.GifImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +44,7 @@ public class PilotoDetails extends AppCompatActivity {
 
     private Driver piloto;
     private DriverStanding standings;
+    private ArrayList<Constructor> constructors;
     private int podios;
     private int puntos;
     private List<String> equipos = new ArrayList<>();
@@ -62,7 +65,7 @@ public class PilotoDetails extends AppCompatActivity {
     TextView numEquipos;
     Loader loaderGif;
     AtomicInteger llamadasCompletadasGeneral = new AtomicInteger(0);
-    int totalLlamadasGeneral = 9;
+    int totalLlamadasGeneral = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +77,8 @@ public class PilotoDetails extends AppCompatActivity {
 
         Intent intentPiloto= getIntent();
         piloto= intentPiloto.getParcelableExtra(PilotosFragment.PILOTO_SELECCIONADO);
-        standings = intentPiloto.getParcelableExtra(PilotosFragment.EQUIPO_PILOTO_SELECCIONADO);
+        standings = intentPiloto.getParcelableExtra(PilotosFragment.STANDINGS_PILOTO_SELECCIONADO);
+        constructors = intentPiloto.getParcelableArrayListExtra(PilotosFragment.EQUIPO_PILOTO_SELECCIONADO);
         nacionalidadPiloto = findViewById(R.id.txNacionalidadPiloto);
         numeroPiloto = findViewById(R.id.txNumero);
         codigoPiloto = findViewById(R.id.txCodigo);
@@ -298,6 +302,10 @@ public class PilotoDetails extends AppCompatActivity {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://ergast.com/api/f1/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(new OkHttpClient.Builder()
+                        .connectTimeout(30, TimeUnit.SECONDS) // Ajusta este tiempo según tus necesidades
+                        .readTimeout(30, TimeUnit.SECONDS)
+                        .build())
                 .build();
 
         ErgastApi ergastApi = retrofit.create(ErgastApi.class);
@@ -365,42 +373,10 @@ public class PilotoDetails extends AppCompatActivity {
         });
     }
 
-    private void mostrarTemporadaStandings(int year){
-        for(StandingsList standings : standingsList){
-            if(standings.getSeason().equals(String.valueOf(year))){
-                TemporadaPilotoFragment temporadaPilotoFragment=TemporadaPilotoFragment.newInstance(standings.getDriverStandings().get(0));
-                getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaPiloto, temporadaPilotoFragment).commit();
-                return;
-            }
-        }
-    }
+
 
     private void mostrarTemporadaActualStandings(){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://ergast.com/api/f1/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        ErgastApi ergastApi = retrofit.create(ErgastApi.class);
-        Call<Standings> result = ergastApi.getDriverStandingsCurrent(piloto.getDriverId());
-        result.enqueue(new Callback<Standings>() {
-            @Override
-            public void onResponse(Call<Standings> call, Response<Standings> response) {
-                if(response.isSuccessful()){
-                    TemporadaPilotoFragment temporadaPilotoFragment=TemporadaPilotoFragment.newInstance(response.body().getMRData().getStandingsTable().getStandingsLists().get(0).getDriverStandings().get(0));
-                    getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaPiloto, temporadaPilotoFragment).commit();
-                    llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
-                }else{
-                    loaderGif.dismiss();
-                    Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Standings> call, Throwable t) {
-                loaderGif.dismiss();
-                Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto "+t.getMessage(), Snackbar.LENGTH_LONG).show();
-            }
-        });
+        TemporadaPilotoFragment temporadaPilotoFragment=TemporadaPilotoFragment.newInstance(standings,constructors);
+        getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaPiloto, temporadaPilotoFragment).commit();
     }
 }
