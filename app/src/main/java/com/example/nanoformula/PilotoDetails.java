@@ -14,6 +14,7 @@ import com.example.nanoformula.API.ErgastApi;
 import com.example.nanoformula.modelo.Piloto;
 import com.example.nanoformula.modelo.driverQualifyingResults.DriverQualifyingResults;
 import com.example.nanoformula.modelo.driverRaceResults.DriverRaceResults;
+import com.example.nanoformula.modelo.driverRaceResults.Race;
 import com.example.nanoformula.modelo.driversStandings.Constructor;
 import com.example.nanoformula.modelo.driversStandings.Driver;
 import com.example.nanoformula.modelo.driversStandings.DriverStanding;
@@ -47,6 +48,7 @@ public class PilotoDetails extends AppCompatActivity {
     private ArrayList<Constructor> constructors;
     private int podios;
     private int puntos;
+    private ArrayList<Integer> puntosTemp = new ArrayList<>();
     private List<String> equipos = new ArrayList<>();
     private List<StandingsList> standingsList = new ArrayList<>();
     TextView nacionalidadPiloto;
@@ -65,7 +67,7 @@ public class PilotoDetails extends AppCompatActivity {
     TextView numEquipos;
     Loader loaderGif;
     AtomicInteger llamadasCompletadasGeneral = new AtomicInteger(0);
-    int totalLlamadasGeneral = 8;
+    int totalLlamadasGeneral = 9;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -376,7 +378,38 @@ public class PilotoDetails extends AppCompatActivity {
 
 
     private void mostrarTemporadaActualStandings(){
-        TemporadaPilotoFragment temporadaPilotoFragment=TemporadaPilotoFragment.newInstance(standings,constructors);
-        getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaPiloto, temporadaPilotoFragment).commit();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ergast.com/api/f1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ErgastApi ergastApi = retrofit.create(ErgastApi.class);
+        Call<DriverRaceResults> result = ergastApi.getDriverRaceResultsForTemp("current",piloto.getDriverId());
+        result.enqueue(new Callback<DriverRaceResults>() {
+            @Override
+            public void onResponse(Call<DriverRaceResults> call, Response<DriverRaceResults> response) {
+                if(response.isSuccessful()){
+                    int points = 0;
+                    for(Race race : response.body().getMRData().getRaceTable().getRaces()){
+                        points += Integer.parseInt(race.getResults().get(0).getPoints());
+                        puntosTemp.add(points);
+                    }
+                    TemporadaPilotoFragment temporadaPilotoFragment=TemporadaPilotoFragment.newInstance(standings,constructors,puntosTemp);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaPiloto, temporadaPilotoFragment).commit();
+                    llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
+                }else{
+                    loaderGif.dismiss();
+                    Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DriverRaceResults> call, Throwable t) {
+                loaderGif.dismiss();
+                Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto "+t.getMessage(), Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+
     }
 }

@@ -20,6 +20,8 @@ public interface ErgastApi {
 
     @GET("drivers/{driverName}/results/{position}.json")
     Call<DriverRaceResults> getDriverRaceResults(@Path("driverName") String driverName,@Path("position") int position);
+    @GET("{temp}/drivers/{driverName}/results.json")
+    Call<DriverRaceResults> getDriverRaceResultsForTemp(@Path("temp") String temp,@Path("driverName") String driverName);
 
     @GET("drivers/{driverName}/driverStandings/1.json")
     Call<Standings> getDriverChampionStandings(@Path("driverName") String driverName);
@@ -29,8 +31,6 @@ public interface ErgastApi {
 
     @GET("drivers/{driverName}/driverStandings.json")
     Call<Standings> getDriverStandings(@Path("driverName") String driverName);
-    @GET("current/drivers/{driverName}/driverStandings.json")
-    Call<Standings> getDriverStandingsCurrent(@Path("driverName") String driverName);
 
     @GET("drivers/{driverName}/fastest/1/results.json")
     Call<DriverRaceResults> getDriverFastestLap(@Path("driverName") String driverName);
