@@ -91,7 +91,7 @@ public class ListaPilotosAdapter extends RecyclerView.Adapter<ListaPilotosAdapte
             posicion.setText(piloto.getPosition());
             nombre.setText(piloto.getDriver().getGivenName()+" "+piloto.getDriver().getFamilyName());
             equipo.setText(piloto.getConstructors().get(0).getName());
-            puntos.setText(piloto.getPoints());
+            puntos.setText("+"+piloto.getPoints()+" pts.");
             Picasso.get().load(piloto.getDriver().getUrlImage()).into(foto);
 
 

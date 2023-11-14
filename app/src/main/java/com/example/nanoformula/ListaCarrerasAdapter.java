@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nanoformula.modelo.Carrera;
+import com.example.nanoformula.modelo.raceSchedule.Race;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -18,13 +20,13 @@ import java.util.List;
 public class ListaCarrerasAdapter extends RecyclerView.Adapter<ListaCarrerasAdapter.CarrerasViewHolder>{
 
     public interface OnItemClickListener {
-        void onItemClick(Carrera item);
+        void onItemClick(Race item);
     }
 
-    private List<Carrera> listaCarreras;
+    private List<Race> listaCarreras;
     private final OnItemClickListener listener;
 
-    public ListaCarrerasAdapter(List<Carrera> listaCarreras, OnItemClickListener listener) {
+    public ListaCarrerasAdapter( List<Race> listaCarreras, OnItemClickListener listener) {
         this.listaCarreras = listaCarreras;
         this.listener = listener;
     }
@@ -42,7 +44,7 @@ public class ListaCarrerasAdapter extends RecyclerView.Adapter<ListaCarrerasAdap
     @Override
     public void onBindViewHolder(@NonNull CarrerasViewHolder holder, int position) {
         // Extrae de la lista el elemento indicado por posición
-        Carrera carrera= listaCarreras.get(position);
+        Race carrera= listaCarreras.get(position);
         Log.i("Lista","Visualiza elemento: "+carrera);
         // llama al método de nuestro holder para asignar valores a los componentes
         // además, pasamos el listener del evento onClick
@@ -78,14 +80,13 @@ public class ListaCarrerasAdapter extends RecyclerView.Adapter<ListaCarrerasAdap
         }
 
         // asignar valores a los componentes
-        public void bindUser(final Carrera carrera, final OnItemClickListener listener) {
-            posicion.setText(String.valueOf(carrera.getPosition()));
-            nombre.setText(carrera.getName());
-            localizacion.setText(carrera.getLocation());
-            ciudad.setText(carrera.getCountry());
+        public void bindUser(final Race carrera, final OnItemClickListener listener) {
+            posicion.setText(String.valueOf(carrera.getRound()));
+            nombre.setText(carrera.getRaceName());
+            localizacion.setText(carrera.getCircuit().getCircuitName());
+            ciudad.setText(carrera.getCircuit().getLocation().getLocality()+" - "+carrera.getCircuit().getLocation().getCountry());
             fecha.setText(carrera.getDate());
-            bandera.setImageResource(carrera.getFlag());
-            //Picasso.get().load(pelicula.getUrlCaratula()).into(imagen);
+            Picasso.get().load(carrera.getCircuit().getUrl()).into(bandera);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

@@ -1,6 +1,7 @@
 package com.example.nanoformula.API;
 
 import com.example.nanoformula.modelo.driversImage.DriverImage;
+import com.example.nanoformula.modelo.raceImage.RaceImage;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -12,5 +13,10 @@ public interface WikipediaApi {
     @GET("w/api.php?action=query&prop=pageimages&format=json&formatversion=2&pithumbsize=500")
     Call<DriverImage> getImageDriver(
         @Query("titles") String driverName
+    );
+
+    @GET("w/api.php?action=query&prop=pageimages&format=json&formatversion=2&pithumbsize=500")
+    Call<RaceImage> getImageRace(
+            @Query("titles") String raceName
     );
 }

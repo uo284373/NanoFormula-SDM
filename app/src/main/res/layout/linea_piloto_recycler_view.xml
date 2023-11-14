@@ -13,8 +13,9 @@
         android:id="@+id/posicionPiloto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3"
-        android:text="@string/posicion" />
+        android:layout_weight="0.2"
+        android:text="@string/posicion"
+        android:textColor="@color/white"/>
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/fotoPiloto"
@@ -30,8 +31,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_weight="1"
+        android:layout_marginRight="20dp"
+        android:layout_weight="0.7"
         android:orientation="vertical">
 
         <TextView
@@ -39,7 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:text="@string/nombrePiloto" />
+            android:text="@string/nombrePiloto"
+            android:textColor="@color/white"/>
 
 
         <TextView
@@ -47,7 +49,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:text="@string/nombreEquipo" />
+            android:text="@string/nombreEquipo"
+            />
 
     </LinearLayout>
 
@@ -56,6 +59,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.3"
-        android:text="@string/puntosPiloto" />
+        android:text="@string/puntosPiloto"
+        android:textColor="@color/white"/>
 
 </LinearLayout>

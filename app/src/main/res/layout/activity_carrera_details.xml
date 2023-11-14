@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PilotoDetails"
-    android:id="@+id/layoutDetallesPiloto">
+    tools:context=".CarreraDetails"
+    android:id="@+id/layoutDetallesCarrera">
 
 
     <include
-        android:id="@+id/toolbarPiloto"
-        layout="@layout/toolbar_piloto"
+        android:id="@+id/toolbarCarrera"
+        layout="@layout/toolbar_carrera"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
 
 
-    <include layout="@layout/scrolling_piloto"
-        android:id="@+id/layoutPiloto"
+    <include layout="@layout/scrolling_carrera"
+        android:id="@+id/layoutCarrera"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,7 @@
 package com.example.nanoformula;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +15,8 @@ import android.view.ViewGroup;
 
 import com.example.nanoformula.modelo.Carrera;
 import com.example.nanoformula.modelo.Escuderia;
+import com.example.nanoformula.modelo.raceSchedule.Race;
+import com.example.nanoformula.modelo.raceSchedule.RaceSchedule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +29,11 @@ import java.util.List;
 public class CarrerasFragment extends Fragment {
 
     private static final String ARG_CARRERAS = "CARRERAS";
+    public static final String CARRERA_SELECCIONADA = "carrera_seleccionada";
+    public static final String CIRCUITO_SELECCIONADA = "circuito_seleccionada";
 
-    private List<Carrera> carreras;
+
+    private RaceSchedule raceSchedule;
 
     private RecyclerView listaCarrerasView;
 
@@ -34,10 +41,10 @@ public class CarrerasFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static CarrerasFragment newInstance(List<Carrera> carreras) {
+    public static CarrerasFragment newInstance(RaceSchedule raceSchedule) {
         CarrerasFragment fragment = new CarrerasFragment();
         Bundle args = new Bundle();
-        args.putParcelableArrayList(ARG_CARRERAS,new ArrayList<>(carreras));
+        args.putParcelable(ARG_CARRERAS,raceSchedule);
         fragment.setArguments(args);
         return fragment;
     }
@@ -46,7 +53,7 @@ public class CarrerasFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            carreras = (List<Carrera>) getArguments().get(ARG_CARRERAS);
+            raceSchedule = (RaceSchedule) getArguments().get(ARG_CARRERAS);
         }
     }
 
@@ -60,10 +67,10 @@ public class CarrerasFragment extends Fragment {
         listaCarrerasView.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listaCarrerasView.getContext(), layoutManager.getOrientation());
         listaCarrerasView.addItemDecoration(dividerItemDecoration);
-        ListaCarrerasAdapter lcAdapter= new ListaCarrerasAdapter(carreras,
+        ListaCarrerasAdapter lcAdapter= new ListaCarrerasAdapter(raceSchedule.getMRData().getRaceTable().getRaces(),
                 new ListaCarrerasAdapter.OnItemClickListener() {
                     @Override
-                    public void onItemClick(Carrera carrera) {
+                    public void onItemClick(Race carrera) {
                         clickonItem(carrera);
                     }
                 });
@@ -71,6 +78,10 @@ public class CarrerasFragment extends Fragment {
 
         return root;
     }
-    private void clickonItem(Carrera carrera) {
+    private void clickonItem(Race carrera) {
+        Intent intent=new Intent (CarrerasFragment.this.getContext(), CarreraDetails.class);
+        intent.putExtra(CARRERA_SELECCIONADA, carrera);
+        intent.putExtra(CIRCUITO_SELECCIONADA, carrera.getCircuit());
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
     }
 }
