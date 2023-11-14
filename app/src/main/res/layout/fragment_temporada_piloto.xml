@@ -126,6 +126,7 @@
             android:id="@+id/txGraficoPuntosTemp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="15dp"
             android:text="@string/graficoPuntosTemp"
             android:gravity="center"
             android:drawableLeft="@drawable/linea"
@@ -136,6 +137,7 @@
         <com.github.mikephil.charting.charts.LineChart
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:layout_margin="15dp"
             android:id="@+id/lineChartPuntosPiloto"/>
 
     </LinearLayout>

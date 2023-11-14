@@ -7,6 +7,7 @@ import com.example.nanoformula.modelo.driverRaceResults.DriverRaceResults;
 import com.example.nanoformula.modelo.driversForConstructor.DriversByConstructor;
 import com.example.nanoformula.modelo.driversStandings.Standings;
 import com.example.nanoformula.modelo.raceResults.RaceResults;
+import com.example.nanoformula.modelo.raceResultsByConstructor.RaceResultsByConstructor;
 import com.example.nanoformula.modelo.raceSchedule.RaceSchedule;
 
 import retrofit2.Call;
@@ -55,6 +56,9 @@ public interface ErgastApi {
 
     @GET("current/{number}/results.json")
     Call<RaceResults> getRaceResults(@Path("number") String posRace);
+
+    @GET("{temp}/constructors/{constructorName}/results.json?limit=100")
+    Call<RaceResultsByConstructor> getConstructorsRaceResultsForTemp(@Path("temp") String temp, @Path("constructorName") String constructorName);
 }
 
 

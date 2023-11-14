@@ -17,8 +17,13 @@ import com.example.nanoformula.modelo.constructorsStandings.StandingsList;
 import com.example.nanoformula.modelo.driverRaceResults.DriverRaceResults;
 import com.example.nanoformula.modelo.driversStandings.DriverStanding;
 import com.example.nanoformula.modelo.driversStandings.Standings;
+import com.example.nanoformula.modelo.raceResultsByConstructor.Race;
+import com.example.nanoformula.modelo.raceResultsByConstructor.RaceResultsByConstructor;
+import com.example.nanoformula.modelo.raceResultsByConstructor.Result;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import retrofit2.Call;
@@ -47,7 +52,8 @@ public class EscuderiaDetails extends AppCompatActivity {
     ImageView fotoEscuderia;
     Loader loaderGif;
     AtomicInteger llamadasCompletadasGeneral = new AtomicInteger(0);
-    int totalLlamadasGeneral = 3; //8;
+    int totalLlamadasGeneral = 4; //8;
+    private ArrayList<String> puntosTemp = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +83,7 @@ public class EscuderiaDetails extends AppCompatActivity {
             mostrarTitulosConstructor();
             mostrarVictoriasConstructor();
             mostrarTemporadasConstructor();
+            mostrarChart();
         }
     }
 
@@ -192,8 +199,48 @@ public class EscuderiaDetails extends AppCompatActivity {
 
     private void llamadaCompletaGif(AtomicInteger llamadasCompletadas, int totalLlamadas) {
         if (llamadasCompletadas.incrementAndGet() == totalLlamadas) {
+            TemporadaEscuderiaFragment temporadaEscuderiaFragment=TemporadaEscuderiaFragment.newInstance(puntosTemp);
+            getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaEscuderia, temporadaEscuderiaFragment).commit();
             loaderGif.dismiss();
         }
+    }
+
+
+    private void mostrarChart(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ergast.com/api/f1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ErgastApi ergastApi = retrofit.create(ErgastApi.class);
+        Call<RaceResultsByConstructor> result = ergastApi.getConstructorsRaceResultsForTemp("current",standings.getConstructor().getConstructorId());
+        result.enqueue(new Callback<RaceResultsByConstructor>() {
+            @Override
+            public void onResponse(Call<RaceResultsByConstructor> call, Response<RaceResultsByConstructor> response) {
+                if(response.isSuccessful()){
+                    int points = 0;
+                    for(Race race : response.body().getMRData().getRaceTable().getRaces()){
+                        for(Result result : race.getResults()){
+                            points += Integer.parseInt(result.getPoints());
+                        }
+                        puntosTemp.add(race.getRound()+";"+String.valueOf(points));
+                    }
+                    llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
+
+                }else{
+                    loaderGif.dismiss();
+                    Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RaceResultsByConstructor> call, Throwable t) {
+                loaderGif.dismiss();
+                Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto "+t.getMessage(), Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+
     }
 
 }
