@@ -21,9 +21,9 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:contentDescription="@string/fotoEscuderia"
-        app:srcCompat="@mipmap/ic_launcher"
         android:scaleType="centerCrop"
-        app:shapeAppearanceOverlay="@style/roundedImageView" />
+        app:shapeAppearanceOverlay="@style/squareImageView"
+        app:srcCompat="@mipmap/ic_launcher" />
 
 
     <LinearLayout

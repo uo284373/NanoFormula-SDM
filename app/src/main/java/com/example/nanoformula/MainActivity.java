@@ -14,6 +14,8 @@ import com.example.nanoformula.modelo.constructorsStandings.Constructor;
 import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
 import com.example.nanoformula.modelo.constructorsStandings.StandingsEscuderias;
 import com.example.nanoformula.modelo.countryDetails.CountryDetail;
+import com.example.nanoformula.modelo.Carrera;
+import com.example.nanoformula.modelo.driversForConstructor.DriversByConstructor;
 import com.example.nanoformula.modelo.driversImage.DriverImage;
 import com.example.nanoformula.modelo.driversStandings.Driver;
 import com.example.nanoformula.modelo.driversStandings.DriverStanding;
@@ -49,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
     int totalLlamadasGeneral = 0;
 
     String round;
-
-    private boolean hasEndedDrivers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             String decodedString = URLDecoder.decode(driverName, "UTF-8");
                             setDriverImage(decodedString,piloto.getDriver());
-                            hasEndedDrivers = true;
                         }catch (UnsupportedEncodingException e){
                             e.printStackTrace();
                         }
@@ -223,22 +222,8 @@ public class MainActivity extends AppCompatActivity {
                     constructorStandingsEscuderias = response.body();
                     round = constructorStandingsEscuderias.getMRData().getStandingsTable().getStandingsLists().get(0).getRound();
                     for(ConstructorStanding escuderia : constructorStandingsEscuderias.getMRData().getStandingsTable().getStandingsLists().get(0).getConstructorStandings()){
-//                        for(DriverStanding standing : standings.getMRData().getStandingsTable().getStandingsLists().get(0).getDriverStandings()){
-//                            for(com.example.nanoformula.modelo.driversStandings.Constructor constructor : standing.getConstructors()){
-//                                if(constructor.getConstructorId().equals(escuderia.getConstructor().getConstructorId())){
-//                                    escuderia.addDriversName(standing.getDriver().getGivenName() + ". " + standing.getDriver().getFamilyName());
-//                                }
-//                            }
-//                        }
+                        setConstructorDrivers(constructorStandingsEscuderias.getMRData().getStandingsTable().getSeason(), escuderia);
                         escuderia.setRound(round);
-                        int startIndex = escuderia.getConstructor().getUrl().indexOf("wiki/") + 5; // Sumamos 5 para incluir "wiki/"
-                        String constructorName = escuderia.getConstructor().getUrl().substring(startIndex);
-                        try {
-                            String decodedString = URLDecoder.decode(constructorName, "UTF-8");
-                            //setConstructorImage(decodedString,escuderia.getConstructor());
-                        }catch (UnsupportedEncodingException e){
-                            e.printStackTrace();
-                        }
                     }
                 }else{
                     Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los pilotos", Snackbar.LENGTH_LONG).show();
@@ -252,30 +237,35 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setConstructorImage(String driverName, Constructor constructor){
+    private void setConstructorDrivers(String season, ConstructorStanding escuderia) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://en.wikipedia.org/")
+                .baseUrl("https://ergast.com/api/f1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        WikipediaApi wikipediaApi = retrofit.create(WikipediaApi.class);
-        Call<DriverImage> result = wikipediaApi.getImageDriver(driverName);
+        ErgastApi ergastApi = retrofit.create(ErgastApi.class);
 
-        result.enqueue(new Callback<DriverImage>() {
+        Call<DriversByConstructor> result = ergastApi.getDriversBySeasonAndConstructor(season, escuderia.getConstructor().getConstructorId());
+
+        result.enqueue(new Callback<DriversByConstructor>() {
             @Override
-            public void onResponse(Call<DriverImage> call, Response<DriverImage> response) {
+            public void onResponse(Call<DriversByConstructor> call, Response<DriversByConstructor> response) {
                 if(response.isSuccessful()){
-                    if(response.body().getQuery().getPages().get(0).getThumbnail()!=null){
-                        constructor.setUrlImage(response.body().getQuery().getPages().get(0).getThumbnail().getSource());
+                    DriversByConstructor drivers = response.body();
+
+                    for(com.example.nanoformula.modelo.driversForConstructor.Driver driver : drivers.getMRData().getDriverTable().getDrivers()){
+                        escuderia.addDriversName(driver.getFamilyName());
+
                     }
+
                 }else{
-                    Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar las fotos de los pilotos", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los pilotos", Snackbar.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<DriverImage> call, Throwable t) {
-                Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar las fotos de los pilotos", Snackbar.LENGTH_LONG).show();
+            public void onFailure(Call<DriversByConstructor> call, Throwable t) {
+
             }
         });
     }

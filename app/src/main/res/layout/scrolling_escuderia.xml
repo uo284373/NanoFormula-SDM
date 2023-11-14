@@ -21,12 +21,11 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ftEscuderia"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="274dp"
+            android:layout_height="176dp"
             android:contentDescription="@string/fotoEscuderia"
-            app:srcCompat="@mipmap/ic_launcher"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/roundedImageView" />
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/ic_launcher" />
 
         <TextView
             android:id="@+id/txNacionalidadEscuderia"
