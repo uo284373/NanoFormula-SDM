@@ -150,4 +150,5 @@
     <string name="numeroEquipos">NUM.\nEQUIPOS</string>
     <string name="posicionPiloto">POS</string>
     <string name="pilotoEscudería">ESCUDERIA</string>
+    <string name="graficoPuntosTemp">GRÁFICO PUNTOS POR CARRERA</string>
 </resources>

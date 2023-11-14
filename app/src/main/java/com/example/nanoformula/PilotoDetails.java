@@ -195,6 +195,8 @@ public class PilotoDetails extends AppCompatActivity {
     }
     private void llamadaCompletaGif(AtomicInteger llamadasCompletadas, int totalLlamadas) {
         if (llamadasCompletadas.incrementAndGet() == totalLlamadas) {
+            TemporadaPilotoFragment temporadaPilotoFragment=TemporadaPilotoFragment.newInstance(standings,constructors,puntosTemp);
+            getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaPiloto, temporadaPilotoFragment).commit();
             loaderGif.dismiss();
         }
     }
@@ -394,9 +396,8 @@ public class PilotoDetails extends AppCompatActivity {
                         points += Integer.parseInt(race.getResults().get(0).getPoints());
                         puntosTemp.add(points);
                     }
-                    TemporadaPilotoFragment temporadaPilotoFragment=TemporadaPilotoFragment.newInstance(standings,constructors,puntosTemp);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaPiloto, temporadaPilotoFragment).commit();
                     llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
+
                 }else{
                     loaderGif.dismiss();
                     Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();

@@ -282,20 +282,6 @@
 
 
 
-        <TextView
-            android:id="@+id/txTemporadaActual"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:text="@string/TemporadaActual"
-            android:gravity="center"
-            android:drawableLeft="@drawable/linea"
-            android:drawableRight="@drawable/linea"
-            android:textColor="@color/white"
-            />
-
-
-
         <FrameLayout
             android:id="@+id/layoutTemporadaPiloto"
             android:layout_width="match_parent"

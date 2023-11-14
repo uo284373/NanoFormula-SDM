@@ -179,7 +179,12 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         WikipediaApi wikipediaApi = retrofit.create(WikipediaApi.class);
-        Call<DriverImage> result = wikipediaApi.getImageDriver(driverName);
+        Call<DriverImage> result;
+        if(driverName.equals("Alexander_Albon")){
+             result = wikipediaApi.getImageDriver("Alex_Albon");
+        }else{
+             result = wikipediaApi.getImageDriver(driverName);
+        }
 
         result.enqueue(new Callback<DriverImage>() {
             @Override
