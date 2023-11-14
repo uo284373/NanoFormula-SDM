@@ -48,7 +48,7 @@ public class PilotoDetails extends AppCompatActivity {
     private ArrayList<Constructor> constructors;
     private int podios;
     private int puntos;
-    private ArrayList<Integer> puntosTemp = new ArrayList<>();
+    private ArrayList<String> puntosTemp = new ArrayList<>();
     private List<String> equipos = new ArrayList<>();
     private List<StandingsList> standingsList = new ArrayList<>();
     TextView nacionalidadPiloto;
@@ -394,7 +394,7 @@ public class PilotoDetails extends AppCompatActivity {
                     int points = 0;
                     for(Race race : response.body().getMRData().getRaceTable().getRaces()){
                         points += Integer.parseInt(race.getResults().get(0).getPoints());
-                        puntosTemp.add(points);
+                        puntosTemp.add(race.getRound()+";"+String.valueOf(points));
                     }
                     llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
 

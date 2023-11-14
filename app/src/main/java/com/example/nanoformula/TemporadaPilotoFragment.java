@@ -35,7 +35,7 @@ public class TemporadaPilotoFragment extends Fragment {
 
     private DriverStanding driverStanding;
     private ArrayList<Constructor> constructors;
-    private List<Integer> puntostemp = new ArrayList<>();
+    private List<String> puntostemp = new ArrayList<>();
 
     TextView posPiloto;
     TextView escuderiaPiloto;
@@ -48,12 +48,12 @@ public class TemporadaPilotoFragment extends Fragment {
     }
 
 
-    public static TemporadaPilotoFragment newInstance(DriverStanding param1, ArrayList<Constructor> param2,ArrayList<Integer> param3) {
+    public static TemporadaPilotoFragment newInstance(DriverStanding param1, ArrayList<Constructor> param2,ArrayList<String> param3) {
         TemporadaPilotoFragment fragment = new TemporadaPilotoFragment();
         Bundle args = new Bundle();
         args.putParcelable(DRIVER_STANDING, param1);
         args.putParcelableArrayList(DRIVER_TEAM, param2);
-        args.putIntegerArrayList(DRIVER_POINTS,param3);
+        args.putStringArrayList(DRIVER_POINTS,param3);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,7 +64,7 @@ public class TemporadaPilotoFragment extends Fragment {
         if (getArguments() != null) {
             driverStanding = getArguments().getParcelable(DRIVER_STANDING);
             constructors = getArguments().getParcelableArrayList(DRIVER_TEAM);
-            puntostemp = getArguments().getIntegerArrayList(DRIVER_POINTS);
+            puntostemp = getArguments().getStringArrayList(DRIVER_POINTS);
         }
     }
 
@@ -93,7 +93,8 @@ public class TemporadaPilotoFragment extends Fragment {
         lineChartPuntosPiloto.getAxisRight().setEnabled(false);
         lineChartPuntosPiloto.getAxisLeft().setAxisMinimum(0);
         lineChartPuntosPiloto.getAxisLeft().setTextColor(Color.WHITE);
-        lineChartPuntosPiloto.getAxisLeft().setAxisMaximum(puntostemp.get(puntostemp.size()-1) + 20);
+
+        lineChartPuntosPiloto.getAxisLeft().setAxisMaximum(Integer.parseInt(puntostemp.get(puntostemp.size()-1).split(";")[1])+20);
         lineChartPuntosPiloto.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         lineChartPuntosPiloto.getXAxis().setTextColor(Color.WHITE);
         lineChartPuntosPiloto.getXAxis().setLabelCount(puntostemp.size(), true);
@@ -110,7 +111,8 @@ public class TemporadaPilotoFragment extends Fragment {
 
         ArrayList<Entry> lineData = new ArrayList<>();
         for(int i = 0;i < puntostemp.size();i++){
-            lineData.add(new Entry(i,puntostemp.get(i)));
+            String[] roundPuntos =puntostemp.get(i).split(";");
+            lineData.add(new Entry(Integer.parseInt(roundPuntos[0]),Integer.parseInt(roundPuntos[1])));
         }
         LineData dataSet = new LineData(new LineDataSet(lineData,"Puntos"));
         dataSet.setValueTextColor(Color.WHITE);
