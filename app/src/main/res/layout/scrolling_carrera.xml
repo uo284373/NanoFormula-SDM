@@ -172,7 +172,7 @@
                 android:contentDescription="@string/fotoPilotoGanador"
                 android:scaleType="centerCrop"
                 app:shapeAppearanceOverlay="@style/roundedImageView"
-                app:srcCompat="@mipmap/ic_launcher" />
+                app:srcCompat="@mipmap/ic_f1_launcher_foreground" />
 
             <TextView
                 android:id="@+id/txGanador"
@@ -304,7 +304,8 @@
         <TableLayout
             android:id="@+id/tableResultados"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_margin="15dp">
 
             <TableRow
                 android:id="@+id/tituloTabla"
@@ -317,20 +318,23 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="start|center_vertical"
                     android:text="@string/posCarrera" />
 
                 <TextView
                     android:id="@+id/txNombrePiloto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
+                    android:gravity="start|center_vertical"
                     android:text="@string/nombrePilotoCarrera" />
 
                 <TextView
                     android:id="@+id/txNombreEscuderiaCarrera"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
+                    android:gravity="start|center_vertical"
                     android:text="@string/nombreEscuderiaCarrera" />
 
                 <TextView
@@ -338,13 +342,15 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="start|center_vertical"
                     android:text="@string/puntosCarreraPiloto" />
 
                 <TextView
                     android:id="@+id/txTiempoPilotoCarrera"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
+                    android:gravity="start|center_vertical"
                     android:text="@string/tiempoGanador" />
             </TableRow>
         </TableLayout>

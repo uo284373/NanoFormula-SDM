@@ -68,12 +68,17 @@ public class CarreraDetails extends AppCompatActivity {
     TextView pilotoVueltaRapida;
     TextView vueltas;
     TextView tiempo;
+    Loader loaderGif;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carrera_details);
+
+        loaderGif = new Loader(this);
+        loaderGif.show();
 
         Intent intentCarrera= getIntent();
         race = intentCarrera.getParcelableExtra(CarrerasFragment.CARRERA_SELECCIONADA);
@@ -130,13 +135,7 @@ public class CarreraDetails extends AppCompatActivity {
     }
 
     private void rellenarTablaResultados() {
-        TableRow tituloTabla = findViewById(R.id.tituloTabla);
-        tituloTabla.setLayoutParams(new TableLayout.LayoutParams(
-                TableLayout.LayoutParams.MATCH_PARENT,
-                TableLayout.LayoutParams.WRAP_CONTENT, 1));
-
-        for (Result result : raceResults.getMRData().getRaceTable().getRaces().get(0).getResults()) {
-            TableRow tableRow = new TableRow(this);
+        for (Result result : raceResults.getMRData().getRaceTable().getRaces().get(0).getResults()) {            TableRow tableRow = new TableRow(this);
 
             tableRow.setLayoutParams(new TableLayout.LayoutParams(
                     TableLayout.LayoutParams.MATCH_PARENT,
@@ -207,6 +206,7 @@ public class CarreraDetails extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }else{
+                    loaderGif.dismiss();
                     Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
                 }
             }
@@ -234,8 +234,10 @@ public class CarreraDetails extends AppCompatActivity {
                     if(response.body().getQuery().getPages().get(0).getThumbnail()!=null){
                         driver.setUrl(response.body().getQuery().getPages().get(0).getThumbnail().getSource());
                         mostrarDatosGanador();
+                        loaderGif.dismiss();
                     }
                 }else{
+                    loaderGif.dismiss();
                     Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar las fotos de los pilotos", Snackbar.LENGTH_LONG).show();
                 }
             }

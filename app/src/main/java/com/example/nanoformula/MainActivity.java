@@ -8,8 +8,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.nanoformula.API.ErgastApi;
-import com.example.nanoformula.API.RESTCountriesApi;
 import com.example.nanoformula.API.WikipediaApi;
+import com.example.nanoformula.API.Api;
+import com.example.nanoformula.modelo.Escuderia;
 import com.example.nanoformula.modelo.constructorsStandings.Constructor;
 import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
 import com.example.nanoformula.modelo.constructorsStandings.StandingsEscuderias;
@@ -29,8 +30,15 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import retrofit2.Call;
@@ -302,33 +310,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setRaceFlag(String countryName, Race race){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://restcountries.com/v3.1/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        RESTCountriesApi restCountriesApi = retrofit.create(RESTCountriesApi.class);
-        Call<List<CountryDetail>> result = restCountriesApi.getCountryCode(countryName);
-
-        result.enqueue(new Callback<List<CountryDetail>>() {
-            @Override
-            public void onResponse(Call<List<CountryDetail>> call, Response<List<CountryDetail>> response) {
-                if(response.isSuccessful()){
-                    if(response.body().get(0).getFlags().getPng()!=null){
-                        race.getCircuit().setUrl(response.body().get(0).getFlags().getPng());
-                    }
-                }else{
-                    loaderGif.dismiss();
-                    Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar las fotos de la bandera", Snackbar.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<CountryDetail>> call, Throwable t) {
-                loaderGif.dismiss();
-                Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar las fotos de la bandera: "+t.getMessage(), Snackbar.LENGTH_LONG).show();
-            }
-        });
+        String countryCode = getCountryCode(countryName);
+        String url = String.format(Locale.US, "https://www.flagsapi.com/%s/%s/%d.png", countryCode, "flat", 64);
+        race.getCircuit().setUrl(url);
     }
 
 
@@ -373,4 +357,48 @@ public class MainActivity extends AppCompatActivity {
             throw new IllegalStateException("Unexpected value: " + item.getItemId());
         };
     };
+
+    public static String getCountryCode(String countryName) {
+        Map<String, String> specialCases = createSpecialCasesMap();
+
+        for (Map.Entry<String, String> entry : specialCases.entrySet()) {
+            if (countryName.equalsIgnoreCase(entry.getKey())) {
+                return entry.getValue();
+            }
+        }
+
+        Set<String> allCountryCodes = getAllCountryCodes();
+
+        for (String code : allCountryCodes) {
+            Locale locale = new Locale("", code);
+            String displayName = locale.getDisplayCountry(Locale.ENGLISH);
+            String iso3Country = locale.getISO3Country();
+
+            if (countryName.equalsIgnoreCase(displayName)
+                    || countryName.equalsIgnoreCase(iso3Country)
+                    || countryName.equalsIgnoreCase(locale.getCountry())) {
+                return code;
+            }
+        }
+
+        return "";
+    }
+
+    private static Set<String> getAllCountryCodes() {
+        Set<String> countryCodes = new HashSet<>();
+
+        String[] isoCountries = Locale.getISOCountries();
+        Collections.addAll(countryCodes, isoCountries);
+
+        return countryCodes;
+    }
+
+    private static Map<String, String> createSpecialCasesMap() {
+        Map<String, String> specialCases = new HashMap<>();
+        specialCases.put("UK", "GB");   // Reino Unido
+        specialCases.put("UAE", "AE");  // Emiratos Árabes Unidos
+        return specialCases;
+    }
 }
+
+
