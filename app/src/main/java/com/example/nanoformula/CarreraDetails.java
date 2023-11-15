@@ -104,7 +104,7 @@ public class CarreraDetails extends AppCompatActivity {
             Date fechaActual = new Date();
             Date fechaCarrera = convertirFechaStringADate(race.getDate());
             if (fechaCarrera != null && fechaCarrera.compareTo(fechaActual) <= 0) {
-                new YouTubeSearchTask().execute("F1 Highlights " + race.getSeason() + " " + race.getRaceName());
+                //new YouTubeSearchTask().execute("F1 Highlights " + race.getSeason() + " " + race.getRaceName());
                 cargarDatos();
             }else {
                 mostrarCarreraNoDisponible();
