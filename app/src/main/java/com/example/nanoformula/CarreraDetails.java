@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.nanoformula.API.ErgastApi;
 import com.example.nanoformula.API.WikipediaApi;
+import com.example.nanoformula.API.YouTubeSearchTask;
 import com.example.nanoformula.modelo.driversImage.DriverImage;
 import com.example.nanoformula.modelo.raceResults.Driver;
 import com.example.nanoformula.modelo.raceResults.FastestLap;
@@ -26,11 +27,9 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
 import com.squareup.picasso.Picasso;
 
 import java.io.UnsupportedEncodingException;
-import java.net.ConnectException;
 import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,6 +41,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class CarreraDetails extends AppCompatActivity {
 
@@ -103,10 +103,12 @@ public class CarreraDetails extends AppCompatActivity {
             mostrarDatosCarrera();
             Date fechaActual = new Date();
             Date fechaCarrera = convertirFechaStringADate(race.getDate());
-            if (fechaCarrera != null && fechaCarrera.compareTo(fechaActual) <= 0)
+            if (fechaCarrera != null && fechaCarrera.compareTo(fechaActual) <= 0) {
+                new YouTubeSearchTask().execute("F1 Highlights " + race.getSeason() + " " + race.getRaceName());
                 cargarDatos();
-            else
+            }else {
                 mostrarCarreraNoDisponible();
+            }
         }
     }
 
