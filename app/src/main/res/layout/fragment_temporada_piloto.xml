@@ -131,12 +131,31 @@
             android:drawableLeft="@drawable/linea"
             android:drawableRight="@drawable/linea"
             android:textColor="@color/white"
+            android:layout_marginTop="-25dp"
             />
 
         <com.github.mikephil.charting.charts.LineChart
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:id="@+id/lineChartPuntosPiloto"/>
+            android:layout_height="250dp"
+            android:id="@+id/lineChartPuntosPiloto"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/txGraficoPosSalidaFin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/graficoPosSalidaFin"
+            android:gravity="center"
+            android:drawableLeft="@drawable/linea"
+            android:drawableRight="@drawable/linea"
+            android:textColor="@color/white"
+            />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:id="@+id/lineChartPosPilotoSalidaFin"
+            android:layout_marginBottom="20dp"/>
 
     </LinearLayout>
 

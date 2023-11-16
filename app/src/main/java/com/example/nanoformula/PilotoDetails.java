@@ -51,6 +51,8 @@ public class PilotoDetails extends AppCompatActivity {
     private ArrayList<String> puntosTemp = new ArrayList<>();
     private List<String> equipos = new ArrayList<>();
     private List<StandingsList> standingsList = new ArrayList<>();
+    private ArrayList<String> racesStartPosition = new ArrayList<>();
+    private ArrayList<String> racesFinalPosition = new ArrayList<>();
     TextView nacionalidadPiloto;
     TextView numeroPiloto;
     TextView codigoPiloto;
@@ -195,7 +197,7 @@ public class PilotoDetails extends AppCompatActivity {
     }
     private void llamadaCompletaGif(AtomicInteger llamadasCompletadas, int totalLlamadas) {
         if (llamadasCompletadas.incrementAndGet() == totalLlamadas) {
-            TemporadaPilotoFragment temporadaPilotoFragment=TemporadaPilotoFragment.newInstance(standings,constructors,puntosTemp);
+            TemporadaPilotoFragment temporadaPilotoFragment=TemporadaPilotoFragment.newInstance(standings,constructors,puntosTemp,racesStartPosition,racesFinalPosition);
             getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaPiloto, temporadaPilotoFragment).commit();
             loaderGif.dismiss();
         }
@@ -396,6 +398,7 @@ public class PilotoDetails extends AppCompatActivity {
                         points += Integer.parseInt(race.getResults().get(0).getPoints());
                         puntosTemp.add(race.getRound()+";"+String.valueOf(points));
                     }
+                    getRaceStartPosition(response.body().getMRData().getRaceTable().getRaces());
                     llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
 
                 }else{
@@ -412,5 +415,16 @@ public class PilotoDetails extends AppCompatActivity {
         });
 
 
+    }
+
+    private void getRaceStartPosition(List<Race> races){
+        for(Race race : races){
+            if(!race.getResults().get(0).getGrid().equals("0")){
+                racesStartPosition.add(race.getRound()+";"+race.getResults().get(0).getGrid());
+            }else{
+                racesStartPosition.add(race.getRound()+";"+"20");
+            }
+            racesFinalPosition.add(race.getRound()+";"+race.getResults().get(0).getPosition());
+        }
     }
 }

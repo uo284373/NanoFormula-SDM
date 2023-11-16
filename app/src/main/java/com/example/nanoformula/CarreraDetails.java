@@ -134,6 +134,7 @@ public class CarreraDetails extends AppCompatActivity {
         textView.setGravity(Gravity.CENTER);
         layoutDetallesCarrera.addView(imageView,4);
         layoutDetallesCarrera.addView(textView,5);
+        loaderGif.dismiss();
     }
 
     private void rellenarTablaResultados() {

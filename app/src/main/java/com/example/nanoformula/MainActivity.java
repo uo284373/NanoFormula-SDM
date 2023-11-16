@@ -9,11 +9,11 @@ import android.view.MenuItem;
 
 import com.example.nanoformula.API.ErgastApi;
 import com.example.nanoformula.API.WikipediaApi;
-import com.example.nanoformula.API.Api;
 import com.example.nanoformula.modelo.Escuderia;
 import com.example.nanoformula.modelo.constructorsStandings.Constructor;
 import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
 import com.example.nanoformula.modelo.constructorsStandings.StandingsEscuderias;
+import com.example.nanoformula.modelo.Escuderia;
 import com.example.nanoformula.modelo.countryDetails.CountryDetail;
 import com.example.nanoformula.modelo.Carrera;
 import com.example.nanoformula.modelo.driversForConstructor.DriversByConstructor;
@@ -30,11 +30,11 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
     String round;
 
+    private boolean hasEndedDrivers;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Calendario GP");
@@ -232,6 +233,14 @@ public class MainActivity extends AppCompatActivity {
                     for(ConstructorStanding escuderia : constructorStandingsEscuderias.getMRData().getStandingsTable().getStandingsLists().get(0).getConstructorStandings()){
                         setConstructorDrivers(constructorStandingsEscuderias.getMRData().getStandingsTable().getSeason(), escuderia);
                         escuderia.setRound(round);
+                        int startIndex = escuderia.getConstructor().getUrl().indexOf("wiki/") + 5; // Sumamos 5 para incluir "wiki/"
+                        String constructorName = escuderia.getConstructor().getUrl().substring(startIndex);
+                        try {
+                            String decodedString = URLDecoder.decode(constructorName, "UTF-8");
+                            //setConstructorImage(decodedString,escuderia.getConstructor());
+                        }catch (UnsupportedEncodingException e){
+                            e.printStackTrace();
+                        }
                     }
                 }else{
                     Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los pilotos", Snackbar.LENGTH_LONG).show();
