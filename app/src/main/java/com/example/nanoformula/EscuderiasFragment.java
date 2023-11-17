@@ -13,10 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.nanoformula.modelo.Escuderia;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
+import com.example.nanoformula.modelo.constructorsStandings.StandingsEscuderias;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,19 +24,18 @@ import java.util.List;
 public class EscuderiasFragment extends Fragment {
 
     private static final String ARG_ESCUDERIAS = "ESCUDERIAS";
+    public static final String ESCUDERIA_SELECCIONADA = "escuderia_seleccionado";
 
-    public static final String ESCUDERIA_SELECCIONADA = "piloto_seleccionado";
 
-
-    private List<Escuderia> escuderias;
+    private StandingsEscuderias standings;
 
     private RecyclerView listaEscuderiasView;
 
 
-    public static EscuderiasFragment newInstance(List<Escuderia> escuderias) {
+    public static EscuderiasFragment newInstance(StandingsEscuderias standings) {
         EscuderiasFragment fragment = new EscuderiasFragment();
         Bundle args = new Bundle();
-        args.putParcelableArrayList(ARG_ESCUDERIAS,new ArrayList<>(escuderias));
+        args.putParcelable(ARG_ESCUDERIAS,standings);
         fragment.setArguments(args);
         return fragment;
     }
@@ -47,7 +44,7 @@ public class EscuderiasFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            escuderias = (List<Escuderia>) getArguments().get(ARG_ESCUDERIAS);
+            standings = (StandingsEscuderias) getArguments().get(ARG_ESCUDERIAS);
         }
     }
 
@@ -61,10 +58,10 @@ public class EscuderiasFragment extends Fragment {
         listaEscuderiasView.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listaEscuderiasView.getContext(), layoutManager.getOrientation());
         listaEscuderiasView.addItemDecoration(dividerItemDecoration);
-        ListaEscuderiasAdapter leAdapter= new ListaEscuderiasAdapter(escuderias,
+        ListaEscuderiasAdapter leAdapter= new ListaEscuderiasAdapter(standings.getMRData().getStandingsTable().getStandingsLists().get(0).getConstructorStandings(),
                 new ListaEscuderiasAdapter.OnItemClickListener() {
                     @Override
-                    public void onItemClick(Escuderia escuderia) {
+                    public void onItemClick(ConstructorStanding escuderia) {
                         clickonItem(escuderia);
                     }
                 });
@@ -73,10 +70,9 @@ public class EscuderiasFragment extends Fragment {
         return root;
     }
 
-    private void clickonItem(Escuderia escuderia) {
+    private void clickonItem(ConstructorStanding escuderia) {
         Intent intent=new Intent (EscuderiasFragment.this.getContext(), EscuderiaDetails.class);
         intent.putExtra(ESCUDERIA_SELECCIONADA, escuderia);
-
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
     }
 }

@@ -264,15 +264,15 @@
                     android:gravity="center"/>
 
                 <TextView
-                    android:id="@+id/txTituloMejorPosicion"
+                    android:id="@+id/txTituloNumEquipos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/mejorPosicion"
+                    android:text="@string/numeroEquipos"
                     android:textAlignment="center"
                     android:textColor="@color/white"/>
 
                 <TextView
-                    android:id="@+id/txMejorPosicionPiloto"
+                    android:id="@+id/txMejorNumEquipos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="-"
@@ -282,16 +282,10 @@
 
 
 
-        <TextView
-            android:id="@+id/txTemporadaActual"
+        <FrameLayout
+            android:id="@+id/layoutTemporadaPiloto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:text="@string/TemporadaActual"
-            android:gravity="center"
-            android:drawableLeft="@drawable/linea"
-            android:drawableRight="@drawable/linea"
-            android:textColor="@color/white"
+            android:layout_height="match_parent"
             />
     </LinearLayout>
 

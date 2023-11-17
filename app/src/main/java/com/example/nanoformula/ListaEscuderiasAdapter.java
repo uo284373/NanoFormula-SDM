@@ -1,5 +1,8 @@
 package com.example.nanoformula;
 
+import android.app.Application;
+import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.nanoformula.modelo.Escuderia;
+import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -18,13 +22,13 @@ import java.util.List;
 public class ListaEscuderiasAdapter extends RecyclerView.Adapter<ListaEscuderiasAdapter.EscuderiasViewHolder>{
 
     public interface OnItemClickListener {
-        void onItemClick(Escuderia item);
+        void onItemClick(ConstructorStanding item);
     }
 
-    private List<Escuderia> listaEscuderias;
+    private List<ConstructorStanding> listaEscuderias;
     private final OnItemClickListener listener;
 
-    public ListaEscuderiasAdapter(List<Escuderia> listaEscuderias, OnItemClickListener listener) {
+    public ListaEscuderiasAdapter(List<ConstructorStanding> listaEscuderias, OnItemClickListener listener) {
         this.listaEscuderias = listaEscuderias;
         this.listener = listener;
     }
@@ -44,7 +48,7 @@ public class ListaEscuderiasAdapter extends RecyclerView.Adapter<ListaEscuderias
     @Override
     public void onBindViewHolder(@NonNull EscuderiasViewHolder holder, int position) {
         // Extrae de la lista el elemento indicado por posición
-        Escuderia escuderia= listaEscuderias.get(position);
+        ConstructorStanding escuderia= listaEscuderias.get(position);
         Log.i("Lista","Visualiza elemento: "+escuderia);
         // llama al método de nuestro holder para asignar valores a los componentes
         // además, pasamos el listener del evento onClick
@@ -77,20 +81,65 @@ public class ListaEscuderiasAdapter extends RecyclerView.Adapter<ListaEscuderias
         }
 
         // asignar valores a los componentes
-        public void bindUser(final Escuderia escuderia, final OnItemClickListener listener) {
+        public void bindUser(final ConstructorStanding escuderia, final OnItemClickListener listener) {
             posicion.setText(String.valueOf(escuderia.getPosition()));
-            nombre.setText(escuderia.getName());
+            nombre.setText(escuderia.getConstructor().getName());
 
-            String pilots = "";
-            for(String pilot : escuderia.getPilots()){
-                pilots += pilot + " - ";
+
+            String drivers = "";
+            for(String driver : escuderia.getDriversNames()){
+                drivers += driver + " - ";
             }
-            pilots = pilots.substring(0, pilots.length() - 2);
-            pilotos.setText(pilots);
+            drivers = drivers.substring(0, drivers.length() - 2);
+            pilotos.setText(drivers);
             puntos.setText(String.valueOf(escuderia.getPoints()));
-            foto.setImageResource(escuderia.getFoto());
-            //Picasso.get().load(pelicula.getUrlCaratula()).into(imagen);
 
+            switch (escuderia.getConstructor().getConstructorId()){
+                case "alfa":
+                    escuderia.setDrawable(R.drawable.alfaromeo);
+                    foto.setImageResource(R.drawable.alfaromeo);
+                    break;
+                case "alphatauri":
+                    escuderia.setDrawable(R.drawable.alphatauri);
+                    foto.setImageResource(R.drawable.alphatauri);
+                    break;
+                case "alpine":
+                    escuderia.setDrawable(R.drawable.alpine);
+                    foto.setImageResource(R.drawable.alpine);
+                    break;
+                case "aston_martin":
+                    escuderia.setDrawable(R.drawable.astonmartin);
+                    foto.setImageResource(R.drawable.astonmartin);
+                    break;
+                case "ferrari":
+                    escuderia.setDrawable(R.drawable.ferrari);
+                    foto.setImageResource(R.drawable.ferrari);
+                    break;
+                case "haas":
+                    escuderia.setDrawable(R.drawable.haas);
+                    foto.setImageResource(R.drawable.haas);
+                    break;
+                case "mclaren":
+                    escuderia.setDrawable(R.drawable.mclaren);
+                    foto.setImageResource(R.drawable.mclaren);
+                    break;
+                case "mercedes":
+                    escuderia.setDrawable(R.drawable.mercedes);
+                    foto.setImageResource(R.drawable.mercedes);
+                    break;
+                case "red_bull":
+                    escuderia.setDrawable(R.drawable.redbull);
+                    foto.setImageResource(R.drawable.redbull);
+                    break;
+                case "williams":
+                    escuderia.setDrawable(R.drawable.williams);
+                    foto.setImageResource(R.drawable.williams);
+                    break;
+                default:
+                    escuderia.setDrawable(R.drawable.f1logo);
+                    foto.setImageResource(R.drawable.f1logo);
+                    break;
+            }
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {

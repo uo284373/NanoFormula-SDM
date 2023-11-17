@@ -7,7 +7,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".EscuderiaDetails"
     tools:showIn="@layout/activity_escuderia_details"
-    android:background="@drawable/fondo_degradado">
+    android:background="@drawable/fondo_degradado"
+    android:layout_marginTop="50dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,23 +19,13 @@
         android:gravity="center|top"
          >
 
-
-        <TextView
-            android:id="@+id/txNombreEscuderia"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/nombreEscuderia"
-            android:layout_marginBottom="20dp"
-            android:textAlignment="center"/>
-
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ftEscuderia"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="274dp"
+            android:layout_height="176dp"
             android:contentDescription="@string/fotoEscuderia"
-            app:srcCompat="@mipmap/ic_launcher"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/roundedImageView" />
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/ic_launcher" />
 
         <TextView
             android:id="@+id/txNacionalidadEscuderia"
@@ -278,6 +269,12 @@
 
 
         </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/layoutTemporadaEscuderia"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
 
 
     </LinearLayout>

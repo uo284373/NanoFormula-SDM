@@ -45,6 +45,8 @@ dependencies {
 
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
 
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
     implementation ('com.google.apis:google-api-services-youtube:v3-rev222-1.25.0') {
         exclude group: 'com.google.guava', module: 'guava'
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'

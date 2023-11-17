@@ -134,6 +134,7 @@ public class CarreraDetails extends AppCompatActivity {
         textView.setGravity(Gravity.CENTER);
         layoutDetallesCarrera.addView(imageView,4);
         layoutDetallesCarrera.addView(textView,5);
+        loaderGif.dismiss();
     }
 
     private void rellenarTablaResultados() {
@@ -153,7 +154,7 @@ public class CarreraDetails extends AppCompatActivity {
             txNombrePiloto.setText(result.getDriver().getFamilyName());
             txNombreEscuderiaCarrera.setText(result.getConstructor().getName());
             txPuntosCarrera.setText(result.getPoints());
-            String time = result.getTime() != null ? result.getTime().getTime() : "";
+            String time = result.getTime() != null ? result.getTime().getTime() : result.getStatus();
             txTiempoPilotoCarrera.setText(time);
 
             // Establecer layout_weight en 1 para los TextView dinámicos
