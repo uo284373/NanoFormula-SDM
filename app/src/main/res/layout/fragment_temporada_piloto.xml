@@ -131,14 +131,14 @@
             android:drawableLeft="@drawable/linea"
             android:drawableRight="@drawable/linea"
             android:textColor="@color/white"
-            android:layout_marginTop="-25dp"
+            android:layout_marginHorizontal="15dp"
             />
 
         <com.github.mikephil.charting.charts.LineChart
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:id="@+id/lineChartPuntosPiloto"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginHorizontal="15dp"/>
 
         <TextView
             android:id="@+id/txGraficoPosSalidaFin"
@@ -149,13 +149,16 @@
             android:drawableLeft="@drawable/linea"
             android:drawableRight="@drawable/linea"
             android:textColor="@color/white"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="5dp"
             />
 
         <com.github.mikephil.charting.charts.LineChart
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:id="@+id/lineChartPosPilotoSalidaFin"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginHorizontal="15dp"
+            />
 
     </LinearLayout>
 

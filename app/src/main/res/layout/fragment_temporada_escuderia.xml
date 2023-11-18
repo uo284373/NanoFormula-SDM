@@ -14,7 +14,8 @@
             android:id="@+id/txGraficoPuntosTemp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="15dp"
             android:text="@string/graficoPuntosTemp"
             android:gravity="center"
             android:drawableLeft="@drawable/linea"
@@ -26,7 +27,29 @@
             android:layout_width="match_parent"
             android:layout_margin="15dp"
             android:layout_height="200dp"
-            android:id="@+id/lineChartPuntosEscuderias"/>
+            android:id="@+id/lineChartPuntosEscuderias"
+            android:layout_marginHorizontal="15dp"
+            />
+
+        <TextView
+            android:id="@+id/txPilotos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:text="@string/pilotos"
+            android:gravity="center"
+            android:drawableLeft="@drawable/linea"
+            android:drawableRight="@drawable/linea"
+            android:textColor="@color/white"
+            />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:layout_width="match_parent"
+            android:layout_margin="15dp"
+            android:layout_height="200dp"
+            android:id="@+id/lineChartComparativaPilotos"
+            android:layout_marginHorizontal="15dp"
+            />
 
     </LinearLayout>
 
