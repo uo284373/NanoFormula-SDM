@@ -19,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -103,7 +104,9 @@ public class CarreraDetails extends AppCompatActivity {
             mostrarDatosCarrera();
             Date fechaActual = new Date();
             Date fechaCarrera = convertirFechaStringADate(race.getDate());
-            if (fechaCarrera != null && fechaCarrera.compareTo(fechaActual) <= 0) {
+            long timeDifference = fechaActual.getTime() - fechaCarrera.getTime();
+            long hoursDifference = timeDifference / (60 * 60 * 1000);
+            if (hoursDifference >= 24) {
                 //new YouTubeSearchTask().execute("F1 Highlights " + race.getSeason() + " " + race.getRaceName());
                 cargarDatos();
             }else {
