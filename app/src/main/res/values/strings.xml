@@ -152,4 +152,7 @@
     <string name="pilotoEscudería">ESCUDERIA</string>
     <string name="graficoPuntosTemp">PUNTOS POR CARRERA</string>
     <string name="graficoPosSalidaFin">POSICIÓN SALIDA VS FINAL</string>
+    <string name="CalendarioGP">CALENDARIO DE GP</string>
+    <string name="siguienteCarrera">SIGUIENTE CARRERA</string>
+    <string name="pilotos">PILOTOS</string>
 </resources>

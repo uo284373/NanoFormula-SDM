@@ -23,6 +23,7 @@ import com.example.nanoformula.modelo.raceResultsByConstructor.Result;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -54,6 +55,7 @@ public class EscuderiaDetails extends AppCompatActivity {
     AtomicInteger llamadasCompletadasGeneral = new AtomicInteger(0);
     int totalLlamadasGeneral = 4; //8;
     private ArrayList<String> puntosTemp = new ArrayList<>();
+    private ArrayList<String> pilotosTemp = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,7 +201,7 @@ public class EscuderiaDetails extends AppCompatActivity {
 
     private void llamadaCompletaGif(AtomicInteger llamadasCompletadas, int totalLlamadas) {
         if (llamadasCompletadas.incrementAndGet() == totalLlamadas) {
-            TemporadaEscuderiaFragment temporadaEscuderiaFragment=TemporadaEscuderiaFragment.newInstance(puntosTemp);
+            TemporadaEscuderiaFragment temporadaEscuderiaFragment=TemporadaEscuderiaFragment.newInstance(puntosTemp, pilotosTemp);
             getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaEscuderia, temporadaEscuderiaFragment).commit();
             loaderGif.dismiss();
         }
@@ -219,12 +221,21 @@ public class EscuderiaDetails extends AppCompatActivity {
             public void onResponse(Call<RaceResultsByConstructor> call, Response<RaceResultsByConstructor> response) {
                 if(response.isSuccessful()){
                     int points = 0;
+                    HashMap<String, String> drivers = new HashMap<>();
                     for(Race race : response.body().getMRData().getRaceTable().getRaces()){
                         for(Result result : race.getResults()){
                             points += Integer.parseInt(result.getPoints());
+
+                            String races = drivers.get(result.getDriver().getFamilyName());
+
+                            drivers.put(result.getDriver().getFamilyName(), races == null ? race.getRound() + "," + result.getPoints() : races + ";" + race.getRound() + "," + result.getPoints());
                         }
                         puntosTemp.add(race.getRound()+";"+String.valueOf(points));
                     }
+                    for(String driver : drivers.keySet()){
+                        pilotosTemp.add(driver + "-" + drivers.get(driver));
+                    }
+
                     llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
 
                 }else{
