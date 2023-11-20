@@ -27,7 +27,7 @@ public class Escuderia implements Parcelable {
         this.nacionalidad = nacionalidad;
         this.pilots = pilots;
         this.points = points;
-        this.foto = R.drawable.mclaren;
+        this.foto = R.drawable.mclarenfragment;
     }
 
     public Escuderia(int position, String name, String nacionalidad, Set<String> pilots, int points, int wins, int titles, int seasons, int foto) {

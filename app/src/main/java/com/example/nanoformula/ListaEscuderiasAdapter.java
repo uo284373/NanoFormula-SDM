@@ -1,8 +1,5 @@
 package com.example.nanoformula;
 
-import android.app.Application;
-import android.content.Context;
-import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -108,8 +104,8 @@ public class ListaEscuderiasAdapter extends RecyclerView.Adapter<ListaEscuderias
                     escuderia.setDrawableDetails(R.drawable.alpinedetails);
                     break;
                 case "aston_martin":
-                    escuderia.setDrawableFragment(R.drawable.astonmartin);
-                    escuderia.setDrawableDetails(R.drawable.astonmartin);
+                    escuderia.setDrawableFragment(R.drawable.astonmartinfragment);
+                    escuderia.setDrawableDetails(R.drawable.astonmartindetails);
                     break;
                 case "ferrari":
                     escuderia.setDrawableFragment(R.drawable.ferrarifragment);
@@ -120,16 +116,16 @@ public class ListaEscuderiasAdapter extends RecyclerView.Adapter<ListaEscuderias
                     escuderia.setDrawableDetails(R.drawable.haasdetails);
                     break;
                 case "mclaren":
-                    escuderia.setDrawableFragment(R.drawable.mclaren);
-                    escuderia.setDrawableDetails(R.drawable.mclaren);
+                    escuderia.setDrawableFragment(R.drawable.mclarenfragment);
+                    escuderia.setDrawableDetails(R.drawable.mclarendetails);
                     break;
                 case "mercedes":
-                    escuderia.setDrawableFragment(R.drawable.mercedes);
-                    escuderia.setDrawableDetails(R.drawable.mercedes);
+                    escuderia.setDrawableFragment(R.drawable.mercedesfragment);
+                    escuderia.setDrawableDetails(R.drawable.mercedesdetails);
                     break;
                 case "red_bull":
-                    escuderia.setDrawableFragment(R.drawable.redbull);
-                    escuderia.setDrawableDetails(R.drawable.redbull);
+                    escuderia.setDrawableFragment(R.drawable.redbullfragment);
+                    escuderia.setDrawableDetails(R.drawable.redbulldetails);
                     break;
                 case "williams":
                     escuderia.setDrawableFragment(R.drawable.williamsfragment);
