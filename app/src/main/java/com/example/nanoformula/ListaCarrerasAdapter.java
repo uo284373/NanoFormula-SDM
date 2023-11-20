@@ -85,7 +85,7 @@ public class ListaCarrerasAdapter extends RecyclerView.Adapter<ListaCarrerasAdap
             nombre.setText(carrera.getRaceName());
             localizacion.setText(carrera.getCircuit().getCircuitName());
             ciudad.setText(carrera.getCircuit().getLocation().getLocality()+" - "+carrera.getCircuit().getLocation().getCountry());
-            fecha.setText(carrera.getDate());
+            fecha.setText(carrera.getDateFormat());
             Picasso.get().load(carrera.getCircuit().getUrl()).into(bandera);
 
 

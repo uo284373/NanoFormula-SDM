@@ -116,7 +116,7 @@ public class CarrerasFragment extends Fragment {
         nombreCarrera.setText(race.getRaceName());
         nombreCircuito.setText(race.getCircuit().getCircuitName());
         localidad.setText(race.getCircuit().getLocation().getLocality());
-        fecha.setText(race.getDate());
+        fecha.setText(race.getDateFormat());
         hora.setText(race.getTime().substring(0,5));
     }
 

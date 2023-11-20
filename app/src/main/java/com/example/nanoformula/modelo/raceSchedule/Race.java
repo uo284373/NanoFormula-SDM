@@ -98,6 +98,12 @@ public class Race implements Parcelable {
         return date;
     }
 
+    public String getDateFormat(){
+        String[] date = this.date.split("-");
+
+        return date[2] + "-" + date[1] + "-" + date[0];
+    }
+
     public void setDate(String date) {
         this.date = date;
     }

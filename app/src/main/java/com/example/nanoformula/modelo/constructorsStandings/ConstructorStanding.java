@@ -31,11 +31,8 @@ public class ConstructorStanding implements Parcelable {
     private String round;
 
     private List<String> driversNames = new ArrayList<>();
-    private int drawable;
-
-    public int getDrawable() {
-        return drawable;
-    }
+    private int drawableDetails;
+    private int drawableFragment;
 
     protected ConstructorStanding(Parcel in) {
         position = in.readString();
@@ -45,7 +42,8 @@ public class ConstructorStanding implements Parcelable {
         constructor = in.readParcelable(Constructor.class.getClassLoader());
         round = in.readString();
         driversNames = in.createStringArrayList();
-        drawable = in.readInt();
+        drawableDetails = in.readInt();
+        drawableFragment = in.readInt();
     }
 
     @Override
@@ -57,7 +55,8 @@ public class ConstructorStanding implements Parcelable {
         dest.writeParcelable(constructor, flags);
         dest.writeString(round);
         dest.writeStringList(driversNames);
-        dest.writeInt(drawable);
+        dest.writeInt(drawableDetails);
+        dest.writeInt(drawableFragment);
     }
 
     @Override
@@ -76,6 +75,22 @@ public class ConstructorStanding implements Parcelable {
             return new ConstructorStanding[size];
         }
     };
+
+    public int getDrawableDetails() {
+        return drawableDetails;
+    }
+
+    public void setDrawableDetails(int drawableDetails) {
+        this.drawableDetails = drawableDetails;
+    }
+
+    public int getDrawableFragment() {
+        return drawableFragment;
+    }
+
+    public void setDrawableFragment(int drawableFragment) {
+        this.drawableFragment = drawableFragment;
+    }
 
     public List<String> getDriversNames() {
         return driversNames;
@@ -139,7 +154,5 @@ public class ConstructorStanding implements Parcelable {
         driversNames.add(driverName);
     }
 
-    public void setDrawable(int drawable) {
-        this.drawable = drawable;
-    }
+
 }
