@@ -268,7 +268,7 @@ public class CarreraDetails extends AppCompatActivity {
         nombreCarrera.setText(race.getRaceName());
         nombreCircuito.setText(circuit.getCircuitName());
         localidad.setText(circuit.getLocation().getLocality());
-        fecha.setText(race.getDate());
+        fecha.setText(race.getDateFormat());
         hora.setText(race.getTime().substring(0,5));
     }
 
