@@ -1,174 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="60dp"
     android:gravity="center|top"
     android:orientation="vertical"
-    android:layout_marginTop="60dp"
     tools:layout_editor_absoluteX="1dp"
     tools:layout_editor_absoluteY="1dp">
 
-
-    <TextView
-        android:id="@+id/txSiguienteCarrera"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:drawableLeft="@drawable/linea"
-        android:drawableRight="@drawable/linea"
-        android:gravity="center"
-        android:text="@string/siguienteCarrera"
-        android:textColor="@color/white" />
+        android:gravity="center|top"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/ftPilotoCircuito"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:contentDescription="@string/fotoCircuito"
-        android:scaleType="centerInside"
-        app:shapeAppearanceOverlay="@style/Theme.NanoFormula"
-        app:srcCompat="@mipmap/ic_launcher" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/fotoBanderaCarrera"
-            android:layout_width="24dp"
-            android:layout_height="16dp"
-            android:layout_gravity="center"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/fotoConstructor"
-            android:scaleType="centerCrop"
-            app:srcCompat="@mipmap/ic_launcher" />
 
         <TextView
-            android:id="@+id/txNombreCarrera"
+            android:id="@+id/txSiguienteCarrera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:drawableLeft="@drawable/linea"
+            android:drawableRight="@drawable/linea"
+            android:gravity="center"
+            android:text="@string/siguienteCarrera"
+            android:textColor="@color/white" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ftPilotoCircuito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/fotoCircuito"
+            android:scaleType="centerInside"
+            app:shapeAppearanceOverlay="@style/Theme.NanoFormula"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/fotoBanderaCarrera"
+                android:layout_width="24dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/fotoConstructor"
+                android:scaleType="centerCrop"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/txNombreCarrera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:text="@string/nombreCarrera"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txNombreCircuito"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:gravity="center"
-            android:text="@string/nombreCarrera"
+            android:text="@string/nombreCircuito"
             android:textColor="@color/white" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/txNombreCircuito"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:gravity="center"
-        android:text="@string/nombreCircuito"
-        android:textColor="@color/white" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="center"
-        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="40dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/txTituloLocalidad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/localidadCircuito" />
-
-            <TextView
-                android:id="@+id/txLocalidad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="TextView"
-                android:textColor="@color/white" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginRight="60dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/txTituloFecha"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/fecha_carrera" />
-
-            <TextView
-                android:id="@+id/txFecha"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="TextView"
-                android:textColor="@color/white" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginRight="20dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/txTituloHora"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/hora_carrera" />
-
-            <TextView
-                android:id="@+id/txHora"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="TextView"
-                android:textColor="@color/white" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/txCalendario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:drawableLeft="@drawable/linea"
-        android:drawableRight="@drawable/linea"
-        android:gravity="center"
-        android:text="@string/CalendarioGP"
-        android:textColor="@color/white" />
-
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".CarrerasFragment"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="70dp">
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/carrerasRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-</LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="40dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txTituloLocalidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/localidadCircuito" />
+
+                <TextView
+                    android:id="@+id/txLocalidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="TextView"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="60dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txTituloFecha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/fecha_carrera" />
+
+                <TextView
+                    android:id="@+id/txFecha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="TextView"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txTituloHora"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/hora_carrera" />
+
+                <TextView
+                    android:id="@+id/txHora"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="TextView"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txCalendario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:drawableLeft="@drawable/linea"
+            android:drawableRight="@drawable/linea"
+            android:gravity="center"
+            android:text="@string/CalendarioGP"
+            android:textColor="@color/white" />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="70dp"
+            tools:context=".CarrerasFragment">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/carrerasRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
