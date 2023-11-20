@@ -96,50 +96,52 @@ public class ListaEscuderiasAdapter extends RecyclerView.Adapter<ListaEscuderias
 
             switch (escuderia.getConstructor().getConstructorId()){
                 case "alfa":
-                    escuderia.setDrawable(R.drawable.alfaromeo);
-                    foto.setImageResource(R.drawable.alfaromeo);
+                    escuderia.setDrawableFragment(R.drawable.alfaromeofragment);
+                    escuderia.setDrawableDetails(R.drawable.alfaromeodetails);
                     break;
                 case "alphatauri":
-                    escuderia.setDrawable(R.drawable.alphatauri);
-                    foto.setImageResource(R.drawable.alphatauri);
+                    escuderia.setDrawableFragment(R.drawable.alphataurifragment);
+                    escuderia.setDrawableDetails(R.drawable.alphatauridetails);
                     break;
                 case "alpine":
-                    escuderia.setDrawable(R.drawable.alpine);
-                    foto.setImageResource(R.drawable.alpine);
+                    escuderia.setDrawableFragment(R.drawable.alpinefragment);
+                    escuderia.setDrawableDetails(R.drawable.alpinedetails);
                     break;
                 case "aston_martin":
-                    escuderia.setDrawable(R.drawable.astonmartin);
-                    foto.setImageResource(R.drawable.astonmartin);
+                    escuderia.setDrawableFragment(R.drawable.astonmartin);
+                    escuderia.setDrawableDetails(R.drawable.astonmartin);
                     break;
                 case "ferrari":
-                    escuderia.setDrawable(R.drawable.ferrari);
-                    foto.setImageResource(R.drawable.ferrari);
+                    escuderia.setDrawableFragment(R.drawable.ferrarifragment);
+                    escuderia.setDrawableDetails(R.drawable.ferraridetails);
                     break;
                 case "haas":
-                    escuderia.setDrawable(R.drawable.haas);
-                    foto.setImageResource(R.drawable.haas);
+                    escuderia.setDrawableFragment(R.drawable.haasfragment);
+                    escuderia.setDrawableDetails(R.drawable.haasdetails);
                     break;
                 case "mclaren":
-                    escuderia.setDrawable(R.drawable.mclaren);
-                    foto.setImageResource(R.drawable.mclaren);
+                    escuderia.setDrawableFragment(R.drawable.mclaren);
+                    escuderia.setDrawableDetails(R.drawable.mclaren);
                     break;
                 case "mercedes":
-                    escuderia.setDrawable(R.drawable.mercedes);
-                    foto.setImageResource(R.drawable.mercedes);
+                    escuderia.setDrawableFragment(R.drawable.mercedes);
+                    escuderia.setDrawableDetails(R.drawable.mercedes);
                     break;
                 case "red_bull":
-                    escuderia.setDrawable(R.drawable.redbull);
-                    foto.setImageResource(R.drawable.redbull);
+                    escuderia.setDrawableFragment(R.drawable.redbull);
+                    escuderia.setDrawableDetails(R.drawable.redbull);
                     break;
                 case "williams":
-                    escuderia.setDrawable(R.drawable.williams);
-                    foto.setImageResource(R.drawable.williams);
+                    escuderia.setDrawableFragment(R.drawable.williamsfragment);
+                    escuderia.setDrawableDetails(R.drawable.williamsdetails);
                     break;
                 default:
-                    escuderia.setDrawable(R.drawable.f1logo);
-                    foto.setImageResource(R.drawable.f1logo);
+                    escuderia.setDrawableFragment(R.drawable.f1logo);
+                    escuderia.setDrawableDetails(R.drawable.f1logo);
                     break;
             }
+
+            foto.setImageResource(escuderia.getDrawableFragment());
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
