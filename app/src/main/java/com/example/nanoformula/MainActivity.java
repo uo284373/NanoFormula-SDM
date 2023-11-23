@@ -92,9 +92,9 @@ public class MainActivity extends AppCompatActivity {
     private void llamadaCompletaGif(AtomicInteger llamadasCompletadas, int totalLlamadas) {
         if (!isFinishing() && !isDestroyed()) {
             if (llamadasCompletadas.incrementAndGet() == totalLlamadas) {
-                loaderGif.dismiss();
                 CarrerasFragment carrerasFragment=CarrerasFragment.newInstance(raceSchedule);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, carrerasFragment).commit();
+                loaderGif.dismiss();
             }
         }
     }
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         ErgastApi ergastApi = retrofit.create(ErgastApi.class);
-        Call<Standings> result = ergastApi.getDriversClasification();
+        Call<Standings> result = ergastApi.getDriversClasification("current");
         result.enqueue(new Callback<Standings>() {
             @Override
             public void onResponse(Call<Standings> call, Response<Standings> response) {

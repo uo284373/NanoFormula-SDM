@@ -16,8 +16,8 @@ import retrofit2.http.Path;
 
 public interface ErgastApi {
 
-    @GET("current/driverStandings.json")
-    Call<Standings> getDriversClasification();
+    @GET("{temp}/driverStandings.json")
+    Call<Standings> getDriversClasification(@Path("temp") String temp);
 
     @GET("drivers/{driverName}/results/{position}.json")
     Call<DriverRaceResults> getDriverRaceResults(@Path("driverName") String driverName,@Path("position") int position);
@@ -32,6 +32,8 @@ public interface ErgastApi {
 
     @GET("drivers/{driverName}/driverStandings.json")
     Call<Standings> getDriverStandings(@Path("driverName") String driverName);
+    @GET("{temp}/drivers/{driverName}/driverStandings.json")
+    Call<Standings> getDriverStandingsForTemp(@Path("temp") String temp,@Path("driverName") String driverName);
 
     @GET("drivers/{driverName}/fastest/1/results.json")
     Call<DriverRaceResults> getDriverFastestLap(@Path("driverName") String driverName);

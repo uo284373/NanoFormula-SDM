@@ -1,14 +1,18 @@
 package com.example.nanoformula;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nanoformula.API.ErgastApi;
 import com.example.nanoformula.modelo.Piloto;
@@ -53,6 +57,7 @@ public class PilotoDetails extends AppCompatActivity {
     private List<StandingsList> standingsList = new ArrayList<>();
     private ArrayList<String> racesStartPosition = new ArrayList<>();
     private ArrayList<String> racesFinalPosition = new ArrayList<>();
+    private ArrayList<String> numTempPiloto = new ArrayList<>();
     TextView nacionalidadPiloto;
     TextView numeroPiloto;
     TextView codigoPiloto;
@@ -67,9 +72,12 @@ public class PilotoDetails extends AppCompatActivity {
     TextView vueltasRapidasPiloto;
     TextView puntosPiloto;
     TextView numEquipos;
+    Button btnSelectTemp;
     Loader loaderGif;
     AtomicInteger llamadasCompletadasGeneral = new AtomicInteger(0);
+    AtomicInteger llamadasCompletadasTemporada = new AtomicInteger(0);
     int totalLlamadasGeneral = 9;
+    int llamadasTemporada = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +105,7 @@ public class PilotoDetails extends AppCompatActivity {
         vueltasRapidasPiloto = findViewById(R.id.txVueltaRapidaPiloto);
         puntosPiloto = findViewById(R.id.txPuntosPilotoTotal);
         numEquipos = findViewById(R.id.txMejorNumEquipos);
+        btnSelectTemp = findViewById(R.id.btnSeleccionarTemporada);
 
         if(piloto != null){
             mostrarDatosPiloto();
@@ -106,7 +115,7 @@ public class PilotoDetails extends AppCompatActivity {
             mostrarPolesPiloto();
             mostrarTemporadasPiloto();
             mostrarVueltasRapidasPiloto();
-            mostrarTemporadaActualStandings();
+            mostrarTemporadaStandingsCurrent();
         }
     }
 
@@ -117,7 +126,7 @@ public class PilotoDetails extends AppCompatActivity {
     }
 
     private void mostrarDatosPiloto() {
-        toolbar.setTitle(piloto.getGivenName()+" "+piloto.getFamilyName());
+        ((TextView)findViewById(R.id.tituloToolbarPiloto)).setText(piloto.getGivenName()+" "+piloto.getFamilyName());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         nacionalidadPiloto.setText(piloto.getNationality());
@@ -195,11 +204,42 @@ public class PilotoDetails extends AppCompatActivity {
             podiosPiloto.setText(String.valueOf(podios));
         }
     }
+
+    private void llamadaCompletaTemporada(AtomicInteger llamadasCompletadas, int totalLlamadas) {
+        if (llamadasCompletadas.incrementAndGet() == totalLlamadas) {
+            TemporadaPilotoFragment temporadaPilotoFragment=TemporadaPilotoFragment.newInstance(standings,constructors,puntosTemp,racesStartPosition,racesFinalPosition);
+            getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaPiloto, temporadaPilotoFragment).commit();
+            loaderGif.dismiss();
+        }
+    }
     private void llamadaCompletaGif(AtomicInteger llamadasCompletadas, int totalLlamadas) {
         if (llamadasCompletadas.incrementAndGet() == totalLlamadas) {
             TemporadaPilotoFragment temporadaPilotoFragment=TemporadaPilotoFragment.newInstance(standings,constructors,puntosTemp,racesStartPosition,racesFinalPosition);
             getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaPiloto, temporadaPilotoFragment).commit();
             loaderGif.dismiss();
+
+            btnSelectTemp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog.Builder dialogo1 = new AlertDialog.Builder(PilotoDetails.this);
+                    dialogo1.setTitle("Seleccione una temporada");
+                    CharSequence[] itemsArray = numTempPiloto.toArray(new CharSequence[numTempPiloto.size()]);
+                    dialogo1.setSingleChoiceItems(itemsArray, -1, (dialog, which) -> {
+                        CharSequence temp = itemsArray[which];
+                        btnSelectTemp.setText(temp);
+                        puntosTemp.clear();
+                        racesFinalPosition.clear();
+                        racesStartPosition.clear();
+                        llamadasTemporada = 2;
+                        llamadasCompletadasTemporada = new AtomicInteger(0);
+                        loaderGif.show();
+                        mostrarTemporadaStandings(temp.toString());
+                        mostrarEstadisticasGeneralesTemporadaPiloto(temp.toString());
+                        dialog.dismiss();
+                    });
+                    dialogo1.show();
+                }
+            });
         }
     }
 
@@ -322,8 +362,9 @@ public class PilotoDetails extends AppCompatActivity {
                 if(response.isSuccessful()){
                     temporadasPiloto.setText(response.body().getMRData().getTotal());
                     standingsList = response.body().getMRData().getStandingsTable().getStandingsLists();
-                    for(StandingsList standings : response.body().getMRData().getStandingsTable().getStandingsLists()){
-                        for(DriverStanding driverStanding : standings.getDriverStandings()){
+                    for(StandingsList standingsResponse : response.body().getMRData().getStandingsTable().getStandingsLists()){
+                        numTempPiloto.add(standingsResponse.getSeason());
+                        for(DriverStanding driverStanding : standingsResponse.getDriverStandings()){
                             puntos += Double.parseDouble(driverStanding.getPoints());
                             for(Constructor constructor : driverStanding.getConstructors()){
                                 if(!equipos.contains(constructor.getConstructorId())){
@@ -335,8 +376,9 @@ public class PilotoDetails extends AppCompatActivity {
                     puntos += Integer.parseInt(standings.getPoints());
                     puntosPiloto.setText(String.valueOf(puntos));
                     numEquipos.setText(String.valueOf(equipos.size()));
-
+                    numTempPiloto.add("2023");
                     llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
+
                 }else{
                     loaderGif.dismiss();
                     Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
@@ -381,7 +423,7 @@ public class PilotoDetails extends AppCompatActivity {
 
 
 
-    private void mostrarTemporadaActualStandings(){
+    private void mostrarTemporadaStandingsCurrent(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://ergast.com/api/f1/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -416,6 +458,71 @@ public class PilotoDetails extends AppCompatActivity {
 
 
     }
+
+    private void mostrarTemporadaStandings(String temporada){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ergast.com/api/f1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ErgastApi ergastApi = retrofit.create(ErgastApi.class);
+        Call<DriverRaceResults> result = ergastApi.getDriverRaceResultsForTemp(temporada,piloto.getDriverId());
+        result.enqueue(new Callback<DriverRaceResults>() {
+            @Override
+            public void onResponse(Call<DriverRaceResults> call, Response<DriverRaceResults> response) {
+                if(response.isSuccessful()){
+                    int points = 0;
+                    for(Race race : response.body().getMRData().getRaceTable().getRaces()){
+                        points += Integer.parseInt(race.getResults().get(0).getPoints());
+                        puntosTemp.add(race.getRound()+";"+String.valueOf(points));
+                    }
+                    getRaceStartPosition(response.body().getMRData().getRaceTable().getRaces());
+                    llamadaCompletaTemporada(llamadasCompletadasTemporada,llamadasTemporada);
+                }else{
+                    loaderGif.dismiss();
+                    Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DriverRaceResults> call, Throwable t) {
+                loaderGif.dismiss();
+                Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto "+t.getMessage(), Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+
+    }
+
+    private void mostrarEstadisticasGeneralesTemporadaPiloto(String temp){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ergast.com/api/f1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ErgastApi ergastApi = retrofit.create(ErgastApi.class);
+        Call<Standings> result = ergastApi.getDriverStandingsForTemp(temp,piloto.getDriverId());
+        result.enqueue(new Callback<Standings>() {
+            @Override
+            public void onResponse(Call<Standings> call, Response<Standings> response) {
+                if(response.isSuccessful()){
+                    standings = response.body().getMRData().getStandingsTable().getStandingsLists().get(0).getDriverStandings().get(0);
+                    constructors = new ArrayList<>(response.body().getMRData().getStandingsTable().getStandingsLists().get(0).getDriverStandings().get(0).getConstructors());
+                    llamadaCompletaTemporada(llamadasCompletadasTemporada,llamadasTemporada);
+
+                }else{
+                    Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Standings> call, Throwable t) {
+                Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto "+t.getMessage(), Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
 
     private void getRaceStartPosition(List<Race> races){
         for(Race race : races){

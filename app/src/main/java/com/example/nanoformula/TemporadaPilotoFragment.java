@@ -139,7 +139,6 @@ public class TemporadaPilotoFragment extends Fragment {
         lineChartPosStartFinal.getAxisLeft().setAxisMinimum(0);
         lineChartPosStartFinal.getAxisLeft().setTextColor(Color.WHITE);
 
-        lineChartPosStartFinal.getAxisLeft().setAxisMaximum(20);
         lineChartPosStartFinal.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         lineChartPosStartFinal.getXAxis().setTextColor(Color.WHITE);
         lineChartPosStartFinal.getXAxis().setLabelCount(raceFinalPosition.size(), true);
