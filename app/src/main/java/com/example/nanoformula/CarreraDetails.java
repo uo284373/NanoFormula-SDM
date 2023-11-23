@@ -1,6 +1,10 @@
 package com.example.nanoformula;
 
+import android.app.FragmentTransaction;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.example.nanoformula.API.ErgastApi;
@@ -19,15 +23,22 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.squareup.picasso.Picasso;
 
 import java.io.UnsupportedEncodingException;
@@ -44,7 +55,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class CarreraDetails extends AppCompatActivity {
+public class CarreraDetails extends AppCompatActivity implements YouTubeSearchTask.OnSearchCompleteListener {
 
     private Circuit circuit;
     private Race race;
@@ -107,7 +118,7 @@ public class CarreraDetails extends AppCompatActivity {
             long timeDifference = fechaActual.getTime() - fechaCarrera.getTime();
             long hoursDifference = timeDifference / (60 * 60 * 1000);
             if (hoursDifference >= 24) {
-                //new YouTubeSearchTask().execute("F1 Highlights " + race.getSeason() + " " + race.getRaceName());
+                new YouTubeSearchTask(this).execute("Resumen del GP de " + race.getRaceName()+ " - F1 " + race.getSeason());
                 cargarDatos();
             }else {
                 mostrarCarreraNoDisponible();
@@ -119,6 +130,8 @@ public class CarreraDetails extends AppCompatActivity {
         table.setVisibility(View.GONE);
         findViewById(R.id.txResultados).setVisibility(View.GONE);
         findViewById(R.id.layoutDatosGandor).setVisibility(View.GONE);
+        findViewById(R.id.layoutVideo).setVisibility(View.GONE);
+        findViewById(R.id.txVideoCarrera).setVisibility(View.GONE);
         findViewById(R.id.layoutGanador).setVisibility(View.GONE);
         findViewById(R.id.txTemporada).setVisibility(View.GONE);
 
@@ -309,4 +322,25 @@ public class CarreraDetails extends AppCompatActivity {
             return null;
         }
     }
-}
+
+    @Override
+    public void onSearchComplete(String url) {
+        Log.i("VideoUrl", url);
+
+        if (!url.isEmpty()) {
+            YouTubePlayerView youTubePlayerView = findViewById(R.id.youtube_player_view);
+            youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                @Override
+                public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                    youTubePlayer.cueVideo(getVideoIdFromUrl(url),0);
+                }
+            });
+        }
+    }
+
+    private String getVideoIdFromUrl(String url) {
+        Uri uri = Uri.parse(url);
+        return uri.getQueryParameter("v");
+    }
+
+    }
