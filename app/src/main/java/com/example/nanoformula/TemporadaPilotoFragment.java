@@ -35,17 +35,20 @@ public class TemporadaPilotoFragment extends Fragment {
     private static final String DRIVER_POINTS = "driver_points";
     private static final String RACES_START_POSITION = "driver_start_position";
     private static final String RACES_FINAL_POSITION = "driver_final_position";
+    private static final String TEMP_PILOTO = "driver_temp";
 
     private DriverStanding driverStanding;
     private ArrayList<Constructor> constructors;
     private List<String> puntostemp = new ArrayList<>();
     private List<String> raceStartPosition = new ArrayList<>();
     private List<String> raceFinalPosition = new ArrayList<>();
+    private String tempPiloto;
 
     TextView posPiloto;
     TextView escuderiaPiloto;
     TextView victoriasPiloto;
     TextView puntosPiloto;
+    TextView temporadaPiloto;
     LineChart lineChartPuntosPiloto;
     LineChart lineChartPosStartFinal;
 
@@ -54,7 +57,7 @@ public class TemporadaPilotoFragment extends Fragment {
     }
 
 
-    public static TemporadaPilotoFragment newInstance(DriverStanding param1, ArrayList<Constructor> param2,ArrayList<String> param3,ArrayList<String> param4,ArrayList<String> param5) {
+    public static TemporadaPilotoFragment newInstance(DriverStanding param1, ArrayList<Constructor> param2,ArrayList<String> param3,ArrayList<String> param4,ArrayList<String> param5,String param6) {
         TemporadaPilotoFragment fragment = new TemporadaPilotoFragment();
         Bundle args = new Bundle();
         args.putParcelable(DRIVER_STANDING, param1);
@@ -62,6 +65,7 @@ public class TemporadaPilotoFragment extends Fragment {
         args.putStringArrayList(DRIVER_POINTS,param3);
         args.putStringArrayList(RACES_START_POSITION,param4);
         args.putStringArrayList(RACES_FINAL_POSITION,param5);
+        args.putString(TEMP_PILOTO,param6);
         fragment.setArguments(args);
         return fragment;
     }
@@ -75,6 +79,7 @@ public class TemporadaPilotoFragment extends Fragment {
             puntostemp = getArguments().getStringArrayList(DRIVER_POINTS);
             raceStartPosition = getArguments().getStringArrayList(RACES_START_POSITION);
             raceFinalPosition = getArguments().getStringArrayList(RACES_FINAL_POSITION);
+            tempPiloto = getArguments().getString(TEMP_PILOTO);
         }
     }
 
@@ -87,6 +92,7 @@ public class TemporadaPilotoFragment extends Fragment {
         escuderiaPiloto = root.findViewById(R.id.txEscuderiaPilotoTemporada);
         victoriasPiloto = root.findViewById(R.id.txVictoriasPilotoTemporada);
         puntosPiloto = root.findViewById(R.id.txPuntosPilotoTemporada);
+        temporadaPiloto = root.findViewById(R.id.txTemporadaActual);
         lineChartPuntosPiloto = root.findViewById(R.id.lineChartPuntosPiloto);
         lineChartPosStartFinal = root.findViewById(R.id.lineChartPosPilotoSalidaFin);
         createChartPoints();
@@ -96,6 +102,7 @@ public class TemporadaPilotoFragment extends Fragment {
         escuderiaPiloto.setText(constructors.get(0).getName());
         victoriasPiloto.setText(driverStanding.getWins());
         puntosPiloto.setText(driverStanding.getPoints());
+        temporadaPiloto.setText("TEMPORADA "+ tempPiloto);
         return root;
     }
 
