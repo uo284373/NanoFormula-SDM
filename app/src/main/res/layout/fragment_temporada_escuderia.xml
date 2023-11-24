@@ -9,48 +9,168 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
         <TextView
-            android:id="@+id/txGraficoPuntosTemp"
+            android:id="@+id/txTemporada"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="15dp"
-            android:text="@string/graficoPuntosTemp"
+            android:layout_margin="15dp"
+            android:text="@string/temporada"
             android:gravity="center"
             android:drawableLeft="@drawable/linea"
             android:drawableRight="@drawable/linea"
-            android:textColor="@color/white"
             />
 
-        <com.github.mikephil.charting.charts.LineChart
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_margin="15dp"
-            android:layout_height="200dp"
-            android:id="@+id/lineChartPuntosEscuderias"
-            android:layout_marginHorizontal="15dp"
-            />
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/txPilotos"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="20dp"
+
+                >
+
+                <TextView
+                    android:id="@+id/txPosEscuderia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/posEscudería"
+                    />
+
+                <TextView
+                    android:id="@+id/txPos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                >
+
+                <TextView
+                    android:id="@+id/txRondaEscuderias"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rondaEscudería" />
+
+                <TextView
+                    android:id="@+id/txRonda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                >
+
+                <TextView
+                    android:id="@+id/txVictoriasEscuderiaTemp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/victoriasEscudería" />
+
+                <TextView
+                    android:id="@+id/txVictoriasTemp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="20dp"
+                >
+
+                <TextView
+                    android:id="@+id/txPuntosEscuderiaTemp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/puntosEscudería" />
+
+                <TextView
+                    android:id="@+id/txPuntosTemp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:gravity="center"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:text="@string/pilotos"
-            android:gravity="center"
-            android:drawableLeft="@drawable/linea"
-            android:drawableRight="@drawable/linea"
-            android:textColor="@color/white"
-            />
+            android:orientation="vertical">
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:layout_width="match_parent"
-            android:layout_margin="15dp"
-            android:layout_height="200dp"
-            android:id="@+id/lineChartComparativaPilotos"
-            android:layout_marginHorizontal="15dp"
-            />
+            <TextView
+                android:id="@+id/txGraficoPuntosTemp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/graficoPuntosTemp"
+                android:gravity="center"
+                android:drawableLeft="@drawable/linea"
+                android:drawableRight="@drawable/linea"
+                android:textColor="@color/white"
+                />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:layout_width="match_parent"
+                android:layout_margin="15dp"
+                android:layout_height="200dp"
+                android:id="@+id/lineChartPuntosEscuderias"
+                android:layout_marginHorizontal="15dp"
+                />
+
+            <TextView
+                android:id="@+id/txPilotos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:text="@string/pilotos"
+                android:gravity="center"
+                android:drawableLeft="@drawable/linea"
+                android:drawableRight="@drawable/linea"
+                android:textColor="@color/white"
+                />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:layout_width="match_parent"
+                android:layout_margin="15dp"
+                android:layout_height="200dp"
+                android:id="@+id/lineChartComparativaPilotos"
+                android:layout_marginHorizontal="15dp"
+                />
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
+
+
 
 </FrameLayout>

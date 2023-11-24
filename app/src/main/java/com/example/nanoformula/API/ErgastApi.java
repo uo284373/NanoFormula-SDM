@@ -61,6 +61,9 @@ public interface ErgastApi {
 
     @GET("{temp}/constructors/{constructorName}/results.json?limit=100")
     Call<RaceResultsByConstructor> getConstructorsRaceResultsForTemp(@Path("temp") String temp, @Path("constructorName") String constructorName);
+
+    @GET("{temp}/constructors/{constructorName}/constructorStandings.json")
+    Call<StandingsEscuderias> getConstructorsStandingsForTemp(@Path("temp") String temp,@Path("constructorName") String driverName);
 }
 
 

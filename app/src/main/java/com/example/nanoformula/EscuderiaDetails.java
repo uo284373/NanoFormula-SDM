@@ -1,11 +1,14 @@
 package com.example.nanoformula;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,7 +18,6 @@ import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
 import com.example.nanoformula.modelo.constructorsStandings.StandingsEscuderias;
 import com.example.nanoformula.modelo.constructorsStandings.StandingsList;
 import com.example.nanoformula.modelo.driverRaceResults.DriverRaceResults;
-import com.example.nanoformula.modelo.driversStandings.DriverStanding;
 import com.example.nanoformula.modelo.driversStandings.Standings;
 import com.example.nanoformula.modelo.raceResultsByConstructor.Race;
 import com.example.nanoformula.modelo.raceResultsByConstructor.RaceResultsByConstructor;
@@ -24,7 +26,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import retrofit2.Call;
@@ -42,20 +43,22 @@ public class EscuderiaDetails extends AppCompatActivity {
     TextView victoriasEscuderia;
     TextView puntosEscuderia;
     TextView temporadasEscuderia;
-
-    TextView posEscuderia;
-    TextView rondaEscuderia;
-    TextView victoriasEscuderiaTemporada;
-    TextView puntosEscuderiaTemporada;
-
+    Button btnSelectTemp;
+    private ArrayList<String> numTemporadasEscuderia = new ArrayList<>();
     Toolbar toolbar;
 
     ImageView fotoEscuderia;
     Loader loaderGif;
     AtomicInteger llamadasCompletadasGeneral = new AtomicInteger(0);
+    AtomicInteger llamadasCompletadasTemporada = new AtomicInteger(0);
+
     int totalLlamadasGeneral = 4; //8;
+    int llamadasTemporada = 2;
+
     private ArrayList<String> puntosTemp = new ArrayList<>();
     private ArrayList<String> pilotosTemp = new ArrayList<>();
+
+    boolean first = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,18 +77,15 @@ public class EscuderiaDetails extends AppCompatActivity {
         puntosEscuderia = findViewById(R.id.txPuntos);
         temporadasEscuderia = findViewById(R.id.txTemporadas);
         fotoEscuderia = findViewById(R.id.ftEscuderia);
-        posEscuderia = findViewById(R.id.txPos);
-        rondaEscuderia = findViewById(R.id.txRonda);
-        victoriasEscuderiaTemporada = findViewById(R.id.txVictoriasTemp);
-        puntosEscuderiaTemporada = findViewById(R.id.txPuntosTemp);
         toolbar = findViewById(R.id.toolbarEscuderia);
+        btnSelectTemp = findViewById(R.id.btnSeleccionarTemporada);
 
         if(standings != null){
             mostrarDatosEscuderia();
             mostrarTitulosConstructor();
             mostrarVictoriasConstructor();
             mostrarTemporadasConstructor();
-            mostrarChart();
+            mostrarChart("current");
         }
     }
 
@@ -101,10 +101,6 @@ public class EscuderiaDetails extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         nacionalidadEscuderia.setText(standings.getConstructor().getNationality());
 
-        posEscuderia.setText(standings.getPosition());
-        rondaEscuderia.setText(standings.getRound());
-        victoriasEscuderiaTemporada.setText(standings.getWins());
-        puntosEscuderiaTemporada.setText(standings.getPoints());
         fotoEscuderia.setImageResource(standings.getDrawableDetails());
 //        fotoEscuderia.setScaleType();
 
@@ -181,6 +177,7 @@ public class EscuderiaDetails extends AppCompatActivity {
                         for(ConstructorStanding constructorStanding : standings.getConstructorStandings()){
                             puntos += Double.parseDouble(constructorStanding.getPoints());
                             seasons++;
+                            numTemporadasEscuderia.add(standings.getSeason());
                         }
                     }
                     Log.i("Seasons", String.valueOf(seasons));
@@ -201,21 +198,99 @@ public class EscuderiaDetails extends AppCompatActivity {
 
     private void llamadaCompletaGif(AtomicInteger llamadasCompletadas, int totalLlamadas) {
         if (llamadasCompletadas.incrementAndGet() == totalLlamadas) {
-            TemporadaEscuderiaFragment temporadaEscuderiaFragment=TemporadaEscuderiaFragment.newInstance(puntosTemp, pilotosTemp);
+            TemporadaEscuderiaFragment temporadaEscuderiaFragment=TemporadaEscuderiaFragment.newInstance(puntosTemp, pilotosTemp, standings.getPosition(), standings.getRound(), standings.getWins(), standings.getPoints());
+            getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaEscuderia, temporadaEscuderiaFragment).commit();
+            loaderGif.dismiss();
+
+            btnSelectTemp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog.Builder dialogo1 = new AlertDialog.Builder(EscuderiaDetails.this);
+                    dialogo1.setTitle("Seleccione una temporada");
+                    CharSequence[] itemsArray = numTemporadasEscuderia.toArray(new CharSequence[numTemporadasEscuderia.size()]);
+                    dialogo1.setSingleChoiceItems(itemsArray, -1, (dialog, which) -> {
+                        CharSequence temp = itemsArray[which];
+                        btnSelectTemp.setText(temp);
+                        puntosTemp.clear();
+                        pilotosTemp.clear();
+                        llamadasTemporada = 2;
+                        llamadasCompletadasTemporada = new AtomicInteger(0);
+                        loaderGif.show();
+                        mostrarChart(temp.toString());
+                        mostrarEstadisticasGeneralesTemporadaEscuderias(temp.toString());
+                        dialog.dismiss();
+                    });
+                    dialogo1.show();
+                }
+            });
+        }
+    }
+
+    private void llamadaCompletaTemporada(AtomicInteger llamadasCompletadas, int totalLlamadas) {
+        if (llamadasCompletadas.incrementAndGet() == totalLlamadas) {
+            TemporadaEscuderiaFragment temporadaEscuderiaFragment=TemporadaEscuderiaFragment.newInstance(puntosTemp, pilotosTemp, standings.getPosition(), standings.getRound(), standings.getWins(), standings.getPoints());
             getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaEscuderia, temporadaEscuderiaFragment).commit();
             loaderGif.dismiss();
         }
     }
 
-
-    private void mostrarChart(){
+    private void mostrarEstadisticasGeneralesTemporadaEscuderias(String temp){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://ergast.com/api/f1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         ErgastApi ergastApi = retrofit.create(ErgastApi.class);
-        Call<RaceResultsByConstructor> result = ergastApi.getConstructorsRaceResultsForTemp("current",standings.getConstructor().getConstructorId());
+        Call<StandingsEscuderias> result = ergastApi.getConstructorsStandingsForTemp(temp,standings.getConstructor().getConstructorId());
+        result.enqueue(new Callback<StandingsEscuderias>() {
+            @Override
+            public void onResponse(Call<StandingsEscuderias> call, Response<StandingsEscuderias> response) {
+                if(response.isSuccessful()){
+                    standings = response.body().getMRData().getStandingsTable().getStandingsLists().get(0).getConstructorStandings().get(0);
+                    standings.setRound(response.body().getMRData().getStandingsTable().getStandingsLists().get(0).getRound());
+                    llamadaCompletaTemporada(llamadasCompletadasTemporada,llamadasTemporada);
+
+                }else{
+                    Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto", Snackbar.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StandingsEscuderias> call, Throwable t) {
+                Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto "+t.getMessage(), Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void mostrarChart(String temp){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ergast.com/api/f1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ErgastApi ergastApi = retrofit.create(ErgastApi.class);
+        Call<RaceResultsByConstructor> result = ergastApi.getConstructorsRaceResultsForTemp(temp,standings.getConstructor().getConstructorId());
         result.enqueue(new Callback<RaceResultsByConstructor>() {
             @Override
             public void onResponse(Call<RaceResultsByConstructor> call, Response<RaceResultsByConstructor> response) {
@@ -236,7 +311,12 @@ public class EscuderiaDetails extends AppCompatActivity {
                         pilotosTemp.add(driver + "-" + drivers.get(driver));
                     }
 
-                    llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
+                    if(first) {
+                        first = false;
+                        llamadaCompletaGif(llamadasCompletadasGeneral, totalLlamadasGeneral);
+                    } else{
+                        llamadaCompletaTemporada(llamadasCompletadasTemporada,llamadasTemporada);
+                    }
 
                 }else{
                     loaderGif.dismiss();

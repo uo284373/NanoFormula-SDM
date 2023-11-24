@@ -30,13 +30,29 @@ public class TemporadaEscuderiaFragment extends Fragment {
     private static final String CONSTRUCTOR_POINTS = "constructors_points";
     private static final String DRIVER_POINTS = "driver_points";
 
+    private static final String POSITION = "position";
+    private static final String ROUND = "round";
+
+    private static final String WINS = "wins";
+    private static final String POINTS = "points";
+
     private List<String> puntostemp = new ArrayList<>();
 
     private List<String> puntosPilotos = new ArrayList<>();
 
+    private String position;
+    private String round;
+    private String wins;
+    private String points;
+
     LineChart lineChartPuntosEscuderia;
 
     LineChart lineChartPilotos;
+
+    TextView posEscuderia;
+    TextView rondaEscuderia;
+    TextView victoriasEscuderiaTemporada;
+    TextView puntosEscuderiaTemporada;
 
     private final static int[] colors = {Color.MAGENTA, Color.CYAN, Color.GREEN, Color.RED, Color.BLUE, Color.GRAY,  Color.YELLOW};
 
@@ -45,11 +61,15 @@ public class TemporadaEscuderiaFragment extends Fragment {
     }
 
 
-    public static TemporadaEscuderiaFragment newInstance(ArrayList<String> param, ArrayList<String> puntosPilotos) {
+    public static TemporadaEscuderiaFragment newInstance(ArrayList<String> param, ArrayList<String> puntosPilotos, String position, String round, String wins, String points) {
         TemporadaEscuderiaFragment fragment = new TemporadaEscuderiaFragment();
         Bundle args = new Bundle();
         args.putStringArrayList(CONSTRUCTOR_POINTS,param);
         args.putStringArrayList(DRIVER_POINTS, puntosPilotos);
+        args.putString(POSITION, position);
+        args.putString(ROUND, round);
+        args.putString(WINS, wins);
+        args.putString(POINTS, points);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,6 +80,10 @@ public class TemporadaEscuderiaFragment extends Fragment {
         if (getArguments() != null) {
             puntostemp = getArguments().getStringArrayList(CONSTRUCTOR_POINTS);
             puntosPilotos = getArguments().getStringArrayList(DRIVER_POINTS);
+            position = getArguments().getString(POSITION);
+            round = getArguments().getString(ROUND);
+            wins = getArguments().getString(WINS);
+            points = getArguments().getString(POINTS);
         }
     }
 
@@ -70,6 +94,17 @@ public class TemporadaEscuderiaFragment extends Fragment {
         View root= inflater.inflate(R.layout.fragment_temporada_escuderia, container, false);
         lineChartPuntosEscuderia = root.findViewById(R.id.lineChartPuntosEscuderias);
         lineChartPilotos = root.findViewById(R.id.lineChartComparativaPilotos);
+
+
+        posEscuderia = root.findViewById(R.id.txPos);
+        rondaEscuderia = root.findViewById(R.id.txRonda);
+        victoriasEscuderiaTemporada = root.findViewById(R.id.txVictoriasTemp);
+        puntosEscuderiaTemporada = root.findViewById(R.id.txPuntosTemp);
+        posEscuderia.setText(position);
+        rondaEscuderia.setText(round);
+        victoriasEscuderiaTemporada.setText(wins);
+        puntosEscuderiaTemporada.setText(points);
+
         createChart();
         createChartDrivers();
 
