@@ -58,7 +58,9 @@ public class EscuderiaDetails extends AppCompatActivity {
     private ArrayList<String> puntosTemp = new ArrayList<>();
     private ArrayList<String> pilotosTemp = new ArrayList<>();
 
-    boolean first = true;
+    private String season = "2023";
+
+    private boolean first = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,6 +182,7 @@ public class EscuderiaDetails extends AppCompatActivity {
                             numTemporadasEscuderia.add(standings.getSeason());
                         }
                     }
+                    numTemporadasEscuderia.add("2023");
                     Log.i("Seasons", String.valueOf(seasons));
                     puntos += Integer.parseInt(standings.getPoints());
                     puntosEscuderia.setText(String.valueOf(puntos));
@@ -198,7 +201,7 @@ public class EscuderiaDetails extends AppCompatActivity {
 
     private void llamadaCompletaGif(AtomicInteger llamadasCompletadas, int totalLlamadas) {
         if (llamadasCompletadas.incrementAndGet() == totalLlamadas) {
-            TemporadaEscuderiaFragment temporadaEscuderiaFragment=TemporadaEscuderiaFragment.newInstance(puntosTemp, pilotosTemp, standings.getPosition(), standings.getRound(), standings.getWins(), standings.getPoints());
+            TemporadaEscuderiaFragment temporadaEscuderiaFragment=TemporadaEscuderiaFragment.newInstance(season, puntosTemp, pilotosTemp, standings.getPosition(), standings.getRound(), standings.getWins(), standings.getPoints());
             getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaEscuderia, temporadaEscuderiaFragment).commit();
             loaderGif.dismiss();
 
@@ -216,6 +219,7 @@ public class EscuderiaDetails extends AppCompatActivity {
                         llamadasTemporada = 2;
                         llamadasCompletadasTemporada = new AtomicInteger(0);
                         loaderGif.show();
+                        season = temp.toString();
                         mostrarChart(temp.toString());
                         mostrarEstadisticasGeneralesTemporadaEscuderias(temp.toString());
                         dialog.dismiss();
@@ -228,7 +232,7 @@ public class EscuderiaDetails extends AppCompatActivity {
 
     private void llamadaCompletaTemporada(AtomicInteger llamadasCompletadas, int totalLlamadas) {
         if (llamadasCompletadas.incrementAndGet() == totalLlamadas) {
-            TemporadaEscuderiaFragment temporadaEscuderiaFragment=TemporadaEscuderiaFragment.newInstance(puntosTemp, pilotosTemp, standings.getPosition(), standings.getRound(), standings.getWins(), standings.getPoints());
+            TemporadaEscuderiaFragment temporadaEscuderiaFragment=TemporadaEscuderiaFragment.newInstance(season, puntosTemp, pilotosTemp, standings.getPosition(), standings.getRound(), standings.getWins(), standings.getPoints());
             getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaEscuderia, temporadaEscuderiaFragment).commit();
             loaderGif.dismiss();
         }

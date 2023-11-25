@@ -35,6 +35,7 @@ public class TemporadaEscuderiaFragment extends Fragment {
 
     private static final String WINS = "wins";
     private static final String POINTS = "points";
+    private static final String SEASON = "season";
 
     private List<String> puntostemp = new ArrayList<>();
 
@@ -45,10 +46,13 @@ public class TemporadaEscuderiaFragment extends Fragment {
     private String wins;
     private String points;
 
+    private String season;
+
     LineChart lineChartPuntosEscuderia;
 
     LineChart lineChartPilotos;
 
+    TextView seasonEscuderia;
     TextView posEscuderia;
     TextView rondaEscuderia;
     TextView victoriasEscuderiaTemporada;
@@ -61,9 +65,10 @@ public class TemporadaEscuderiaFragment extends Fragment {
     }
 
 
-    public static TemporadaEscuderiaFragment newInstance(ArrayList<String> param, ArrayList<String> puntosPilotos, String position, String round, String wins, String points) {
+    public static TemporadaEscuderiaFragment newInstance(String season, ArrayList<String> param, ArrayList<String> puntosPilotos, String position, String round, String wins, String points) {
         TemporadaEscuderiaFragment fragment = new TemporadaEscuderiaFragment();
         Bundle args = new Bundle();
+        args.putString(SEASON, season);
         args.putStringArrayList(CONSTRUCTOR_POINTS,param);
         args.putStringArrayList(DRIVER_POINTS, puntosPilotos);
         args.putString(POSITION, position);
@@ -84,6 +89,7 @@ public class TemporadaEscuderiaFragment extends Fragment {
             round = getArguments().getString(ROUND);
             wins = getArguments().getString(WINS);
             points = getArguments().getString(POINTS);
+            season = getArguments().getString(SEASON);
         }
     }
 
@@ -95,11 +101,12 @@ public class TemporadaEscuderiaFragment extends Fragment {
         lineChartPuntosEscuderia = root.findViewById(R.id.lineChartPuntosEscuderias);
         lineChartPilotos = root.findViewById(R.id.lineChartComparativaPilotos);
 
-
+        seasonEscuderia = root.findViewById(R.id.txTemporada);
         posEscuderia = root.findViewById(R.id.txPos);
         rondaEscuderia = root.findViewById(R.id.txRonda);
         victoriasEscuderiaTemporada = root.findViewById(R.id.txVictoriasTemp);
         puntosEscuderiaTemporada = root.findViewById(R.id.txPuntosTemp);
+        seasonEscuderia.setText("TEMPORADA " + (season == "current"? "2023" : season));
         posEscuderia.setText(position);
         rondaEscuderia.setText(round);
         victoriasEscuderiaTemporada.setText(wins);
