@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -221,7 +222,7 @@ public class PilotoDetails extends AppCompatActivity {
             btnSelectTemp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AlertDialog.Builder dialogo1 = new AlertDialog.Builder(PilotoDetails.this);
+                    AlertDialog.Builder dialogo1 = new AlertDialog.Builder(new ContextThemeWrapper(PilotoDetails.this,R.style.AlertDialogCustom));
                     dialogo1.setTitle("Seleccione una temporada");
                     CharSequence[] itemsArray = numTempPiloto.toArray(new CharSequence[numTempPiloto.size()]);
                     dialogo1.setSingleChoiceItems(itemsArray, -1, (dialog, which) -> {
