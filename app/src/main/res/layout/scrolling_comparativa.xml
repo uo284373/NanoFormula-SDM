@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ComparativaFragment"
+    tools:showIn="@layout/fragment_comparativa"
+
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/txSeleccionarPilotos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/seleccionarPiloto"
+            android:gravity="center"
+            android:drawableLeft="@drawable/linea"
+            android:drawableRight="@drawable/linea"
+            android:textColor="@color/white"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="40dp">
+
+                <TextView
+                    android:id="@+id/txSeleccionarPiloto1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/seleccionarPiloto1"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"/>
+
+                <Spinner
+                    android:id="@+id/spinnerPiloto1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dialog"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txSeleccionarPiloto2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/seleccionarPiloto2"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"/>
+
+                <Spinner
+                    android:id="@+id/spinnerPiloto2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dialog"/>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="@string/buttonComparar"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/white"/>
+
+        <include layout="@layout/fragment_comparativa_pilotos"
+            android:id="@+id/layoutComparativaPilotos"
+            />
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
