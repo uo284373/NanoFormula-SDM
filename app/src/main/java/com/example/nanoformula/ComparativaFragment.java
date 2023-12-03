@@ -1,5 +1,7 @@
 package com.example.nanoformula;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 public class ComparativaFragment extends Fragment {
@@ -17,6 +20,7 @@ public class ComparativaFragment extends Fragment {
 
     private String mParam1;
     private String mParam2;
+    private Button buttonComparativa;
 
     public ComparativaFragment() {
         // Required empty public constructor
@@ -44,6 +48,14 @@ public class ComparativaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_comparativa, container, false);
+        View root= inflater.inflate(R.layout.fragment_comparativa, container, false);
+        buttonComparativa = root.findViewById(R.id.buttonComparativa);
+        buttonComparativa.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(ComparativaFragment.this.getContext(),ComparativaPilotos.class);
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+            }
+        });
+        return root;
     }
 }
