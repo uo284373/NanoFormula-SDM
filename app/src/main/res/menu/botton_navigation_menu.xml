@@ -14,4 +14,9 @@
         android:id="@+id/escuderiasFragment"
         android:icon="@drawable/herramientas"
         android:title="Constructores" />
+
+    <item
+        android:id="@+id/comparativaFragment"
+        android:icon="@drawable/versus"
+        android:title="Comparativa" />
 </menu>

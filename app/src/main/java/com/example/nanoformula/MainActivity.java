@@ -344,7 +344,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
 
-            if (itemId == R.id.pilotosFragment)
+            else if (itemId == R.id.pilotosFragment)
             {
                 PilotosFragment pilotosFragment=PilotosFragment.newInstance(standings);
 
@@ -354,7 +354,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
 
-            if (itemId == R.id.escuderiasFragment)
+            else if (itemId == R.id.escuderiasFragment)
             {
                 EscuderiasFragment escuderiasFragment = EscuderiasFragment.newInstance(constructorStandingsEscuderias);
 
@@ -363,7 +363,18 @@ public class MainActivity extends AppCompatActivity {
                 toolbar.setTitle("Clasificacion de Constructores");
                 return true;
             }
-            throw new IllegalStateException("Unexpected value: " + item.getItemId());
+
+            else if (itemId == R.id.comparativaFragment)
+            {
+                ComparativaFragment comparativaFragment = ComparativaFragment.newInstance("prueba1","prueba2");
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, comparativaFragment).commit();
+                toolbar = findViewById(R.id.toolbar);
+                toolbar.setTitle("Comparativa de Pilotos");
+                return true;
+            }else {
+                throw new IllegalStateException("Unexpected value: " + item.getItemId());
+            }
         };
     };
 

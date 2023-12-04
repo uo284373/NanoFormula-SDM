@@ -155,4 +155,11 @@
     <string name="CalendarioGP">CALENDARIO DE GP</string>
     <string name="siguienteCarrera">SIGUIENTE CARRERA</string>
     <string name="pilotos">PILOTOS</string>
+    <string name="seleccionarPiloto">SELECCIONE 2 PILOTOS</string>
+    <string name="seleccionarPiloto1">Primer Piloto</string>
+    <string name="seleccionarPiloto2">Segundo Piloto</string>
+    <string name="buttonComparar">Comparar Pilotos</string>
+    <string name="comparativaPilotos">COMPARATIVA</string>
+    <string name="estadisticasPiloto1">ESTADÍSTICAS PILOTO1</string>
+    <string name="estadisticasPiloto2">ESTADÍSTICAS PILOTO2</string>
 </resources>

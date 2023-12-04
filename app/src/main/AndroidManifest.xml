@@ -15,6 +15,10 @@
         android:theme="@style/Theme.NanoFormula"
         tools:targetApi="31">
         <activity
+            android:name=".ComparativaPilotos"
+            android:exported="false"
+            android:theme="@style/Theme.NanoFormulaDetails"/>
+        <activity
             android:name=".CarreraDetails"
             android:exported="false"
             android:label="@string/title_activity_carrera_details"
@@ -22,7 +26,7 @@
         <activity
             android:name=".EscuderiaDetails"
             android:exported="false"
-            android:theme="@style/Theme.NanoFormulaDetails"/>
+            android:theme="@style/Theme.NanoFormulaDetails" />
         <activity
             android:name=".PilotoDetails"
             android:exported="false"
