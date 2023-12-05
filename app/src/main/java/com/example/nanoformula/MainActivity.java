@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import com.example.nanoformula.API.ErgastApi;
 import com.example.nanoformula.API.WikipediaApi;
 import com.example.nanoformula.modelo.Escuderia;
+import com.example.nanoformula.modelo.allDrivers.AllDrivers;
 import com.example.nanoformula.modelo.constructorsStandings.Constructor;
 import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
 import com.example.nanoformula.modelo.constructorsStandings.StandingsEscuderias;
@@ -49,6 +50,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    AllDrivers allDrivers;
     Standings standings;
 
     StandingsEscuderias constructorStandingsEscuderias;
@@ -72,12 +75,9 @@ public class MainActivity extends AppCompatActivity {
 
         getRaceSchedule();
         getDriversStandings();
+        getConstructorsStandings();
+        getAllDrivers();
 
-        try {
-            getConstructorsStandings();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -98,6 +98,79 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    private void getAllDrivers(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ergast.com/api/f1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ErgastApi ergastApi = retrofit.create(ErgastApi.class);
+        Call<AllDrivers> result = ergastApi.getAllDrivers();
+        result.enqueue(new Callback<AllDrivers>() {
+            @Override
+            public void onResponse(Call<AllDrivers> call, Response<AllDrivers> response) {
+                if(response.isSuccessful()){
+                    allDrivers = response.body();
+
+                }else{
+                    Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los pilotos", Snackbar.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AllDrivers> call, Throwable t) {
+                Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los pilotos", Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void setDriverImage(String driverName, com.example.nanoformula.modelo.allDrivers.Driver driver){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://en.wikipedia.org/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        WikipediaApi wikipediaApi = retrofit.create(WikipediaApi.class);
+        Call<DriverImage> result;
+        if(driverName.equals("Alexander_Albon")){
+            result = wikipediaApi.getImageDriver("Alex_Albon");
+        }else{
+            result = wikipediaApi.getImageDriver(driverName);
+        }
+
+        result.enqueue(new Callback<DriverImage>() {
+            @Override
+            public void onResponse(Call<DriverImage> call, Response<DriverImage> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getQuery().getPages().get(0).getThumbnail()!=null){
+                        driver.setUrlImage(response.body().getQuery().getPages().get(0).getThumbnail().getSource());
+                    }
+                    llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
+                }else{
+                    loaderGif.dismiss();
+                    Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar las fotos de los pilotos", Snackbar.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DriverImage> call, Throwable t) {
+                loaderGif.dismiss();
+                Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar las fotos de los pilotos", Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -216,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void getConstructorsStandings() throws InterruptedException {
+    private void getConstructorsStandings() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://ergast.com/api/f1/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -366,7 +439,7 @@ public class MainActivity extends AppCompatActivity {
 
             else if (itemId == R.id.comparativaFragment)
             {
-                ComparativaFragment comparativaFragment = ComparativaFragment.newInstance("prueba1","prueba2");
+                ComparativaFragment comparativaFragment = ComparativaFragment.newInstance(allDrivers);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, comparativaFragment).commit();
                 toolbar = findViewById(R.id.toolbar);
