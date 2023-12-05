@@ -2,6 +2,7 @@ package com.example.nanoformula;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.example.nanoformula.API.ErgastApi;
 import com.example.nanoformula.API.WikipediaApi;
 import com.example.nanoformula.modelo.allDrivers.Driver;
+import com.example.nanoformula.modelo.allResultsForADriver.AllResultsForADriver;
 import com.example.nanoformula.modelo.driverQualifyingResults.DriverQualifyingResults;
 import com.example.nanoformula.modelo.driverRaceResults.DriverRaceResults;
 import com.example.nanoformula.modelo.driversImage.DriverImage;
@@ -90,6 +92,16 @@ public class ComparativaPilotos extends AppCompatActivity {
         piloto2= intentEscuderia.getParcelableExtra(ComparativaFragment.PILOTO_2);
         Log.i("comparativa",piloto2.toString());
 
+        Toolbar toolbar = findViewById(R.id.toolbarComparativaPiloto);
+        TextView txPiloto1 = findViewById(R.id.txEstadisticasPiloto1);
+        TextView txPiloto2 = findViewById(R.id.txEstadisticasPiloto2);
+
+        toolbar.setTitle(piloto1.getFamilyName() + " vs " + piloto2.getFamilyName());
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        txPiloto1.setText(piloto1.toString());
+        txPiloto2.setText(piloto2.toString());
 
         foto1 = findViewById(R.id.ftComparativaPiloto1);
         nombre1 = findViewById(R.id.txNombrePiloto1);
@@ -281,12 +293,12 @@ public class ComparativaPilotos extends AppCompatActivity {
                 .build();
 
         ErgastApi ergastApi = retrofit.create(ErgastApi.class);
-        Call<DriverQualifyingResults> result = ergastApi.getDriverQualifyingResults(piloto.getDriverId());
-        result.enqueue(new Callback<DriverQualifyingResults>() {
+        Call<AllResultsForADriver> result = ergastApi.getDriverAllRaceResults(piloto.getDriverId());
+        result.enqueue(new Callback<AllResultsForADriver>() {
             @Override
-            public void onResponse(Call<DriverQualifyingResults> call, Response<DriverQualifyingResults> response) {
+            public void onResponse(Call<AllResultsForADriver> call, Response<AllResultsForADriver> response) {
                 if(response.isSuccessful()){
-                    piloto.setPoles(Integer.valueOf(response.body().getMRData().getTotal()));
+                    piloto.setPoles((int) response.body().getMRData().getRaceTable().getRaces().stream().filter(x -> x.getResults().get(0).getGrid().equals("1")).count());
                     llamadaCompleta(llamadasCompletadasGeneral, totalLlamadasGeneral);
                 }else{
                     loaderGif.dismiss();
@@ -295,7 +307,7 @@ public class ComparativaPilotos extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DriverQualifyingResults> call, Throwable t) {
+            public void onFailure(Call<AllResultsForADriver> call, Throwable t) {
                 loaderGif.dismiss();
                 Snackbar.make(findViewById(R.id.layoutDetallesPiloto), "Se ha producido un error al recuperar los datos del piloto "+t.getMessage(), Snackbar.LENGTH_LONG).show();
             }

@@ -1,6 +1,7 @@
 package com.example.nanoformula.API;
 
 import com.example.nanoformula.modelo.allDrivers.AllDrivers;
+import com.example.nanoformula.modelo.allResultsForADriver.AllResultsForADriver;
 import com.example.nanoformula.modelo.constructorRaceResults.ConstructorRaceResults;
 import com.example.nanoformula.modelo.constructorsStandings.StandingsEscuderias;
 import com.example.nanoformula.modelo.driverQualifyingResults.DriverQualifyingResults;
@@ -24,6 +25,9 @@ public interface ErgastApi {
     Call<DriverRaceResults> getDriverRaceResults(@Path("driverName") String driverName,@Path("position") int position);
     @GET("{temp}/drivers/{driverName}/results.json")
     Call<DriverRaceResults> getDriverRaceResultsForTemp(@Path("temp") String temp,@Path("driverName") String driverName);
+
+    @GET("drivers/{driverName}/results.json?limit=1000")
+    Call<AllResultsForADriver> getDriverAllRaceResults(@Path("driverName") String driverName);
 
     @GET("drivers/{driverName}/driverStandings/1.json")
     Call<Standings> getDriverChampionStandings(@Path("driverName") String driverName);
