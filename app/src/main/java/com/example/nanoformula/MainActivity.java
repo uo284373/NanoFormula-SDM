@@ -469,6 +469,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, comparativaFragment).commit();
                 toolbar = findViewById(R.id.toolbar);
                 toolbar.setTitle("Comparativa de Pilotos");
+                toggleExportarCSVButtonVisibility(false);
                 return true;
             }else {
                 throw new IllegalStateException("Unexpected value: " + item.getItemId());
