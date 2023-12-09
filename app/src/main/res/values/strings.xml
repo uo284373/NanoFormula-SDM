@@ -164,4 +164,7 @@
     <string name="estadisticasPiloto2">ESTADÍSTICAS PILOTO2</string>
     <string name="seleccionarPiloto1Titulo">PRIMER PILOTO</string>
     <string name="seleccionarPiloto2Titulo">SEGUNDO PILOTO</string>
+    <string name="tituloNombrePiloto">"Nombre: "</string>
+    <string name="fechaNacimientoPiloto">Fecha de Nacimiento: </string>
+    <string name="nacionalidadPiloto">"Nacionalidad: "</string>
 </resources>
