@@ -156,5 +156,6 @@
     <string name="siguienteCarrera">SIGUIENTE CARRERA</string>
     <string name="pilotos">PILOTOS</string>
     <string name="momentos_carrera">RESUMEN</string>
+    <string name="export_csv">Exportar CSV</string>
 
 </resources>

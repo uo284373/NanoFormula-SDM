@@ -1,14 +1,21 @@
 package com.example.nanoformula;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +29,12 @@ import com.example.nanoformula.modelo.raceSchedule.RaceSchedule;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.squareup.picasso.Picasso;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +48,8 @@ import java.util.Locale;
  * create an instance of this fragment.
  */
 public class CarrerasFragment extends Fragment {
+
+    private static final int CREATE_FILE_REQUEST_CODE = 123;
 
     private static final String ARG_CARRERAS = "CARRERAS";
     public static final String CARRERA_SELECCIONADA = "carrera_seleccionada";
@@ -149,4 +164,55 @@ public class CarrerasFragment extends Fragment {
         intent.putExtra(CIRCUITO_SELECCIONADA, carrera.getCircuit());
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
     }
+    public void exportarCSV() {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("text/csv");
+        intent.putExtra(Intent.EXTRA_TITLE, "carreras_google_calendar.csv");
+
+        startActivityForResult(intent, CREATE_FILE_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        super.onActivityResult(requestCode, resultCode, resultData);
+
+        if (requestCode == CREATE_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if (resultData != null) {
+                Uri uri = resultData.getData();
+                writeToFile(uri);
+            }
+        }
+    }
+
+    private void writeToFile(Uri uri) {
+        try {
+            OutputStream outputStream = getContext().getContentResolver().openOutputStream(uri);
+            if (outputStream != null) {
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream));
+                writer.write("Subject,Start Date,Start Time,End Date,End Time,Description,Location\n");
+
+                List<Race> carreras = raceSchedule.getMRData().getRaceTable().getRaces();
+
+                for (Race carrera : carreras) {
+                    writer.write(String.format("%s,%s,%s,%s,%s,%s,%s\n",
+                            carrera.getRaceName(),
+                            carrera.getDate(),
+                            carrera.getTime().substring(0, 5),
+                            carrera.getDate(),
+                            carrera.getTime().substring(0, 5),
+                            carrera.getCircuit().getCircuitName(),
+                            carrera.getCircuit().getLocation().getLocality()));
+                }
+
+                writer.close();
+                Log.d("ExportarCSV", "Archivo CSV generado con éxito: " + uri.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("ExportarCSV", "Error al generar el archivo CSV");
+        }
+    }
+
+
 }
