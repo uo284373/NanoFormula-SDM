@@ -14,70 +14,51 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/txSeleccionarPilotos"
+            android:id="@+id/txSeleccionarPiloto1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:text="@string/seleccionarPiloto"
+            android:text="@string/seleccionarPiloto1Titulo"
             android:gravity="center"
-            android:drawableLeft="@drawable/linea"
-            android:drawableRight="@drawable/linea"
+            android:drawableLeft="@drawable/linea_blanca"
+            android:drawableRight="@drawable/linea_blanca"
             android:textColor="@color/white"
+            android:textSize="16sp"
             />
 
-        <LinearLayout
+
+        <Spinner
+            android:id="@+id/spinnerPiloto1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:textAlignment="center"
+            android:spinnerMode="dialog"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginRight="40dp">
-
-                <TextView
-                    android:id="@+id/txSeleccionarPiloto1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/seleccionarPiloto1"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"/>
-
-                <Spinner
-                    android:id="@+id/spinnerPiloto1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:spinnerMode="dialog"/>
+        <TextView
+            android:id="@+id/txSeleccionarPiloto2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/seleccionarPiloto2Titulo"
+            android:gravity="center"
+            android:drawableLeft="@drawable/linea_blanca"
+            android:drawableRight="@drawable/linea_blanca"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            />
 
 
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txSeleccionarPiloto2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/seleccionarPiloto2"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"/>
-
-                <Spinner
-                    android:id="@+id/spinnerPiloto2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:spinnerMode="dialog"/>
-
-
-            </LinearLayout>
-        </LinearLayout>
+        <Spinner
+            android:id="@+id/spinnerPiloto2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:spinnerMode="dialog"
+            android:layout_marginBottom="10dp"/>
 
         <Button
             android:id="@+id/buttonComparativa"

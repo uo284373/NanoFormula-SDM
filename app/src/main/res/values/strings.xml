@@ -162,4 +162,6 @@
     <string name="comparativaPilotos">COMPARATIVA</string>
     <string name="estadisticasPiloto1">ESTADÍSTICAS PILOTO1</string>
     <string name="estadisticasPiloto2">ESTADÍSTICAS PILOTO2</string>
+    <string name="seleccionarPiloto1Titulo">PRIMER PILOTO</string>
+    <string name="seleccionarPiloto2Titulo">SEGUNDO PILOTO</string>
 </resources>

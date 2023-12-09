@@ -50,7 +50,7 @@
 
                 <TextView
                     android:id="@+id/txNombrePiloto1"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/seleccionarPiloto1"
                     android:textAlignment="center"
@@ -84,7 +84,7 @@
 
                 <TextView
                     android:id="@+id/txNombrePiloto2"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/seleccionarPiloto2"
                     android:textAlignment="center"
