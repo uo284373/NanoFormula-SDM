@@ -6,6 +6,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.nanoformula.API.ErgastApi;
 import com.example.nanoformula.API.WikipediaApi;
@@ -86,7 +88,25 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("Calendario GP");
         setSupportActionBar(toolbar);
 
+        Button btnExportarCSV = findViewById(R.id.btnExportarCSV);
+        btnExportarCSV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exportarCSV();
+            }
+        });
+    }
 
+    private void exportarCSV() {
+        CarrerasFragment carrerasFragment = (CarrerasFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (carrerasFragment != null) {
+            carrerasFragment.exportarCSV();
+        }
+    }
+
+    private void toggleExportarCSVButtonVisibility(boolean show) {
+        Button btnExportarCSV = findViewById(R.id.btnExportarCSV);
+        btnExportarCSV.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     private void llamadaCompletaGif(AtomicInteger llamadasCompletadas, int totalLlamadas) {
@@ -414,6 +434,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, carrerasFragment).commit();
                 toolbar = findViewById(R.id.toolbar);
                 toolbar.setTitle("Calendario GP");
+                toggleExportarCSVButtonVisibility(true);
                 return true;
             }
 
@@ -424,6 +445,8 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, pilotosFragment).commit();
                 toolbar = findViewById(R.id.toolbar);
                 toolbar.setTitle("Clasificacion de Pilotos");
+
+                toggleExportarCSVButtonVisibility(false);
                 return true;
             }
 
@@ -434,6 +457,8 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, escuderiasFragment).commit();
                 toolbar = findViewById(R.id.toolbar);
                 toolbar.setTitle("Clasificacion de Constructores");
+
+                toggleExportarCSVButtonVisibility(false);
                 return true;
             }
 

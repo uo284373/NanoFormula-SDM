@@ -12,6 +12,16 @@ import com.google.api.services.youtube.model.SearchResultSnippet;
 import java.util.List;
 
 public class YouTubeSearchTask extends AsyncTask<String, String, String> {
+    public interface OnSearchCompleteListener {
+        void onSearchComplete(String url);
+    }
+
+    private OnSearchCompleteListener listener;
+
+    public YouTubeSearchTask(OnSearchCompleteListener listener) {
+        this.listener = listener;
+    }
+
     @Override
     protected String doInBackground(String... params) {
         String title = params[0];
@@ -20,6 +30,9 @@ public class YouTubeSearchTask extends AsyncTask<String, String, String> {
 
     @Override
     protected void onPostExecute(String result) {
+        if (listener != null) {
+            listener.onSearchComplete(result);
+        }
     }
 
     private String searchYouTubeByTitle(String title) {
@@ -33,6 +46,7 @@ public class YouTubeSearchTask extends AsyncTask<String, String, String> {
             YouTube.Search.List search = youtube.search().list("id,snippet");
             search.setKey("AIzaSyBwkydR0gjtLTT9Du9QNm-O8CBQ57M1f-A");
             search.setQ(title);
+            search.setChannelId("UC89aCe0fFyScFU-NegT2CFQ");
             search.setType("video");
             search.setMaxResults(1L);
 
@@ -54,4 +68,5 @@ public class YouTubeSearchTask extends AsyncTask<String, String, String> {
         }
         return "";
     }
+
 }

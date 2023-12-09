@@ -167,4 +167,7 @@
     <string name="tituloNombrePiloto">"Nombre: "</string>
     <string name="fechaNacimientoPiloto">Fecha de Nacimiento: </string>
     <string name="nacionalidadPiloto">"Nacionalidad: "</string>
+    <string name="momentos_carrera">RESUMEN</string>
+    <string name="export_csv">Exportar CSV</string>
+
 </resources>
