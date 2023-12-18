@@ -182,7 +182,6 @@ public class EscuderiaDetails extends AppCompatActivity {
                             numTemporadasEscuderia.add(standings.getSeason());
                         }
                     }
-                    numTemporadasEscuderia.add("2023");
                     Log.i("Seasons", String.valueOf(seasons));
                     puntos += Integer.parseInt(standings.getPoints());
                     puntosEscuderia.setText(String.valueOf(puntos));

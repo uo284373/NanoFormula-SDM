@@ -34,6 +34,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -134,13 +135,35 @@ public class PilotoDetails extends AppCompatActivity {
         numeroPiloto.setText(piloto.getPermanentNumber());
         codigoPiloto.setText(piloto.getCode());
 
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate fechaNac = LocalDate.parse(piloto.getDateOfBirth(), fmt);
-        LocalDate ahora = LocalDate.now();
+        edadPiloto.setText(String.valueOf(calcularEdad(piloto.getDateOfBirth())));
 
-        Period periodo = Period.between(fechaNac, ahora);
-        edadPiloto.setText(String.valueOf(periodo.getYears()));
         Picasso.get().load(piloto.getUrlImage()).into(fotoPiloto);
+    }
+
+    public static int calcularEdad(String fechaNacimiento) {
+        // Obtener la fecha actual
+        Date fechaActual = new Date();
+
+        // Convertir la fecha de nacimiento a un objeto Date
+        Date fechaNac = parseFecha(fechaNacimiento);
+
+        // Calcular la diferencia en milisegundos
+        long diferenciaMillis = fechaActual.getTime() - fechaNac.getTime();
+
+        // Calcular la diferencia en años
+        int edad = (int) (diferenciaMillis / 1000 / 60 / 60 / 24 / 365.25);
+
+        return edad;
+    }
+
+    private static Date parseFecha(String fecha) {
+        // Método para convertir una cadena de fecha a un objeto Date
+        String[] partes = fecha.split("-");
+        int año = Integer.parseInt(partes[0]);
+        int mes = Integer.parseInt(partes[1]) - 1; // Los meses en Date van de 0 a 11
+        int dia = Integer.parseInt(partes[2]);
+
+        return new Date(año - 1900, mes, dia);
     }
 
     private void mostrarNumeroVictorias(){
@@ -377,7 +400,7 @@ public class PilotoDetails extends AppCompatActivity {
                     puntos += Integer.parseInt(standings.getPoints());
                     puntosPiloto.setText(String.valueOf(puntos));
                     numEquipos.setText(String.valueOf(equipos.size()));
-                    numTempPiloto.add("2023");
+
                     llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
 
                 }else{
