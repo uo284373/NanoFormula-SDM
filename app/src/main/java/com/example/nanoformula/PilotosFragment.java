@@ -29,16 +29,19 @@ public class PilotosFragment extends Fragment {
     public static final String PILOTO_SELECCIONADO = "piloto_seleccionado";
     public static final String EQUIPO_PILOTO_SELECCIONADO = "equipo_piloto_seleccionado";
     public static final String STANDINGS_PILOTO_SELECCIONADO = "standings_piloto_seleccionado";
+    public static final String TEMPORADA_PILOTO = "temporada";
 
     private Standings standings;
     private RecyclerView listaPilotosView;
+    private String season;
 
 
 
-    public static PilotosFragment newInstance(Standings standings) {
+    public static PilotosFragment newInstance(Standings standings, String temporada) {
         PilotosFragment fragment = new PilotosFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_PILOTOS,standings);
+        args.putString(TEMPORADA_PILOTO,temporada);
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,6 +51,7 @@ public class PilotosFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             standings = (Standings) getArguments().get(ARG_PILOTOS);
+            season = (String) getArguments().get(TEMPORADA_PILOTO);
         }
     }
 
@@ -78,7 +82,7 @@ public class PilotosFragment extends Fragment {
         intent.putExtra(PILOTO_SELECCIONADO, piloto.getDriver());
         intent.putParcelableArrayListExtra(EQUIPO_PILOTO_SELECCIONADO, new ArrayList<>(piloto.getConstructors()));
         intent.putExtra(STANDINGS_PILOTO_SELECCIONADO, piloto);
-
+        intent.putExtra(TEMPORADA_PILOTO, season);
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
     }
 }

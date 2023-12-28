@@ -52,6 +52,7 @@ public class CarrerasFragment extends Fragment {
     private static final int CREATE_FILE_REQUEST_CODE = 123;
 
     private static final String ARG_CARRERAS = "CARRERAS";
+    public static final String TEMPORADA_CARRERA = "TEMPORADA";
     public static final String CARRERA_SELECCIONADA = "carrera_seleccionada";
     public static final String CIRCUITO_SELECCIONADA = "circuito_seleccionada";
 
@@ -67,16 +68,18 @@ public class CarrerasFragment extends Fragment {
     TextView localidad;
     TextView fecha;
     TextView hora;
+    private String season;
 
 
     public CarrerasFragment() {
         // Required empty public constructor
     }
 
-    public static CarrerasFragment newInstance(RaceSchedule raceSchedule) {
+    public static CarrerasFragment newInstance(RaceSchedule raceSchedule, String season) {
         CarrerasFragment fragment = new CarrerasFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_CARRERAS,raceSchedule);
+        args.putString(TEMPORADA_CARRERA, season);
         fragment.setArguments(args);
         return fragment;
     }
@@ -86,6 +89,7 @@ public class CarrerasFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             raceSchedule = (RaceSchedule) getArguments().get(ARG_CARRERAS);
+            season = (String) getArguments().get(TEMPORADA_CARRERA);
         }
 
 
@@ -132,7 +136,7 @@ public class CarrerasFragment extends Fragment {
         nombreCircuito.setText(race.getCircuit().getCircuitName());
         localidad.setText(race.getCircuit().getLocation().getLocality());
         fecha.setText(race.getDateFormat());
-        hora.setText(race.getTime().substring(0,5));
+        hora.setText(race.getTime() != null ? race.getTime().substring(0,5) : "--:--");
     }
 
     private Race findUpcomingRace(List<Race> raceList) {
@@ -162,6 +166,7 @@ public class CarrerasFragment extends Fragment {
         Intent intent=new Intent (CarrerasFragment.this.getContext(), CarreraDetails.class);
         intent.putExtra(CARRERA_SELECCIONADA, carrera);
         intent.putExtra(CIRCUITO_SELECCIONADA, carrera.getCircuit());
+        intent.putExtra(TEMPORADA_CARRERA, season);
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
     }
     public void exportarCSV() {

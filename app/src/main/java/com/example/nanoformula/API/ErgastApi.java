@@ -43,8 +43,8 @@ public interface ErgastApi {
     @GET("drivers/{driverName}/fastest/1/results.json")
     Call<DriverRaceResults> getDriverFastestLap(@Path("driverName") String driverName);
 
-    @GET("current/constructorStandings.json")
-    Call<StandingsEscuderias> getConstructorsClasification();
+    @GET("{temp}/constructorStandings.json")
+    Call<StandingsEscuderias> getConstructorsClasification(@Path("temp") String season);
 
     @GET("constructors/{constructorName}/constructorStandings/1.json")
     Call<StandingsEscuderias> getConstructorsChampionStandings(@Path("constructorName") String constructorName);
@@ -58,11 +58,11 @@ public interface ErgastApi {
     @GET("{season}/constructors/{constructorName}/drivers.json")
     Call<DriversByConstructor>  getDriversBySeasonAndConstructor(@Path("season") String season, @Path("constructorName") String constructorName);
 
-    @GET("current.json")
-    Call<RaceSchedule> getRaceSchedule();
+    @GET("{temp}.json")
+    Call<RaceSchedule> getRaceSchedule(@Path("temp") String season);
 
-    @GET("current/{number}/results.json")
-    Call<RaceResults> getRaceResults(@Path("number") String posRace);
+    @GET("{temp}/{number}/results.json")
+    Call<RaceResults> getRaceResults(@Path("temp") String season, @Path("number") String posRace);
 
     @GET("{temp}/constructors/{constructorName}/results.json?limit=100")
     Call<RaceResultsByConstructor> getConstructorsRaceResultsForTemp(@Path("temp") String temp, @Path("constructorName") String constructorName);

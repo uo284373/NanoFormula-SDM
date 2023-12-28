@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/toolbarEscuderia"
-        layout="@layout/toolbar_piloto"
+        layout="@layout/toolbar_spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />

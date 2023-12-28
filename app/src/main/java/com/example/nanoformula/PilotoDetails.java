@@ -81,6 +81,8 @@ public class PilotoDetails extends AppCompatActivity {
     int totalLlamadasGeneral = 9;
     int llamadasTemporada = 2;
 
+    private String season = "2023";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +92,7 @@ public class PilotoDetails extends AppCompatActivity {
         loaderGif.show();
 
         Intent intentPiloto= getIntent();
+        season= intentPiloto.getStringExtra(PilotosFragment.TEMPORADA_PILOTO);
         piloto= intentPiloto.getParcelableExtra(PilotosFragment.PILOTO_SELECCIONADO);
         standings = intentPiloto.getParcelableExtra(PilotosFragment.STANDINGS_PILOTO_SELECCIONADO);
         constructors = intentPiloto.getParcelableArrayListExtra(PilotosFragment.EQUIPO_PILOTO_SELECCIONADO);
@@ -117,7 +120,7 @@ public class PilotoDetails extends AppCompatActivity {
             mostrarPolesPiloto();
             mostrarTemporadasPiloto();
             mostrarVueltasRapidasPiloto();
-            mostrarTemporadaStandingsCurrent();
+            mostrarTemporadaStandingsCurrent(season);
         }
     }
 
@@ -231,14 +234,14 @@ public class PilotoDetails extends AppCompatActivity {
 
     private void llamadaCompletaTemporada(AtomicInteger llamadasCompletadas, int totalLlamadas) {
         if (llamadasCompletadas.incrementAndGet() == totalLlamadas) {
-            TemporadaPilotoFragment temporadaPilotoFragment=TemporadaPilotoFragment.newInstance(standings,constructors,puntosTemp,racesStartPosition,racesFinalPosition,btnSelectTemp.getText().toString());
+            TemporadaPilotoFragment temporadaPilotoFragment=TemporadaPilotoFragment.newInstance(standings,constructors,puntosTemp,racesStartPosition,racesFinalPosition,season);
             getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaPiloto, temporadaPilotoFragment).commit();
             loaderGif.dismiss();
         }
     }
     private void llamadaCompletaGif(AtomicInteger llamadasCompletadas, int totalLlamadas) {
         if (llamadasCompletadas.incrementAndGet() == totalLlamadas) {
-            TemporadaPilotoFragment temporadaPilotoFragment=TemporadaPilotoFragment.newInstance(standings,constructors,puntosTemp,racesStartPosition,racesFinalPosition,btnSelectTemp.getText().toString());
+            TemporadaPilotoFragment temporadaPilotoFragment=TemporadaPilotoFragment.newInstance(standings,constructors,puntosTemp,racesStartPosition,racesFinalPosition,season);
             getSupportFragmentManager().beginTransaction().replace(R.id.layoutTemporadaPiloto, temporadaPilotoFragment).commit();
             loaderGif.dismiss();
 
@@ -257,6 +260,7 @@ public class PilotoDetails extends AppCompatActivity {
                         llamadasTemporada = 2;
                         llamadasCompletadasTemporada = new AtomicInteger(0);
                         loaderGif.show();
+                        season = temp.toString();
                         mostrarTemporadaStandings(temp.toString());
                         mostrarEstadisticasGeneralesTemporadaPiloto(temp.toString());
                         dialog.dismiss();
@@ -447,14 +451,14 @@ public class PilotoDetails extends AppCompatActivity {
 
 
 
-    private void mostrarTemporadaStandingsCurrent(){
+    private void mostrarTemporadaStandingsCurrent(String temp){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://ergast.com/api/f1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         ErgastApi ergastApi = retrofit.create(ErgastApi.class);
-        Call<DriverRaceResults> result = ergastApi.getDriverRaceResultsForTemp("current",piloto.getDriverId());
+        Call<DriverRaceResults> result = ergastApi.getDriverRaceResultsForTemp(temp,piloto.getDriverId());
         result.enqueue(new Callback<DriverRaceResults>() {
             @Override
             public void onResponse(Call<DriverRaceResults> call, Response<DriverRaceResults> response) {

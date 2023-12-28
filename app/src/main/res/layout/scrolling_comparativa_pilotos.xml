@@ -45,8 +45,7 @@
                     android:layout_marginTop="10dp"
                     android:contentDescription="@string/fotoPiloto"
                     android:scaleType="centerCrop"
-                    app:shapeAppearanceOverlay="@style/roundedImageView"
-                    app:srcCompat="@mipmap/ic_launcher" />
+                    app:shapeAppearanceOverlay="@style/roundedImageView" />
 
                 <TextView
                     android:id="@+id/txNombrePiloto1"
@@ -79,8 +78,7 @@
                     android:layout_marginTop="10dp"
                     android:contentDescription="@string/fotoPiloto"
                     android:scaleType="centerCrop"
-                    app:shapeAppearanceOverlay="@style/roundedImageView"
-                    app:srcCompat="@mipmap/ic_launcher" />
+                    app:shapeAppearanceOverlay="@style/roundedImageView" />
 
                 <TextView
                     android:id="@+id/txNombrePiloto2"

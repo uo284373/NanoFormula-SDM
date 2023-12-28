@@ -1,13 +1,16 @@
 package com.example.nanoformula;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.nanoformula.API.ErgastApi;
 import com.example.nanoformula.API.WikipediaApi;
@@ -63,9 +66,11 @@ public class MainActivity extends AppCompatActivity {
     AtomicInteger llamadasCompletadasGeneral = new AtomicInteger(0);
     int totalLlamadasGeneral = 0;
 
+    String season = "current";
+
     String round;
 
-    private boolean hasEndedDrivers;
+    String window;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +80,9 @@ public class MainActivity extends AppCompatActivity {
         loaderGif = new Loader(this);
         loaderGif.show();
 
-        getRaceSchedule();
-        getDriversStandings();
-        getConstructorsStandings();
+        getRaceSchedule(season);
+        getDriversStandings(season);
+        getConstructorsStandings(season);
         getAllDrivers();
 
 
@@ -87,6 +92,40 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Calendario GP");
         setSupportActionBar(toolbar);
+
+        Button btnTemporada = findViewById(R.id.btnSeleccionarTemporada);
+
+        btnTemporada.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(new ContextThemeWrapper(MainActivity.this,R.style.AlertDialogCustom));
+                dialogo1.setTitle("Seleccione una temporada");
+                ArrayList<String> temps = new ArrayList<>();
+                if(((TextView)findViewById(R.id.tituloToolbarPiloto)).getText().equals("Clasificacion de Pilotos")){
+                    for(int i = 1950; i < 2024; i++){
+                        temps.add(String.valueOf(i));
+                    }
+                } else{
+                    for(int i = 1958; i < 2024; i++){
+                        temps.add(String.valueOf(i));
+                    }
+                }
+
+
+                CharSequence[] itemsArray = temps.toArray(new CharSequence[temps.size()]);
+                dialogo1.setSingleChoiceItems(itemsArray, -1, (dialog, which) -> {
+                    CharSequence temp = itemsArray[which];
+                    btnTemporada.setText(temp);
+                    season = temp.toString();
+                    loaderGif.show();
+                    getRaceSchedule(temp.toString());
+                    getDriversStandings(temp.toString());
+                    getConstructorsStandings(temp.toString());
+                    dialog.dismiss();
+                });
+                dialogo1.show();
+            }
+        });
 
         Button btnExportarCSV = findViewById(R.id.btnExportarCSV);
         btnExportarCSV.setOnClickListener(new View.OnClickListener() {
@@ -109,11 +148,25 @@ public class MainActivity extends AppCompatActivity {
         btnExportarCSV.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
+    private void toggleTemporadaButtonVisibility(boolean show) {
+        Button btnTemporada = findViewById(R.id.btnSeleccionarTemporada);
+        btnTemporada.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
     private void llamadaCompletaGif(AtomicInteger llamadasCompletadas, int totalLlamadas) {
         if (!isFinishing() && !isDestroyed()) {
             if (llamadasCompletadas.incrementAndGet() == totalLlamadas) {
-                CarrerasFragment carrerasFragment=CarrerasFragment.newInstance(raceSchedule);
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, carrerasFragment).commit();
+                if(window == null || window.equals("carreras")){
+                    CarrerasFragment carrerasFragment=CarrerasFragment.newInstance(raceSchedule, season);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, carrerasFragment).commit();
+                } else if (window.equals("pilotos")) {
+                    PilotosFragment pilotosFragment=PilotosFragment.newInstance(standings, season);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, pilotosFragment).commit();
+                } else {
+                    EscuderiasFragment escuderiasFragment = EscuderiasFragment.newInstance(constructorStandingsEscuderias, season);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, escuderiasFragment).commit();
+                }
+
                 loaderGif.dismiss();
             }
         }
@@ -145,41 +198,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setDriverImage(String driverName, com.example.nanoformula.modelo.allDrivers.Driver driver){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://en.wikipedia.org/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        WikipediaApi wikipediaApi = retrofit.create(WikipediaApi.class);
-        Call<DriverImage> result;
-        if(driverName.equals("Alexander_Albon")){
-            result = wikipediaApi.getImageDriver("Alex_Albon");
-        }else{
-            result = wikipediaApi.getImageDriver(driverName);
-        }
-
-        result.enqueue(new Callback<DriverImage>() {
-            @Override
-            public void onResponse(Call<DriverImage> call, Response<DriverImage> response) {
-                if(response.isSuccessful()){
-                    if(response.body().getQuery().getPages().get(0).getThumbnail()!=null){
-                        driver.setUrlImage(response.body().getQuery().getPages().get(0).getThumbnail().getSource());
-                    }
-                    llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
-                }else{
-                    loaderGif.dismiss();
-                    Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar las fotos de los pilotos", Snackbar.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<DriverImage> call, Throwable t) {
-                loaderGif.dismiss();
-                Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar las fotos de los pilotos", Snackbar.LENGTH_LONG).show();
-            }
-        });
-    }
 
 
 
@@ -188,21 +206,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-    private void  getRaceSchedule(){
+    private void  getRaceSchedule(String season){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://ergast.com/api/f1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         ErgastApi ergastApi = retrofit.create(ErgastApi.class);
-        Call<RaceSchedule> result = ergastApi.getRaceSchedule();
+        Call<RaceSchedule> result = ergastApi.getRaceSchedule(season);
 
         result.enqueue(new Callback<RaceSchedule>() {
             @Override
@@ -237,14 +248,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void getDriversStandings(){
+    private void getDriversStandings(String season){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://ergast.com/api/f1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         ErgastApi ergastApi = retrofit.create(ErgastApi.class);
-        Call<Standings> result = ergastApi.getDriversClasification("current");
+        Call<Standings> result = ergastApi.getDriversClasification(season);
         result.enqueue(new Callback<Standings>() {
             @Override
             public void onResponse(Call<Standings> call, Response<Standings> response) {
@@ -261,6 +272,7 @@ public class MainActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
+
                 }else{
                     Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los pilotos", Snackbar.LENGTH_LONG).show();
                 }
@@ -309,30 +321,26 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void getConstructorsStandings() {
+    private void getConstructorsStandings(String season) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://ergast.com/api/f1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         ErgastApi ergastApi = retrofit.create(ErgastApi.class);
-        Call<StandingsEscuderias> result = ergastApi.getConstructorsClasification();
+        Call<StandingsEscuderias> result = ergastApi.getConstructorsClasification(season);
         result.enqueue(new Callback<StandingsEscuderias>() {
             @Override
             public void onResponse(Call<StandingsEscuderias> call, Response<StandingsEscuderias> response) {
                 if(response.isSuccessful()){
                     constructorStandingsEscuderias = response.body();
-                    round = constructorStandingsEscuderias.getMRData().getStandingsTable().getStandingsLists().get(0).getRound();
-                    for(ConstructorStanding escuderia : constructorStandingsEscuderias.getMRData().getStandingsTable().getStandingsLists().get(0).getConstructorStandings()){
-                        setConstructorDrivers(constructorStandingsEscuderias.getMRData().getStandingsTable().getSeason(), escuderia);
-                        escuderia.setRound(round);
-                        int startIndex = escuderia.getConstructor().getUrl().indexOf("wiki/") + 5; // Sumamos 5 para incluir "wiki/"
-                        String constructorName = escuderia.getConstructor().getUrl().substring(startIndex);
-                        try {
-                            String decodedString = URLDecoder.decode(constructorName, "UTF-8");
-                            //setConstructorImage(decodedString,escuderia.getConstructor());
-                        }catch (UnsupportedEncodingException e){
-                            e.printStackTrace();
+                    if(constructorStandingsEscuderias.getMRData().getStandingsTable().getStandingsLists().size() > 0) {
+                        totalLlamadasGeneral += constructorStandingsEscuderias.getMRData().getStandingsTable().getStandingsLists().get(0).getConstructorStandings().size();
+
+                        round = constructorStandingsEscuderias.getMRData().getStandingsTable().getStandingsLists().get(0).getRound();
+                        for (ConstructorStanding escuderia : constructorStandingsEscuderias.getMRData().getStandingsTable().getStandingsLists().get(0).getConstructorStandings()) {
+                            setConstructorDrivers(constructorStandingsEscuderias.getMRData().getStandingsTable().getSeason(), escuderia);
+                            escuderia.setRound(round);
                         }
                     }
                 }else{
@@ -367,6 +375,8 @@ public class MainActivity extends AppCompatActivity {
                         escuderia.addDriversName(driver.getFamilyName());
 
                     }
+
+                    llamadaCompletaGif(llamadasCompletadasGeneral,totalLlamadasGeneral);
 
                 }else{
                     Snackbar.make(findViewById(R.id.layoutPrincipal), "Se ha producido un error al recuperar los pilotos", Snackbar.LENGTH_LONG).show();
@@ -429,36 +439,42 @@ public class MainActivity extends AppCompatActivity {
             /* Según el caso, crearemos un Fragmento u otro */
             if (itemId == R.id.carrerasFragment)
             {
-                CarrerasFragment carrerasFragment=CarrerasFragment.newInstance(raceSchedule);
+                CarrerasFragment carrerasFragment=CarrerasFragment.newInstance(raceSchedule, season);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, carrerasFragment).commit();
-                toolbar = findViewById(R.id.toolbar);
-                toolbar.setTitle("Calendario GP");
+                TextView tx = findViewById(R.id.tituloToolbarPiloto);
+                tx.setText("Calendario GP");
                 toggleExportarCSVButtonVisibility(true);
+                toggleTemporadaButtonVisibility(true);
+                window = "carreras";
                 return true;
             }
 
             else if (itemId == R.id.pilotosFragment)
             {
-                PilotosFragment pilotosFragment=PilotosFragment.newInstance(standings);
+                PilotosFragment pilotosFragment=PilotosFragment.newInstance(standings, season);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, pilotosFragment).commit();
-                toolbar = findViewById(R.id.toolbar);
-                toolbar.setTitle("Clasificacion de Pilotos");
+                TextView tx = findViewById(R.id.tituloToolbarPiloto);
+                tx.setText("Clasificacion de Pilotos");
 
                 toggleExportarCSVButtonVisibility(false);
+                toggleTemporadaButtonVisibility(true);
+                window = "pilotos";
                 return true;
             }
 
             else if (itemId == R.id.escuderiasFragment)
             {
-                EscuderiasFragment escuderiasFragment = EscuderiasFragment.newInstance(constructorStandingsEscuderias);
+                EscuderiasFragment escuderiasFragment = EscuderiasFragment.newInstance(constructorStandingsEscuderias, season);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, escuderiasFragment).commit();
-                toolbar = findViewById(R.id.toolbar);
-                toolbar.setTitle("Clasificacion de Constructores");
+                TextView tx = findViewById(R.id.tituloToolbarPiloto);
+                tx.setText("Clasificacion de Constructores");
 
                 toggleExportarCSVButtonVisibility(false);
+                toggleTemporadaButtonVisibility(true);
+                window = "escuderias";
                 return true;
             }
 
@@ -467,9 +483,10 @@ public class MainActivity extends AppCompatActivity {
                 ComparativaFragment comparativaFragment = ComparativaFragment.newInstance(allDrivers);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, comparativaFragment).commit();
-                toolbar = findViewById(R.id.toolbar);
-                toolbar.setTitle("Comparativa de Pilotos");
+                TextView tx = findViewById(R.id.tituloToolbarPiloto);
+                tx.setText("Comparativa de Pilotos");
                 toggleExportarCSVButtonVisibility(false);
+                toggleTemporadaButtonVisibility(false);
                 return true;
             }else {
                 throw new IllegalStateException("Unexpected value: " + item.getItemId());

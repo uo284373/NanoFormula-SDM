@@ -37,7 +37,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class EscuderiaDetails extends AppCompatActivity {
 
     private ConstructorStanding standings;
-    TextView nombreEscuderia;
     TextView nacionalidadEscuderia;
     TextView titulosEscuderia;
     TextView victoriasEscuderia;
@@ -49,6 +48,7 @@ public class EscuderiaDetails extends AppCompatActivity {
 
     ImageView fotoEscuderia;
     Loader loaderGif;
+
     AtomicInteger llamadasCompletadasGeneral = new AtomicInteger(0);
     AtomicInteger llamadasCompletadasTemporada = new AtomicInteger(0);
 
@@ -72,6 +72,7 @@ public class EscuderiaDetails extends AppCompatActivity {
 
         Intent intentEscuderia= getIntent();
         standings= intentEscuderia.getParcelableExtra(EscuderiasFragment.ESCUDERIA_SELECCIONADA);
+        season= intentEscuderia.getStringExtra(EscuderiasFragment.TEMPORADA);
         Log.i("escuderia",standings.getConstructor().getName());
         nacionalidadEscuderia = findViewById(R.id.txNacionalidadEscuderia);
         titulosEscuderia = findViewById(R.id.txTitulos);
@@ -87,7 +88,7 @@ public class EscuderiaDetails extends AppCompatActivity {
             mostrarTitulosConstructor();
             mostrarVictoriasConstructor();
             mostrarTemporadasConstructor();
-            mostrarChart("current");
+            mostrarChart(season);
         }
     }
 
@@ -102,6 +103,8 @@ public class EscuderiaDetails extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         nacionalidadEscuderia.setText(standings.getConstructor().getNationality());
+        ((TextView)findViewById(R.id.tituloToolbarPiloto)).setText(standings.getConstructor().getName());
+        ((Button)findViewById(R.id.btnSeleccionarTemporada)).setText(season);
 
         fotoEscuderia.setImageResource(standings.getDrawableDetails());
 //        fotoEscuderia.setScaleType();
@@ -304,9 +307,11 @@ public class EscuderiaDetails extends AppCompatActivity {
                         for(Result result : race.getResults()){
                             points += Integer.parseInt(result.getPoints());
 
-                            String races = drivers.get(result.getDriver().getFamilyName());
+                            String driverName = result.getDriver().getFamilyName().replace("-", "");
 
-                            drivers.put(result.getDriver().getFamilyName(), races == null ? race.getRound() + "," + result.getPoints() : races + ";" + race.getRound() + "," + result.getPoints());
+                            String races = drivers.get(driverName);
+
+                            drivers.put(driverName, races == null ? race.getRound() + "," + result.getPoints() : races + ";" + race.getRound() + "," + result.getPoints());
                         }
                         puntosTemp.add(race.getRound()+";"+String.valueOf(points));
                     }

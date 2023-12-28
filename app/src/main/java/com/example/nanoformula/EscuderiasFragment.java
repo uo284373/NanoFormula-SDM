@@ -16,6 +16,9 @@ import android.view.ViewGroup;
 import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
 import com.example.nanoformula.modelo.constructorsStandings.StandingsEscuderias;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link EscuderiasFragment#newInstance} factory method to
@@ -25,17 +28,21 @@ public class EscuderiasFragment extends Fragment {
 
     private static final String ARG_ESCUDERIAS = "ESCUDERIAS";
     public static final String ESCUDERIA_SELECCIONADA = "escuderia_seleccionado";
+    public static final String TEMPORADA = "temporada";
 
 
     private StandingsEscuderias standings;
 
+    private String season;
+
     private RecyclerView listaEscuderiasView;
 
 
-    public static EscuderiasFragment newInstance(StandingsEscuderias standings) {
+    public static EscuderiasFragment newInstance(StandingsEscuderias standings, String temporada) {
         EscuderiasFragment fragment = new EscuderiasFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_ESCUDERIAS,standings);
+        args.putString(TEMPORADA,temporada);
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,6 +52,7 @@ public class EscuderiasFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             standings = (StandingsEscuderias) getArguments().get(ARG_ESCUDERIAS);
+            season = (String) getArguments().get(TEMPORADA);
         }
     }
 
@@ -58,7 +66,8 @@ public class EscuderiasFragment extends Fragment {
         listaEscuderiasView.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listaEscuderiasView.getContext(), layoutManager.getOrientation());
         listaEscuderiasView.addItemDecoration(dividerItemDecoration);
-        ListaEscuderiasAdapter leAdapter= new ListaEscuderiasAdapter(standings.getMRData().getStandingsTable().getStandingsLists().get(0).getConstructorStandings(),
+        List<ConstructorStanding> standingList = standings.getMRData().getStandingsTable().getStandingsLists().size() >= 1 ? standings.getMRData().getStandingsTable().getStandingsLists().get(0).getConstructorStandings() : new ArrayList<>();
+        ListaEscuderiasAdapter leAdapter= new ListaEscuderiasAdapter(standingList,
                 new ListaEscuderiasAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(ConstructorStanding escuderia) {
@@ -73,6 +82,7 @@ public class EscuderiasFragment extends Fragment {
     private void clickonItem(ConstructorStanding escuderia) {
         Intent intent=new Intent (EscuderiasFragment.this.getContext(), EscuderiaDetails.class);
         intent.putExtra(ESCUDERIA_SELECCIONADA, escuderia);
+        intent.putExtra(TEMPORADA, season);
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
     }
 }

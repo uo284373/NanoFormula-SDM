@@ -188,14 +188,17 @@ public class TemporadaEscuderiaFragment extends Fragment {
                 String[] roundPoints = pointsByRace[i].split(",");
 
                 if (i == 0) {
-                    lineDataDriver.add(new Entry(Integer.parseInt(roundPoints[0]), Integer.parseInt(roundPoints[1])));
+                    lineDataDriver.add(new Entry(Float.parseFloat(roundPoints[0]), Float.parseFloat(roundPoints[1])));
                 } else {
-                    lineDataDriver.add(new Entry(Integer.parseInt(roundPoints[0]), lineDataDriver.get(lineDataDriver.size() - 1).getY() + Integer.parseInt(roundPoints[1])));
+                    lineDataDriver.add(new Entry(Float.parseFloat(roundPoints[0]), lineDataDriver.get(lineDataDriver.size() - 1).getY() + Float.parseFloat(roundPoints[1])));
 
                 }
             }
             LineDataSet lineDataSetDriver = new LineDataSet(lineDataDriver, driver);
             lineDataSetDriver.setColor(colors[color++]);
+            if(color == 7){
+                color = 0;
+            }
             lineDataSetDriver.setDrawValues(false);
 
             dataSets.add(lineDataSetDriver);

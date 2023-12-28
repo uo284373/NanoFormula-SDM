@@ -62,6 +62,8 @@ public class CarreraDetails extends AppCompatActivity implements YouTubeSearchTa
 
     private RaceResults raceResults;
 
+    private String season;
+
 
     Toolbar toolbar;
     TableLayout table;
@@ -93,6 +95,7 @@ public class CarreraDetails extends AppCompatActivity implements YouTubeSearchTa
         loaderGif.show();
 
         Intent intentCarrera= getIntent();
+        season = intentCarrera.getStringExtra(CarrerasFragment.TEMPORADA_CARRERA);
         race = intentCarrera.getParcelableExtra(CarrerasFragment.CARRERA_SELECCIONADA);
         circuit=intentCarrera.getParcelableExtra(CarrerasFragment.CIRCUITO_SELECCIONADA);;
         toolbar= findViewById(R.id.toolbarCarrera);
@@ -118,7 +121,8 @@ public class CarreraDetails extends AppCompatActivity implements YouTubeSearchTa
             long timeDifference = fechaActual.getTime() - fechaCarrera.getTime();
             long hoursDifference = timeDifference / (60 * 60 * 1000);
             if (hoursDifference >= 24) {
-                new YouTubeSearchTask(this).execute("Resumen del GP de " + race.getRaceName()+ " - F1 " + race.getSeason());
+                if (season.equals("2023"))
+                    new YouTubeSearchTask(this).execute("Resumen del GP de " + race.getRaceName()+ " - F1 " + race.getSeason());
                 cargarDatos();
             }else {
                 mostrarCarreraNoDisponible();
@@ -208,7 +212,7 @@ public class CarreraDetails extends AppCompatActivity implements YouTubeSearchTa
                 .build();
 
         ErgastApi ergastApi = retrofit.create(ErgastApi.class);
-        Call<RaceResults> result = ergastApi.getRaceResults(race.getRound());
+        Call<RaceResults> result = ergastApi.getRaceResults(season, race.getRound());
         result.enqueue(new Callback<RaceResults>() {
             @Override
             public void onResponse(Call<RaceResults> call, Response<RaceResults> response) {
@@ -285,7 +289,7 @@ public class CarreraDetails extends AppCompatActivity implements YouTubeSearchTa
         nombreCircuito.setText(circuit.getCircuitName());
         localidad.setText(circuit.getLocation().getLocality());
         fecha.setText(race.getDateFormat());
-        hora.setText(race.getTime().substring(0,5));
+        hora.setText(race.getTime() != null ? race.getTime().substring(0,5) : "--:--");
     }
 
     private void mostrarDatosGanador() {
@@ -310,6 +314,8 @@ public class CarreraDetails extends AppCompatActivity implements YouTubeSearchTa
                 break;
             }
         }
+        if(resultWithRank1 == null)
+            return "unkwon";
         return resultWithRank1.getDriver().getFamilyName();
     }
 

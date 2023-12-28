@@ -169,5 +169,6 @@
     <string name="nacionalidadPiloto">"Nacionalidad: "</string>
     <string name="momentos_carrera">RESUMEN</string>
     <string name="export_csv">Exportar CSV</string>
+    <string name="calendario_gp">Calendario GP</string>
 
 </resources>
