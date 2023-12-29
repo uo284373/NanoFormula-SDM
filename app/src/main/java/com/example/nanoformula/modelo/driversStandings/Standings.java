@@ -7,7 +7,6 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-import com.example.nanoformula.modelo.driversStandings.MRData;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

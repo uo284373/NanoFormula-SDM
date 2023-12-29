@@ -17,20 +17,20 @@
         android:theme="@style/Theme.NanoFormula"
         tools:targetApi="31">
         <activity
-            android:name=".ComparativaPilotos"
+            android:name=".vista.comparativa.ComparativaPilotos"
             android:exported="false"
             android:theme="@style/Theme.NanoFormulaDetails"/>
         <activity
-            android:name=".CarreraDetails"
+            android:name=".vista.carreras.CarreraDetails"
             android:exported="false"
             android:label="@string/title_activity_carrera_details"
             android:theme="@style/Theme.NanoFormulaDetails" />
         <activity
-            android:name=".EscuderiaDetails"
+            android:name=".vista.equipos.EscuderiaDetails"
             android:exported="false"
             android:theme="@style/Theme.NanoFormulaDetails" />
         <activity
-            android:name=".PilotoDetails"
+            android:name=".vista.pilotos.PilotoDetails"
             android:exported="false"
             android:theme="@style/Theme.NanoFormulaDetails" />
         <activity

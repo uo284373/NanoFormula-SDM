@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ComparativaPilotos"
+    tools:context=".vista.comparativa.ComparativaPilotos"
     tools:showIn="@layout/activity_comparativa_pilotos"
     android:background="@drawable/fondo_degradado"
     android:layout_marginTop="50dp">

@@ -5,7 +5,6 @@ import com.example.nanoformula.modelo.raceImage.RaceImage;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface WikipediaApi {

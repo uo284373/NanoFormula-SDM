@@ -1,8 +1,4 @@
-package com.example.nanoformula;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+package com.example.nanoformula.vista.equipos;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,16 +8,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.nanoformula.API.ErgastApi;
+import com.example.nanoformula.R;
 import com.example.nanoformula.modelo.constructorRaceResults.ConstructorRaceResults;
 import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
 import com.example.nanoformula.modelo.constructorsStandings.StandingsEscuderias;
 import com.example.nanoformula.modelo.constructorsStandings.StandingsList;
-import com.example.nanoformula.modelo.driverRaceResults.DriverRaceResults;
-import com.example.nanoformula.modelo.driversStandings.Standings;
 import com.example.nanoformula.modelo.raceResultsByConstructor.Race;
 import com.example.nanoformula.modelo.raceResultsByConstructor.RaceResultsByConstructor;
 import com.example.nanoformula.modelo.raceResultsByConstructor.Result;
+import com.example.nanoformula.util.Loader;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;

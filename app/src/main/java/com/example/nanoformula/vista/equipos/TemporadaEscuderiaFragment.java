@@ -1,6 +1,5 @@
-package com.example.nanoformula;
+package com.example.nanoformula.vista.equipos;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,9 +9,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
-import com.example.nanoformula.modelo.driversStandings.Constructor;
-import com.example.nanoformula.modelo.driversStandings.DriverStanding;
+import com.example.nanoformula.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -22,7 +19,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 

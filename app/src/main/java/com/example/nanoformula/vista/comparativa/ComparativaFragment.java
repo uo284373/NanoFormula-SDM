@@ -1,11 +1,8 @@
-package com.example.nanoformula;
+package com.example.nanoformula.vista.comparativa;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +14,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.nanoformula.API.WikipediaApi;
+import com.example.nanoformula.R;
 import com.example.nanoformula.modelo.allDrivers.AllDrivers;
 import com.example.nanoformula.modelo.allDrivers.Driver;
 import com.example.nanoformula.modelo.driversImage.DriverImage;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.nanoformula.util.Loader;
 import com.squareup.picasso.Picasso;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import retrofit2.Call;

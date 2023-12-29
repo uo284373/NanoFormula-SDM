@@ -1,18 +1,18 @@
-package com.example.nanoformula;
+package com.example.nanoformula.vista.equipos;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
+import com.example.nanoformula.R;
 import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
 import com.example.nanoformula.modelo.constructorsStandings.StandingsEscuderias;
 

@@ -1,25 +1,22 @@
-package com.example.nanoformula;
+package com.example.nanoformula.vista.pilotos;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.nanoformula.modelo.Piloto;
+import com.example.nanoformula.R;
 import com.example.nanoformula.modelo.driversStandings.DriverStanding;
 import com.example.nanoformula.modelo.driversStandings.Standings;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class PilotosFragment extends Fragment {

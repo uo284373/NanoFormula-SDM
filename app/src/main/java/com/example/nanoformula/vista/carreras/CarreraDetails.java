@@ -1,15 +1,26 @@
-package com.example.nanoformula;
+package com.example.nanoformula.vista.carreras;
 
-import android.app.FragmentTransaction;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.nanoformula.API.ErgastApi;
 import com.example.nanoformula.API.WikipediaApi;
 import com.example.nanoformula.API.YouTubeSearchTask;
+import com.example.nanoformula.R;
 import com.example.nanoformula.modelo.driversImage.DriverImage;
 import com.example.nanoformula.modelo.raceResults.Driver;
 import com.example.nanoformula.modelo.raceResults.FastestLap;
@@ -17,25 +28,9 @@ import com.example.nanoformula.modelo.raceResults.RaceResults;
 import com.example.nanoformula.modelo.raceResults.Result;
 import com.example.nanoformula.modelo.raceSchedule.Circuit;
 import com.example.nanoformula.modelo.raceSchedule.Race;
+import com.example.nanoformula.util.Loader;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.support.annotation.NonNull;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;

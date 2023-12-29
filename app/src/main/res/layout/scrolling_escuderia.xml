@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".EscuderiaDetails"
+    tools:context=".vista.equipos.EscuderiaDetails"
     tools:showIn="@layout/activity_escuderia_details"
     android:background="@drawable/fondo_degradado"
     android:layout_marginTop="50dp">

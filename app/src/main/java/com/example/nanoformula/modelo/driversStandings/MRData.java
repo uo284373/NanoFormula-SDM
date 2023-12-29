@@ -2,7 +2,6 @@
 package com.example.nanoformula.modelo.driversStandings;
 
 
-import com.example.nanoformula.modelo.driversStandings.StandingsTable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

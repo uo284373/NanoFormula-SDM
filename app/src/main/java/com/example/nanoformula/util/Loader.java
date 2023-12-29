@@ -1,4 +1,4 @@
-package com.example.nanoformula;
+package com.example.nanoformula.util;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.Window;
 
 import androidx.annotation.NonNull;
+
+import com.example.nanoformula.R;
 
 public class Loader extends Dialog {
 

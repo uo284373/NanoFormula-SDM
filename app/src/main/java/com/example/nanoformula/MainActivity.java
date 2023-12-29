@@ -1,24 +1,19 @@
 package com.example.nanoformula;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.nanoformula.API.ErgastApi;
 import com.example.nanoformula.API.WikipediaApi;
-import com.example.nanoformula.modelo.Escuderia;
 import com.example.nanoformula.modelo.allDrivers.AllDrivers;
-import com.example.nanoformula.modelo.constructorsStandings.Constructor;
 import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
 import com.example.nanoformula.modelo.constructorsStandings.StandingsEscuderias;
-import com.example.nanoformula.modelo.Escuderia;
-import com.example.nanoformula.modelo.countryDetails.CountryDetail;
-import com.example.nanoformula.modelo.Carrera;
 import com.example.nanoformula.modelo.driversForConstructor.DriversByConstructor;
 import com.example.nanoformula.modelo.driversImage.DriverImage;
 import com.example.nanoformula.modelo.driversStandings.Driver;
@@ -27,18 +22,19 @@ import com.example.nanoformula.modelo.driversStandings.Standings;
 import com.example.nanoformula.modelo.raceImage.RaceImage;
 import com.example.nanoformula.modelo.raceSchedule.Race;
 import com.example.nanoformula.modelo.raceSchedule.RaceSchedule;
+import com.example.nanoformula.util.Loader;
+import com.example.nanoformula.vista.carreras.CarrerasFragment;
+import com.example.nanoformula.vista.comparativa.ComparativaFragment;
+import com.example.nanoformula.vista.equipos.EscuderiasFragment;
+import com.example.nanoformula.vista.pilotos.PilotosFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EscuderiasFragment"
+    tools:context=".vista.equipos.EscuderiasFragment"
     android:layout_marginTop="60dp"
     android:layout_marginBottom="70dp">
 

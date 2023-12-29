@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".CarreraDetails"
+    tools:context=".vista.carreras.CarreraDetails"
     tools:showIn="@layout/activity_carrera_details"
     android:background="@drawable/fondo_degradado"
     android:layout_marginTop="50dp">

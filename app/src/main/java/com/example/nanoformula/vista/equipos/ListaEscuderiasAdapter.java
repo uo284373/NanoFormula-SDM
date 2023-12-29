@@ -1,4 +1,4 @@
-package com.example.nanoformula;
+package com.example.nanoformula.vista.equipos;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.nanoformula.R;
 import com.example.nanoformula.modelo.constructorsStandings.ConstructorStanding;
 
 import java.util.List;

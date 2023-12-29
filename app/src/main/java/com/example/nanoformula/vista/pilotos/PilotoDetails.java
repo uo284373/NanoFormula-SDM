@@ -1,22 +1,19 @@
-package com.example.nanoformula;
+package com.example.nanoformula.vista.pilotos;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.nanoformula.API.ErgastApi;
-import com.example.nanoformula.modelo.Piloto;
+import com.example.nanoformula.R;
 import com.example.nanoformula.modelo.driverQualifyingResults.DriverQualifyingResults;
 import com.example.nanoformula.modelo.driverRaceResults.DriverRaceResults;
 import com.example.nanoformula.modelo.driverRaceResults.Race;
@@ -25,14 +22,10 @@ import com.example.nanoformula.modelo.driversStandings.Driver;
 import com.example.nanoformula.modelo.driversStandings.DriverStanding;
 import com.example.nanoformula.modelo.driversStandings.Standings;
 import com.example.nanoformula.modelo.driversStandings.StandingsList;
+import com.example.nanoformula.util.Loader;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +33,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import okhttp3.OkHttpClient;
-import pl.droidsonroids.gif.GifImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
