@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -128,7 +127,7 @@ public class ComparativaFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // Acciones a realizar cuando se selecciona un elemento
                 Driver nombreSeleccionado = allDrivers.getMRData().getDriverTable().getDrivers().get(position);
-                Toast.makeText(getContext(), "Seleccionaste: " + nombreSeleccionado, Toast.LENGTH_SHORT).show();
+
 
                 loaderGif.show();
                 driver1 = nombreSeleccionado;
@@ -149,7 +148,7 @@ public class ComparativaFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // Acciones a realizar cuando se selecciona un elemento
                 Driver nombreSeleccionado = allDrivers.getMRData().getDriverTable().getDrivers().get(position);
-                Toast.makeText(getContext(), "Seleccionaste: " + nombreSeleccionado, Toast.LENGTH_SHORT).show();
+
 
                 loaderGif.show();
                 driver2 = nombreSeleccionado;
